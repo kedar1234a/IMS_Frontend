@@ -5,7 +5,7 @@ body {
   }
   
   /* Centering the form container */
-  .login {
+  .signup {
     background: url("https://imgs.search.brave.com/GXYJ5FQ7K3vEewdrfpUViiqV_2glMgIycAOCacV2CW4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9z/aWduLXVzZXItcGFz/c3dvcmQtcHJpdmFj/eS1jb25jZXB0XzUz/ODc2LTEyMDMxNi5q/cGc_c2VtdD1haXNf/aHlicmlk");
     background-repeat: no-repeat;
     background-size: cover;
@@ -36,7 +36,6 @@ body {
   
   /* Styling input fields */
   input {
-    margin: 1em 0;
     width: 100%;
     padding: 0.6em;
     border: none;
@@ -50,8 +49,8 @@ body {
   }
   input:focus,
   input:hover {
-    box-shadow: 0 0 4px rgba(66, 66, 66, 0.551);
     transform: scale(1.03);
+    box-shadow: 0 0 4px rgba(66, 66, 66, 0.551);
   }
   /* Styling labels */
   label {
@@ -63,6 +62,7 @@ body {
   
   /* Styling the button */
   button {
+    margin-top: 1.2em;
     background-color: #f1526a;
     color: white;
     padding: 0.6em;
@@ -70,21 +70,20 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    margin: 0.5em 0 1em 0;
     transition: all 0.15s ease-in-out;
   }
-  
   button:focus,
   button:hover {
     outline: none;
+    transform: scale(1.03);
     background-color: #f03c72;
     transform: scale(1.03);
   }
   
-  .signup {
+  .login {
     font-size: 0.85em;
   }
-  #signup-page {
+  #login-page {
     font-size: 1em;
     font-weight: 600;
     text-decoration: none;

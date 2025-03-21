@@ -1,22 +1,22 @@
-<div class="login">
+<div class="signup">
     <div class="parent">
         <div class="container">
-            <div class="login-container">
-                <h2>Login</h2>
-                <form (ngSubmit)="onLogin()">
+            <div class="signin-container">
+                <h2>Sign Up</h2>
+                <form (ngSubmit)="onSignUp()">
                     <label>Username:</label>
                     <input type="text" [(ngModel)]="username" name="username" required />
+
+                    <label>Email Id:</label>
+                    <input type="text" [(ngModel)]="email" name="email" required />
 
                     <label>Password:</label>
                     <input type="password" [(ngModel)]="password" name="password" required />
 
-                    <button type="submit">Login</button>
+                    <button type="submit">Sign Up</button>
                 </form>
                 <p *ngIf="message">{{ message }}</p>
-                <p class="signup">
-                    Don't have an Account?
-                    <a routerLink="/signin" class="signup" id="signup-page">SignUp</a>
-                  </p>
+                <a routerLink="/login">Already have an account? Login</a>
             </div>
         </div>
     </div>

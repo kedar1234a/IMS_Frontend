@@ -1,36 +1,30 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { UserDataService } from '../../Services/user-data.service';
+import { AuthService } from '../../Services/auth.service';
+import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [RouterLink, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrl: './login.component.css'
 })
-export class LoginComponent {
-  loginData = {
-    username: '',
-    password: '',
-  };
-  constructor(private UserDataMethod: UserDataService) {}
+export class LoginComponent { 
+  username: string = '';
+  password: string = '';
+  message: string = '';
+
+  constructor(private authService: AuthService, private router:Router) {}
 
   onLogin() {
-    const users = this.UserDataMethod.getUserData();
-    const user = users.find(
-      (u) =>
-        u.username === this.loginData.username &&
-        u.password === this.loginData.password
-    );
-    if (user) {
-      console.log('Login Successful!!!');
-      alert('Login Successful');
-    } else {
-      alert('Invalid Credentials!!!');
-    }
-    this.loginData.username = '';
-    this.loginData.password = '';
+    this.authService.login(this.username, this.password).subscribe(response => {
+      if (response.success) {
+        this.router.navigate(['/dashboard']); // Redirect to Dashboard
+      } else {
+        this.message = 'Invalid credentials!';
+      }
+    });
   }
+
+  
 }
