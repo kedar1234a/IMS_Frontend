@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="signup-container">
+    <!-- ✅ Corrected form submission event -->
+    <form (ngSubmit)="OnSignUp()">
+      <input type="text" name="full_name" placeholder="Enter Name" [(ngModel)]="signupData.full_name" required />
+      <input type="email" name="email" placeholder="Enter Email" [(ngModel)]="signupData.email" required />
+      
+      <select name="store_type" [(ngModel)]="signupData.store_type" required>
+        <option value="" selected disabled>Select Store Type</option>
+        <option value="grocery">Grocery</option>
+        <option value="electronics">Electronics</option>
+        <option value="hardware">Hardware</option>
+      </select>
+
+      <select name="role" id="user-role" [(ngModel)]="signupData.role" required>
+        <option value="" selected disabled>Select Your Role</option>
+        <option value="Admin">Admin</option>
+        <option value="Cashier">Cashier</option>
+      </select>
+
+      <input type="password" name="password" placeholder="Password" [(ngModel)]="signupData.password" required />
+      <input type="password" name="confirm_password" placeholder="Confirm Password" [(ngModel)]="confirm_password" required />
+
+      <button type="submit" id="signup-btn">SignUp</button>
+
+      <!-- ✅ Use <a> instead of <span> for routerLink -->
+      <p>Already Signed Up? <a id="login-page" routerLink="/login">LogIn Here</a></p>
+    </form>
+  </div>
+</div>
