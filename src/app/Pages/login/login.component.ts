@@ -21,9 +21,17 @@ export class LoginComponent {
       next: (response) => {
         console.log('Response from backend:', response);
         alert('Login successful!');
+        if(response.store_type == 'grocery'){
+          this.router.navigate(['/grocery_dashboard']);
+        }
+        else if(response.store_type == 'electronics'){
+          this.router.navigate(['/electronics_dashboard']);
+        }
+        else{
+          this.router.navigate(['/hardware_dashboard']);
 
-        // Redirect user to dashboard if needed
-        this.router.navigate(['/dashboard']);
+        }
+        
       },
       error: (error) => {
         console.error('Login failed:', error);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { signup_data } from '../model/signup-data';
 
 @Injectable({
@@ -31,5 +31,11 @@ export class SignupService {
 
   getMessage(): Observable<string> {
     return this.http.get(this.msgURL, { responseType: 'text' });
+  }
+  
+  getStoreType(): Observable<string> {
+    return this.http.get<{ message: string, storeType: string }>(this.apiUrl).pipe(
+      map(response => response.storeType) // Extracting only storeType
+    );
   }
 }
