@@ -11,20 +11,28 @@
   <ul>
     <li>
       <select name="store-type" id="store-type" (change)="navigate($event)">
-        <option value="" selected disabled>Select Store Type</option>
+        <option value="" selected disabled>All Stores</option>
         <option value="grocery">Grocery</option>
         <option value="electronics">Electronics</option>
         <option value="hardware">Hardware</option>
       </select>
     </li>
+    <li >Home</li>
+    <li >Dashboard</li>
     <li>
       <select name="signup-login" id="signup-login" (change)="navigate($event)">
         <option value="" selected disabled>Account</option>
         <option value="signup">SignUp</option>
-        <option value="login" routerLink="/login">LogIn</option>
+        <option value="login">LogIn</option>
       </select>
     </li>
-    <li >Dashboard</li>
+    <li>
+      <select name="admin-auth" id="admin-auth"  (change)="navigate($event)">
+        <option value="" selected disabled>Admin Panel</option>
+        <option value="adminlogin" >Admin Login</option>
+        <option value="adminsignup" >Admin SignUp</option>
+      </select>
+    </li>
   </ul>
 </nav>
 </div>

@@ -1,71 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { signup_data } from '../model/signup-data';
 
 @Injectable({
-  providedIn: 'root', // Makes service available throughout the app
+  providedIn: 'root',
 })
 export class SignupService {
-  private apiUrl = 'http://localhost:8080/api/register'; // Update API endpoint
-  private signInUrl ="http://localhost:8080/api/login";
-
-  // private apiUrl = 'http://localhost:8080/api/login'; // Update API endpoint
+  private apiUrl = 'http://localhost:8080/api/register';
+  private signInUrl = 'http://localhost:8080/api/login';
+  private msgURL = 'http://localhost:8080/api/message';
+  private usersUrl = 'http://localhost:8080/api/users'; // Corrected endpoint for fetching users
 
   constructor(private http: HttpClient) {}
 
-  // Send signup data to Spring Boot API
   storeSignupDetails(signupData: signup_data): Observable<any> {
-    return this.http.post<any>(this.apiUrl, signupData);
+    return this.http.post<any>(this.apiUrl, signupData, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(this.signInUrl, { username, password });
+  login(email: string, password: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.signInUrl, { email, password }, { headers });
   }
 
-  // Fetch all users (optional)
   getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.usersUrl); // Fixed incorrect API call
   }
 
-  private SignupDetails: signup_data[] = [];
-  getUserByEmail(email: string): signup_data | undefined {
-    return this.SignupDetails.find((SignupDetails) => SignupDetails.email);
-  }
-  validateUser(email: string, password: string) {
-    return this.SignupDetails.some(
-      (SignupDetails) =>
-        SignupDetails.email === email && SignupDetails.password === password
-    );
+  getMessage(): Observable<string> {
+    return this.http.get(this.msgURL, { responseType: 'text' });
   }
 }
-
-
-
-// import { Injectable } from '@angular/core';
-// // import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { signup_data } from '../model/signup-data';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class SignupService {
-//   private apiUrl = 'http://localhost:8080/api/register'; // Spring Boot API
-
-//   constructor(private http: HttpClient) { }
-
-//   storeSignupDetails(details: signup_data){
-//     this.SignupDetails.push(details);
-//     console.log("Store Details:",this.SignupDetails);
-//   }
-
-//     // Fetch users from API
-//     getUsers(): Observable<any[]> {
-//       return this.http.get<any[]>(this.apiUrl);
-//     }
-
-//     }
-
-//   }

@@ -11,14 +11,14 @@ h1 {
   overflow: hidden;
   width: 0ch;
   border-right: 3px solid black; /* Adds cursor effect */
-  animation: typing 3s steps(30) infinite alternate-reverse ;
+  animation: typing 2.5s steps(40) infinite alternate-reverse ;
 }
 
 /* Typing animation */
 @keyframes typing {
   from {
     width: 0ch;
-    opacity: 0;
+    /* opacity: 0; */
   }
   to {
     width: 18ch; /* Adjust based on text length */

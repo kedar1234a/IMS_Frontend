@@ -1,0 +1,18 @@
+<nav>
+  <div class="logo">
+    IMS
+  </div>
+  <div class="title">
+    Admin Dashboard
+  </div>
+  <div class="nav-links">
+    <ul>
+      <li>Home</li>
+      <li><select name="admin-select" id="admin-select" (change)="navigate($event)">
+          <option value="" selected disabled>Account</option>
+          <option value="manage" >Manage</option>
+          <option value="logout" >Logout</option>
+      </select></li>
+    </ul>
+  </div>
+</nav>

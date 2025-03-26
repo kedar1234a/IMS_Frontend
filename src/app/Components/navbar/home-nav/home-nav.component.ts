@@ -12,13 +12,19 @@ export class HomeNavComponent {
   constructor(private router: Router) {}
 
   navigate(event: Event) {
-    const selectedStore = (event.target as HTMLSelectElement).value;
+    const selected_option = (event.target as HTMLSelectElement).value;
     
-    if (selectedStore == 'grocery'|| selectedStore == 'hardware'||selectedStore == 'electronics' || selectedStore == 'signup') {
+    if (selected_option == 'grocery'|| selected_option == 'hardware'||selected_option == 'electronics' || selected_option == 'signup') {
       this.router.navigate(['/signup']);
     }
-    else{
+    else if(selected_option == 'login'){
       this.router.navigate(['/login']);
+    }
+    else if(selected_option == 'adminlogin'){
+      this.router.navigate(['/adminlogin']);
+    }
+    else{
+      this.router.navigate(['/adminsignup']);
     }
   }
 }

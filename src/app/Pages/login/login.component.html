@@ -1,6 +1,6 @@
 <div class="container">
   <div class="login-container">
-    <form (ngSubmit)="onLogin()">  <!-- ✅ Correct event binding -->
+    <form (ngSubmit)="onSubmit()">  <!-- ✅ Correct event binding -->
       <input type="text" name="email" placeholder="Enter Email" [(ngModel)]="email" required />
       <input type="password" name="password" placeholder="Password" [(ngModel)]="password" required />
 
