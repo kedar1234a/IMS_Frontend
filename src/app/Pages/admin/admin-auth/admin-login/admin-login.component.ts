@@ -11,7 +11,17 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class AdminLoginComponent {
   constructor(private router:Router){}
-  OnLogin(){
-    this.router.navigate(['/admin_dashboard'])
+  username = '';
+  password = '';
+  OnAdminLogin(){
+    const uname = 'Admin';
+    const password = 'admin';
+    if(uname === this.username && password === this.password){
+      alert("Admin Login Verfied");
+      this.router.navigate(['/adminDashboard'])
+    }
+    else{
+      alert("Login Failed");
+    }
   }
 }

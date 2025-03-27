@@ -1,9 +1,9 @@
 <div class="container">
   <div class="login-container">
     <h1>Admin Login</h1>
-    <form (ngSubmit)="OnLogin()">  <!-- ✅ Correct event binding -->
-      <input type="text" name="email" placeholder="Enter Admin Username" required />
-      <input type="password" name="password" placeholder="Password" required />
+    <form (ngSubmit)="OnAdminLogin()">  <!-- ✅ Correct event binding -->
+      <input type="text" name="email" placeholder="Enter Admin Username" [(ngModel)]= "username" required />
+      <input type="password" name="password" placeholder="Password" [(ngModel)]= "password" required />
 
       <button type="submit" id="login-btn">LogIn</button>
     </form>

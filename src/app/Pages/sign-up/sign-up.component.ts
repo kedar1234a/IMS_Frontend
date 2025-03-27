@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { SignupService } from '../../Services/signup.service';
-import { signup_data } from '../../model/signup-data';
+import { AuthenticationService } from '../../Services/AuthenticationService/authentication.service';
+import { authData } from '../../model/auth-data';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,7 +13,7 @@ import { signup_data } from '../../model/signup-data';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
-  signupData: signup_data = {
+  signupData: authData = {
     full_name: '',
     email: '',
     store_type: '',
@@ -22,7 +22,7 @@ export class SignUpComponent {
   };
   confirm_password = '';
 
-  constructor(private signup_service: SignupService, private router: Router) {}
+  constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   OnSignUp() {
     if (
@@ -34,7 +34,7 @@ export class SignUpComponent {
     ) {
       if (this.signupData.password === this.confirm_password) {
         // Call the signup service to send data to backend
-        this.signup_service.storeSignupDetails(this.signupData).subscribe(
+        this.authenticationService.storeSignupDetails(this.signupData).subscribe(
           (response) => {
             alert('SignUp Successful');
             this.router.navigate(['/login']); // Redirect to login page
