@@ -52,4 +52,10 @@ export const routes: Routes = [
     pathMatch:'full',
     loadComponent: () => {return import('./Pages/Store/store-dashboard/store-dashboard.component').then((m)=> m.StoreDashboardComponent)},
   },
+
+  {
+    path:'products',
+    pathMatch:'full',
+    loadComponent: () => {return import('./Pages/products/products.component').then((m)=> m.ProductComponent)},
+  },
   ];

@@ -17,7 +17,6 @@ export class SignUpComponent {
     full_name: '',
     email: '',
     store_type: '',
-    role: '',
     password: '',
   };
   confirm_password = '';
@@ -29,7 +28,6 @@ export class SignUpComponent {
       this.signupData.full_name &&
       this.signupData.email &&
       this.signupData.password &&
-      this.signupData.role &&
       this.signupData.store_type
     ) {
       if (this.signupData.password === this.confirm_password) {
@@ -44,7 +42,6 @@ export class SignUpComponent {
               full_name: '',
               email: '',
               store_type: '',
-              role: '',
               password: '',
             };
             this.confirm_password = '';
