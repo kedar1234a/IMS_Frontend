@@ -1,4 +1,9 @@
 import { Routes } from '@angular/router';
+import { DashboardComponent } from './Pages/Store/store-dashboard/dashboard.component';
+import { authgardGuard } from './authgard.guard';
+import { StoreHomeComponent } from './Pages/Store/store-home/store-home.component';
+import { HomeComponent } from './Pages/Store/aside-secssion/home/home.component';
+import { ProductComponent } from './Pages/Store/aside-secssion/product/product.component';
 
 export const routes: Routes = [
   
@@ -47,15 +52,7 @@ export const routes: Routes = [
     pathMatch:'full',
     loadComponent: () => {return import('./Pages/Store/store-home/store-home.component').then((m)=> m.StoreHomeComponent)},
   },
-  {
-    path:'storeDashboard',
-    pathMatch:'full',
-    loadComponent: () => {return import('./Pages/Store/store-dashboard/store-dashboard.component').then((m)=> m.StoreDashboardComponent)},
-  },
-
-  {
-    path:'products',
-    pathMatch:'full',
-    loadComponent: () => {return import('./Pages/products/products.component').then((m)=> m.ProductComponent)},
-  },
+  { path: 'dashboard', component:DashboardComponent},
+  { path: 'home', component:HomeComponent, outlet: 'outlet2' },
+  { path: 'product', component:ProductComponent, outlet: 'outlet2'}
   ];

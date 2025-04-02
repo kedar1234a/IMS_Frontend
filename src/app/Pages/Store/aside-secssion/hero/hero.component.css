@@ -1,0 +1,28 @@
+.header {
+    width: 70%;
+    height: 160px;
+    position: absolute;
+    left: 25%;
+    margin-top: 5px;
+    background:#f3f0e5;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.create-btn {
+    background: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.hero_image{
+    position: relative;
+    top: -90px;
+   
+    height: 200px;
+    float: right;
+}

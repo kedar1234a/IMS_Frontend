@@ -1,0 +1,46 @@
+<div class="container">
+  <h2>Product Management</h2>
+  <form [formGroup]="productForm" (submit)="saveProduct()" enctype="multipart/form-data">
+    <input type="hidden" formControlName="id">
+
+    <input type="text" formControlName="name" placeholder="Product Name" required>
+    
+    <input type="number" formControlName="price" placeholder="Price" required>
+    
+    <select formControlName="category" required>
+      <option value="" disabled selected>Select Category</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+    
+    
+    <input type="file" (change)="onFileSelected($event)" required>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of productsArray">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.category }}</td>
+        <td><img [src]="getImageUrl(product.imageUrl)" alt="{{ product.imageUrl }}" class="product-image"/></td>
+        <td>
+          <button (click)="editProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
