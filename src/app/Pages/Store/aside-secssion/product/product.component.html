@@ -1,17 +1,20 @@
 <div class="container">
   <h2>Product Management</h2>
-  <form [formGroup]="productForm" (submit)="saveProduct()" enctype="multipart/form-data">
-    <input type="hidden" formControlName="id">
 
-    <input type="text" formControlName="name" placeholder="Product Name" required>
+  <form [formGroup]="productForm" (submit)="saveProduct()" enctype="multipart/form-data">
     
-    <input type="number" formControlName="price" placeholder="Price" required>
+    <input type="text" formControlName="product_name" placeholder="Product Name" required>
     
-    <select formControlName="category" required>
+    <input type="number" formControlName="product_price" placeholder="Price" required>
+    
+    <select formControlName="product_category" required>
       <option value="" disabled selected>Select Category</option>
       <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
     </select>
-    
+
+    <input type="number" formControlName="product_available_stock_quantity" placeholder="Stock Quantity" required>
+
+    <textarea formControlName="product_description" placeholder="Product Description"></textarea>
     
     <input type="file" (change)="onFileSelected($event)" required>
 
@@ -25,21 +28,24 @@
         <th>Name</th>
         <th>Price</th>
         <th>Category</th>
+        <th>Stock</th>
+        <th>Description</th>
         <th>Image</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let product of productsArray">
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.price }}</td>
-        <td>{{ product.category }}</td>
-        <td>{{ product.stock}}</td>
-        <td><img [src]="getImageUrl(product.imageUrl)" alt="{{ product.imageUrl }}" class="product-image"/></td>
+        <td>{{ product.product_id }}</td>
+        <td>{{ product.product_name }}</td>
+        <td>{{ product.product_price }}</td>
+        <td>{{ product.product_category }}</td>
+        <td>{{ product.product_available_stock_quantity }}</td>
+        <td>{{ product.product_description }}</td>
+        <td><img [src]="getImageUrl(product.product_id)" alt="Product Image" class="product-image"/></td>
         <td>
           <button (click)="editProduct(product)">Edit</button>
-          <button (click)="deleteProduct(product.id)">Delete</button>
+          <button (click)="deleteProduct(product.product_id)">Delete</button>
         </td>
       </tr>
     </tbody>

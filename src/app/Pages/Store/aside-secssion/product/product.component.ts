@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-import { HttpEventType } from '@angular/common/http';
 import { ProductService } from '../../../../Services/productServices/product-service.service';
 
 @Component({
@@ -13,23 +11,21 @@ import { ProductService } from '../../../../Services/productServices/product-ser
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-
   categories: string[] = ['Electronics', 'Clothing', 'Furniture', 'Books', 'Toys'];
-
 
   productForm!: FormGroup;
   productsArray: any[] = [];
   selectedFile: File | null = null;
-  uploadProgress: number = 0;
 
   constructor(private fb: FormBuilder, private productService: ProductService) {}
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
-      id: [''],
-      name: [''],
-      price: [''],
-      category: ['']
+      product_name: [''],
+      product_price: [''],
+      product_category: [''],
+      product_available_stock_quantity: [''],
+      product_description: ['']
     });
 
     this.loadProducts();
@@ -40,36 +36,32 @@ export class ProductComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-    }
+    this.selectedFile = event.target.files[0];
   }
 
   saveProduct(): void {
-    const formData = new FormData();
-    formData.append('id', this.productForm.get('id')?.value);
-    formData.append('name', this.productForm.get('name')?.value);
-    formData.append('price', this.productForm.get('price')?.value);
-    formData.append('category', this.productForm.get('category')?.value);
-
-    if (this.selectedFile) {
-      formData.append('file', this.selectedFile);
+    if (!this.selectedFile) {
+      alert('Please select an image!');
+      return;
     }
 
-    this.productService.addProduct(formData).subscribe({
-      next: (event) => {
-        
-          console.log('Product saved:', event.body);
-          this.loadProducts();
-          this.productForm.reset();
-          this.selectedFile = null;
-         
-        
+    const productData = {
+      product_name: this.productForm.get('product_name')?.value,
+      product_price: this.productForm.get('product_price')?.value,
+      product_category: this.productForm.get('product_category')?.value,
+      product_available_stock_quantity: this.productForm.get('product_available_stock_quantity')?.value,
+      product_description: this.productForm.get('product_description')?.value
+    };
+
+    this.productService.addProduct(productData, this.selectedFile).subscribe({
+      next: (response) => {
+        console.log('Product saved:', response);
+        this.loadProducts();
+        this.productForm.reset();
+        this.selectedFile = null;
       },
       error: (err) => {
         console.error('Error saving product:', err);
-       
       }
     });
   }
@@ -90,16 +82,20 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(id: number): void {
+    if (!confirm('Are you sure you want to delete this product?')) return;
+  
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         console.log('Product deleted');
-        this.loadProducts();
+  
+        // ✅ Remove deleted product from the array instantly
+        this.productsArray = this.productsArray.filter(product => product.id !== id);
       },
       error: (err) => {
         console.error('Error deleting product:', err);
+        alert('Failed to delete the product. Please try again.');
       }
     });
   }
-
-
+  
 }
