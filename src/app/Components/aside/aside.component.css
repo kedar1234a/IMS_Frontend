@@ -21,10 +21,14 @@
     padding: 10px;
     cursor: pointer;
     color: #555;
+    border-radius: 10px;
+    transition: all .15s ease-in-out;
 }
-
+.sidebar ul li:hover{
+  background: #c4e5c4;
+}
 .sidebar ul li.active {
-    background: #c4e5c4;
+    background: #72df72;
     font-weight: bold;
 }
 

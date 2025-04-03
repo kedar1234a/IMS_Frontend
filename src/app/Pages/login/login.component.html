@@ -1,11 +1,40 @@
 <div class="container">
   <div class="login-container">
-    <form (ngSubmit)="onSubmit()">  <!-- ✅ Correct event binding -->
-      <input type="text" name="email" placeholder="Enter Email" [(ngModel)]="email" required />
-      <input type="password" name="password" placeholder="Password" [(ngModel)]="password" required />
-
-      <button type="submit" id="login-btn">LogIn</button>
-    </form>
-    <p>Didn't Register? <span id="signup-page" routerLink="/signup">Register Here</span></p>
+    <div class="login-left-container">
+      <img
+        src="../../../assets/signin.png"
+        alt="This is Image"
+        width="350px"
+      />
+    </div>
+    <div class="login-right-container">
+      <div class="title">
+        <h3>Welcome Back!</h3>
+        <p> Sign in to manage your Inventory.</p>
+        
+      </div>
+      <div class="login-form">
+        <form (ngSubmit)="onSubmit()">
+          <input
+            type="text"
+            name="email"
+            placeholder="Enter Email"
+            [(ngModel)]="email"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            [(ngModel)]="password"
+            required
+          />
+          <button type="submit" id="login-btn">Log In</button>
+          <p>
+            Didn't Register?<a id="signup-page" routerLink="/signup">Register Here</a>
+          </p>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

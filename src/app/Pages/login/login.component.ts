@@ -22,7 +22,7 @@ export class LoginComponent {
       next: (response) => {
         console.log('Response from backend:', response);      
         alert('Login Successful');
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/storeHome']);
         // Ensure store_type is valid
         
       }, // Closing brace added here

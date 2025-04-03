@@ -1,12 +1,11 @@
 <div class="container">
   <div class="login-container">
     <h1>Admin Login</h1>
-    <form (ngSubmit)="OnAdminLogin()">  <!-- ✅ Correct event binding -->
-      <input type="text" name="email" placeholder="Enter Admin Username" [(ngModel)]= "username" required />
-      <input type="password" name="password" placeholder="Password" [(ngModel)]= "password" required />
+    <form (ngSubmit)="OnAdminLogin()">  
+      <input type="text" name="email" placeholder="Admin Username" [(ngModel)]= "username" required />
+      <input type="password" name="password" placeholder="Admin Password" [(ngModel)]= "password" required />
 
       <button type="submit" id="login-btn">LogIn</button>
     </form>
-    <p>Didn't Register? <span id="signup-page" routerLink="/adminsignup">Register Admin</span></p>
   </div>
 </div>

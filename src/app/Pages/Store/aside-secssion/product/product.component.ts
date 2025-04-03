@@ -55,7 +55,7 @@ export class ProductComponent implements OnInit {
 
     this.productService.addProduct(productData, this.selectedFile).subscribe({
       next: (response) => {
-        console.log('Product saved:', response);
+        alert(response.message);
         this.loadProducts();
         this.productForm.reset();
         this.selectedFile = null;
@@ -78,6 +78,9 @@ export class ProductComponent implements OnInit {
   }
 
   editProduct(product: any): void {
+    this.loadProducts();
+    this.productForm.reset();
+    this.selectedFile = null;
     this.productForm.patchValue(product);
   }
 
@@ -86,10 +89,14 @@ export class ProductComponent implements OnInit {
   
     this.productService.deleteProduct(id).subscribe({
       next: () => {
-        console.log('Product deleted');
+        alert('Product deleted SuccessFully');
   
         // ✅ Remove deleted product from the array instantly
         this.productsArray = this.productsArray.filter(product => product.id !== id);
+        this.loadProducts();
+        this.productForm.reset();
+        this.selectedFile = null; 
+        
       },
       error: (err) => {
         console.error('Error deleting product:', err);
