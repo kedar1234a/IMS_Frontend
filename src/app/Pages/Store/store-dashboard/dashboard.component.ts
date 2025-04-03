@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AsideComponent } from '../../../Components/aside/aside.component';
-import { NavbarComponent } from '../../../Components/navbar/store-nav/navbar.component';
+import { StoreNavComponent } from "../../../Components/navbar/store-nav/store-nav.component";
+import { DashboardNavComponent } from '../../../Components/navbar/dashboard-nav/dashboard-nav.component';
 
 
 
@@ -11,7 +12,7 @@ import { NavbarComponent } from '../../../Components/navbar/store-nav/navbar.com
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AsideComponent,NavbarComponent],
+  imports: [AsideComponent,DashboardNavComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
@@ -21,7 +22,7 @@ export class DashboardComponent implements OnInit{
 
   ngOnInit(): void {
     
-      this.router.navigate([{ outlets: { outlet2: ['home'] } }]);
+      this.router.navigate([{ outlets: { outlet2: ['dashboardHome'] } }]);
     
   }
 

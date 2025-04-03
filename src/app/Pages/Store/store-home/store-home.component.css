@@ -12,8 +12,8 @@
 
 
 #banner_img{
-  height: 435px;
-  width: 435px;
+  height: 450px;
+  width: 550px;
   /* border: 1px solid blue; */
   margin-left: 150px;
   
@@ -36,17 +36,3 @@
   margin-top: 10px;
 }
 
-.featured-categories{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5em 3em;
-}
-.featured-categories-title{
-  font-size: 2em;
-  font-weight: 500;
-}
-.see-more{ 
-  font-size: 1.2em;
-  border-bottom: 3px solid black ;
-}
