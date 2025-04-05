@@ -9,11 +9,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './dashboard-nav.component.css',
 })
 export class DashboardNavComponent {
-  // storedUser = localStorage.getItem('name');
-  // uname: any = this.storedUser;
-  // logout() {
-  //   if (localStorage.getItem('username')) {
-  //     localStorage.removeItem('username');
-  //   }
-  // }
+  storedUser = localStorage.getItem('name');
+  uname: any = this.storedUser;
+  logout() {
+    if (localStorage.getItem('username')) {
+      localStorage.removeItem('username');
+    }
+  }
 }

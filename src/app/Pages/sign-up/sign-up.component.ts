@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../Services/AuthenticationService/authentication.service';
 import { authData } from '../../model/auth-data';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink,CommonModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })

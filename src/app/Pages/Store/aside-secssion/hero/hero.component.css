@@ -1,28 +1,33 @@
 .header {
     width: 70%;
-    height: 160px;
+    height: 200px;
     position: absolute;
     left: 25%;
-    margin-top: 5px;
-    background:#f3f0e5;
+    margin-top: 20px;
+    background:#CAFAFF;
     padding: 20px;
     border-radius: 10px;
     text-align: left;
+    box-shadow:0 0 10px rgba(52, 52, 52, 0.242);
 }
 
 .create-btn {
-    background: green;
+    background: #00E5FF;
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
     margin-top: 10px;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
 }
 
 .hero_image{
     position: relative;
-    top: -90px;
-   
-    height: 200px;
+    top: -80px;
+    right: 30px;
+    /* height: 200px; */
+    filter: brightness(105%);
     float: right;
 }

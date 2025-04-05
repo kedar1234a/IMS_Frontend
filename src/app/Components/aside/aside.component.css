@@ -3,7 +3,7 @@
     position: absolute;
     margin-top: 80px;
     width: 20%;
-    background: #e9f5e9;
+    background: #CAFAFF;
     height: 100vh;
     padding: 20px;
 }
@@ -20,22 +20,22 @@
 .sidebar ul li {
     padding: 10px;
     cursor: pointer;
-    color: #555;
+    color: #000;
     border-radius: 10px;
     transition: all .15s ease-in-out;
 }
 .sidebar ul li:hover{
-  background: #c4e5c4;
+  background: #b9ecf2;
 }
 .sidebar ul li.active {
-    background: #72df72;
-    font-weight: bold;
+    background: #00E5FF;
+    font-weight: 600;
 }
 
 .active {
-    background-color: #007bff;
+    background-color: #00E5FF;
     color: white;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 

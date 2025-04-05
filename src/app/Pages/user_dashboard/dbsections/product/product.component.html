@@ -1,0 +1,73 @@
+<div class="container">
+  <h2>Product Management</h2>
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()" enctype="multipart/form-data">
+    
+    <!-- Hidden ID -->
+    <input type="hidden" formControlName="id">
+
+    <!-- Product Name -->
+    <input type="text" formControlName="name" placeholder="Product Name" required>
+
+    <!-- Price -->
+    <input type="number" formControlName="price" placeholder="Price" required>
+
+    <!-- Category -->
+    <select formControlName="category" required>
+      <option value="" disabled>Select Category</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+
+    <!-- Stock -->
+    <input type="number" formControlName="stock" placeholder="Stock" required>
+
+    <!-- Description -->
+    <textarea formControlName="description" placeholder="Description" required></textarea>
+
+    <!-- Image File -->
+    <input type="file" (change)="onFileSelected($event)" required>
+
+    <!-- Action Buttons -->
+    <button type="submit">{{ isEditing ? 'Update' : 'Add' }} Product</button>
+    <button type="button" (click)="resetForm()" *ngIf="isEditing">Cancel</button>
+  </form>
+
+  <!-- Products Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Stock</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of productsArray">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{product.stock}}</td>
+        <td>{{product.description}}</td>
+        <td>
+          <img 
+            *ngIf="product.imageUrl"
+            [src]="getImageUrl(product.imageUrl)" 
+            [alt]="product.name" 
+            class="product-image"
+            width="50" 
+            height="50"
+          />
+        </td>
+        <td>
+          <button (click)="editProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

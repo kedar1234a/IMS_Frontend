@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../Services/AuthenticationService/authentication.service';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,7 +16,6 @@ export class LoginComponent {
   password = '';
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
-
   onSubmit() {
     this.authenticationService.login(this.email, this.password).subscribe({
       next: (response) => {

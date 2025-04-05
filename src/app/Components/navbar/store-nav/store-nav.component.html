@@ -1,23 +1,28 @@
-<div id="navbar">
-  <div id="logo"> Logo</div>
-  <div id="input"> <input type="search"  placeholder="Search..." id="search_bar">
-  </div>
-  <div id="box">
-     <div id="Addtocart"> Add to cart</div>
-     <div id="basket"><img src="../../../../assets/cart.png" id="cart"></div>
+<div id="nav-container">
+  <div id="navbar">
+    <div id="logo">
+      <img src="../../../../assets/inventory-30.png" alt="Inventory Logo">
+      <h5>IMS</h5>
+    </div>
+    
+    <div id="input">
+      <img src="../../../../assets/search.png" width="30" height="30" id="search-logo">
+      <input type="search" placeholder="Search..." id="search_bar">
+    </div>
+    
+    <div id="box">
+      <div id="Addtocart">Add to cart</div>
+      <div id="basket">
+        <img src="../../../../assets/cart.png" id="cart" alt="Cart">
+      </div>
+    </div>
   </div>
 
-</div>
-
-<!--navbar starts  -->
-<div id="nav">
-  <ul>
+  <div id="nav">
+    <ul>
       <li routerLink="/storeHome">Home</li>
-      <!-- <li>About us</li>
-      <li>Categories</li>
-      <li>Store</li> -->
       <li routerLink="/dashboard">Dashboard</li>
-      <li routerLink="/login">Logout</li>
-  </ul>
+      <li routerLink="/">Log Out</li>
+    </ul>
+  </div>
 </div>
-<!-- navbar ends -->

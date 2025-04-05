@@ -4,7 +4,14 @@
   padding: 0;
   font-family: "Poppins", sans-serif;
 }
-*::selection{
-  background-color: #1e1e1e;
-  color:  #C6ECF0;
+html{
+  scroll-behavior: smooth;
+}
+/* *::selection{
+  color: #FFFFFF;
+  background-color:  #333;
+} */
+html, body {
+  margin: 0;
+  padding: 0;
 }

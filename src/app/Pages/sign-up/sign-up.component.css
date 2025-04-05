@@ -1,24 +1,25 @@
+
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: #f0f8ff;
+  justify-content: center;
+  align-items: center;
+  background-color: #cafaff;  
 }
 
-/* Main signup container */
+/* Main login container */
 .signup-container {
   display: flex;
   align-items: center;
-  width: auto; 
-  padding: 2.5em 3.5em;
-  gap: 4em;
+  width: auto; /* Adjust dynamically */
+  padding: 3em 4em;
   justify-content: space-between;
   background-color: #cafaff;
   border: 2px solid #0bd9b3;
   border-radius: 12px;
   transition: width 0.3s ease-in-out;
+  box-shadow: 0 0px 20px rgba(53, 53, 53, 0.256);
 }
 
 /* Left and right containers */
@@ -43,7 +44,7 @@
 .signup-form form {
   display: flex;
   flex-direction: column;
-  gap: 1em; 
+  gap: .5em; 
 }
 
 /* Input fields and button */
@@ -147,4 +148,14 @@ select {
 
 .signup-footer a:hover::after {
   width: 100%;
+}
+
+.signup-alert{
+  font-size: .8em;
+  margin-left: 10px;
+  color: red;
+}
+.signup-alert ul{
+  text-decoration: none;
+  list-style: none;
 }
