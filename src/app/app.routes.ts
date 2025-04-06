@@ -71,14 +71,18 @@ export const routes: Routes = [
 
   // <--------------------- Store Routes --------------------->
   {
-    path: 'storeHome',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import('./Pages/Store/store-home/store-home.component').then(
-        (m) => m.StoreHomeComponent
-      );
-    },
+    path:'storeHome',
+    component: StoreHomeComponent
   },
+  // {
+  //   path: 'storeHome',
+  //   pathMatch: 'full',
+  //   loadComponent: () => {
+  //     return import('./Pages/Store/store-home/store-home.component').then(
+  //       (m) => m.StoreHomeComponent
+  //     );
+  //   },
+  // },
   {
     path: 'dashboard',
     pathMatch: 'full',

@@ -14,21 +14,26 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   email = '';
   password = '';
+  showPassword = false;
 
   constructor(private authenticationService: AuthenticationService, private router: Router) {}
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   onSubmit() {
     this.authenticationService.login(this.email, this.password).subscribe({
       next: (response) => {
         console.log('Response from backend:', response);      
         alert('Login Successful');
         this.router.navigate(['/storeHome']);
-        // Ensure store_type is valid
-        
-      }, // Closing brace added here
+      },
       error: (error) => {
         console.error('Login failed:', error);
         alert('Invalid email or password. Try again.');
       }
     });
   }
+  
 }

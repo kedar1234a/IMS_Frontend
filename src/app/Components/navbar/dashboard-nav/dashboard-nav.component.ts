@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-nav',
@@ -11,9 +11,15 @@ import { RouterLink } from '@angular/router';
 export class DashboardNavComponent {
   storedUser = localStorage.getItem('name');
   uname: any = this.storedUser;
+  constructor(private router:Router){}
   logout() {
     if (localStorage.getItem('username')) {
       localStorage.removeItem('username');
     }
+  }
+  storeHome(){
+    this.router.navigate(
+      [{ outlets: { primary: ['storeHome'], outlet2: null } }]
+    );
   }
 }

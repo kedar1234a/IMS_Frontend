@@ -21,10 +21,7 @@
             #fullName="ngModel"
             required
           />
-          <div
-            class="signup-alert"
-            *ngIf="fullName.touched && fullName.invalid"
-          >
+          <div class="signup-alert" *ngIf="fullName.touched && fullName.invalid">
             <small>Name is required.</small>
           </div>
 
@@ -55,34 +52,31 @@
             <option value="electronics">Electronics</option>
             <option value="hardware">Hardware</option>
           </select>
-          <div
-            class="signup-alert"
-            *ngIf="storeType.touched && storeType.invalid"
-          >
+          <div class="signup-alert" *ngIf="storeType.touched && storeType.invalid">
             <small>Store type is required.</small>
           </div>
 
           <!-- Password -->
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            [(ngModel)]="signupData.password"
-            #password="ngModel"
-            required
-            pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-          />
-
-          <div
-            class="signup-alert"
-            *ngIf="password.touched && password.errors?.['required']"
-          >
+          <div class="password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              placeholder="Password"
+              [(ngModel)]="signupData.password"
+              #password="ngModel"
+              required
+              pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            />
+            <i
+              class="toggle-password fa"
+              [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+              (click)="togglePasswordVisibility()"
+            ></i>
+          </div>
+          <div class="signup-alert" *ngIf="password.touched && password.errors?.['required']">
             <small>Password is required.</small>
           </div>
-          <div
-            class="signup-alert"
-            *ngIf="password.touched && password.errors?.['pattern']"
-          >
+          <div class="signup-alert" *ngIf="password.touched && password.errors?.['pattern']">
             <small>
               Password must contain:
               <ul>
@@ -94,18 +88,22 @@
           </div>
 
           <!-- Confirm Password -->
-          <input
-            type="password"
-            name="confirm_password"
-            placeholder="Confirm Password"
-            [(ngModel)]="confirm_password"
-            #confirmPwd="ngModel"
-            required
-          />
-          <div
-            class="signup-alert"
-            *ngIf="confirmPwd.touched && confirmPwd.errors?.['required']"
-          >
+          <div class="password-wrapper">
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              name="confirm_password"
+              placeholder="Confirm Password"
+              [(ngModel)]="confirm_password"
+              #confirmPwd="ngModel"
+              required
+            />
+            <i
+              class="toggle-password fa"
+              [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'"
+              (click)="toggleConfirmPasswordVisibility()"
+            ></i>
+          </div>
+          <div class="signup-alert" *ngIf="confirmPwd.touched && confirmPwd.errors?.['required']">
             <small>Confirm password is required.</small>
           </div>
           <div

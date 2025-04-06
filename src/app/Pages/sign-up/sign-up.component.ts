@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../Services/AuthenticationService/authentication.service';
 import { authData } from '../../model/auth-data';
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, RouterLink,CommonModule],
+  imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
@@ -20,9 +20,16 @@ export class SignUpComponent {
     store_type: '',
     password: '',
   };
+
   confirm_password = '';
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  showPassword = false;
+  showConfirmPassword = false;
+
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
 
   OnSignUp() {
     if (
@@ -32,13 +39,12 @@ export class SignUpComponent {
       this.signupData.store_type
     ) {
       if (this.signupData.password === this.confirm_password) {
-        // Call the signup service to send data to backend
         this.authenticationService.storeSignupDetails(this.signupData).subscribe(
           (response) => {
             alert('SignUp Successful');
-            this.router.navigate(['/login']); // Redirect to login page
+            this.router.navigate(['/login']);
 
-            // Reset form fields after successful signup
+            // Reset form fields
             this.signupData = {
               full_name: '',
               email: '',
@@ -58,5 +64,13 @@ export class SignUpComponent {
     } else {
       alert('Invalid Credentials');
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }

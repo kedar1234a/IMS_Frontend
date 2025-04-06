@@ -152,6 +152,34 @@ input{
 #register{
 margin: .5em 0;
 }
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for icon */
+  height: 6vh;
+  padding-left: 10px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  color: #666;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.toggle-password:hover {
+  /* transform: scale(1.2); */
+  color: #000;
+}
+
 /* Media Queries for Responsiveness */
 /* @media (max-width: 1024px) {
   .login-container {

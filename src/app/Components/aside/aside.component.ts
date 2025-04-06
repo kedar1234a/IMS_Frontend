@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './aside.component.css',
 })
 export class AsideComponent {
-  activeItem: string = ''; // Stores the active menu item
+  activeItem: string = 'Dashboard'; // Stores the active menu item
 
   constructor(private router: Router) {}
 

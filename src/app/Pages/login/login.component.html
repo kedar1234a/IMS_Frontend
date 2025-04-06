@@ -11,7 +11,6 @@
       <div class="title">
         <h3>Welcome Back!</h3>
         <p> Sign in to manage your Inventory.</p>
-        
       </div>
       <div class="login-form">
         <form (ngSubmit)="onSubmit()">
@@ -22,16 +21,26 @@
             [(ngModel)]="email"
             required
           />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            [(ngModel)]="password"
-            required
-          />
+
+          <div class="password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              placeholder="Password"
+              [(ngModel)]="password"
+              required
+            />
+            <i
+              class="toggle-password fa"
+              [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+              (click)="togglePasswordVisibility()"
+            ></i>
+          </div>
+          
           <button type="submit" id="login-btn">Log In</button>
           <p id="register">
-            Didn't Register?<a id="signup-page" routerLink="/signup">Register Here</a>
+            Didn't Register?
+            <a id="signup-page" routerLink="/signup">Register Here</a>
           </p>
         </form>
       </div>

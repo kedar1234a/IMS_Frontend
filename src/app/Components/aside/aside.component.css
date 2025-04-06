@@ -1,11 +1,13 @@
 /* -----------------------Side Bar --------------------- */
 .sidebar {
-    position: absolute;
+    position: fixed;
     margin-top: 80px;
     width: 20%;
     background: #CAFAFF;
     height: 100vh;
     padding: 20px;
+    top: 0px;
+    border-radius: 10px;
 }
 
 .sidebar h2 {
