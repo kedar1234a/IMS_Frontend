@@ -14,8 +14,13 @@
 }
 
 /* Headings */
-h1, h3 {
+h1 {
   text-align: center;
+  color: #333;
+}
+
+h3{
+  text-align: left;
   color: #333;
 }
 
@@ -113,5 +118,6 @@ button {
   border-radius: 8px;
   background-color: #fff;
 }
+
 
 
