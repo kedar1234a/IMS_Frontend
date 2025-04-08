@@ -1,0 +1,96 @@
+<div id="invoice" class="container" *ngIf="!showPDF">
+  <h1>Invoice</h1>
+
+  <div class="row">
+    <!-- Add Products Section -->
+    <div class="col-sm-8">
+      <h3>Add Products</h3>
+      <table class="table">
+        <tr>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Amount</th>
+          <th>Option</th>
+        </tr>
+        <tr>
+          <td><input type="text" placeholder="Item Name" [(ngModel)]="name" /></td>
+          <td><input type="text" placeholder="Enter Price" [(ngModel)]="price" (input)="calculateTotal(price, qty)" />
+          </td>
+          <td><input type="number" placeholder="Enter Qty" [(ngModel)]="qty" (input)="calculateTotal(price, qty)" />
+          </td>
+          <td><input type="text" [value]="sum" disabled /></td>
+          <td><button class="btn-success" (click)="addProduct()">Add</button></td>
+        </tr>
+
+      </table>
+      <!--Show product section-->
+
+      <div class="showProductSection">
+        <h3>Products</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.name }}</td>
+              <td>{{ user.price }}</td>
+              <td>{{ user.qty }}</td>
+              <td>{{ user.sum }}</td>
+            </tr>
+          </tbody>
+          <thead>
+            <tr>
+              <th>Total</th>
+              <th></th>
+              <th></th>
+              <th><input type="text" [value]="total" disabled /></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Total Section -->
+    <div class="totalSection">
+      <button class="btn-success" (click)="refreshPage()">Complete</button>
+      <button class="btn-success" (click)="downloadPDF()">Download Invoice PDF</button>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- 
+<div class="pdfView">
+
+ 
+  <div *ngIf="!showPDF">
+    <br />
+    <button class="btn-primary" (click)="showPDFPreview()">Preview PDF</button>
+  </div>
+
+
+  <div *ngIf="showPDF">
+    <h3>PDF Preview</h3>
+    <iframe [src]="pdfUrl" width="100%" height="600px"></iframe>
+  </div>
+</div>
+ -->
+
+

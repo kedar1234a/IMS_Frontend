@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './Pages/Store/store-dashboard/dashboard.component';
 import { authgardGuard } from './authgard.guard';
 import { StoreHomeComponent } from './Pages/Store/store-home/store-home.component';
 import { HomeComponent } from './Pages/Store/aside-secssion/home/home.component';
 import { ProductComponent } from './Pages/Store/aside-secssion/product/product.component';
+import { UserdashboardComponent } from './UserDashboard/userdashboard/userdashboard.component';
+import { BillingComponent } from './UserDashboard/Sections/billing/billing.component';
 
 export const routes: Routes = [
   {
@@ -74,42 +75,14 @@ export const routes: Routes = [
     path:'storeHome',
     component: StoreHomeComponent
   },
-  // {
-  //   path: 'storeHome',
-  //   pathMatch: 'full',
-  //   loadComponent: () => {
-  //     return import('./Pages/Store/store-home/store-home.component').then(
-  //       (m) => m.StoreHomeComponent
-  //     );
-  //   },
-  // },
   {
-    path: 'dashboard',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import('./Pages/Store/store-dashboard/dashboard.component').then(
-        (m) => m.DashboardComponent
-      );
-    },
-  },
-  {
-    path: 'dashboardHome',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import('./Pages/Store/aside-secssion/home/home.component').then(
-        (m) => m.HomeComponent
-      );
-    },
+    path: 'dashboardHome',component: HomeComponent,
     outlet: 'outlet2',
   },
   {
-    path: 'product',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Store/aside-secssion/product/product.component'
-      ).then((m) => m.ProductComponent);
-    },
+    path: 'product',component:ProductComponent,
     outlet: 'outlet2',
   },
+  {path:'userdashboard', component:UserdashboardComponent},
+  {path:'billing', component:BillingComponent,outlet: 'outlet2'}
 ];
