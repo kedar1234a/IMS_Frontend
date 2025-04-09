@@ -53,14 +53,29 @@
               <td>{{ user.sum }}</td>
             </tr>
           </tbody>
-          <thead>
+          <tbody>
             <tr>
-              <th>Total</th>
+              <td>Total</td>
+              <td></td>
+              <td></td>
+              <td><input type="text" [value]="total | number:'1.2-2'" disabled /></td>
+            </tr>
+            <tr>
+              <td>GST (18%)</td>
+              <td></td>
+              <td></td>
+              <td><input type="text" [value]="gstAmount | number:'1.2-2'" disabled /></td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+              <th>Grand Total</th>
               <th></th>
               <th></th>
-              <th><input type="text" [value]="total" disabled /></th>
+              <th><input type="text" [value]="grandTotal | number:'1.2-2'" disabled /></th>
             </tr>
           </thead>
+          
         </table>
       </div>
 
