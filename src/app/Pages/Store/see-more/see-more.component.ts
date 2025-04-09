@@ -1,28 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FeaturedCategoriesCardComponent } from '../../../Components/cards/featured-categories-card/featured-categories-card.component';
-import { StoreNavComponent } from '../../../Components/navbar/store-nav/store-nav.component';
-import { LandingFooterComponent } from '../../../Components/footer/landing-footer/landing-footer.component';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { ProductService } from '../../../Services/productServices/product-service.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../../Services/productServices/product-service.service';
+import { RouterLink } from '@angular/router';
+import { StoreNavComponent } from '../../../Components/navbar/store-nav/store-nav.component';
 
 @Component({
-  selector: 'app-store-home',
+  selector: 'app-see-more',
   standalone: true,
-  imports: [
-    StoreNavComponent,
-    FeaturedCategoriesCardComponent,
-    LandingFooterComponent,
-    CommonModule,
-    RouterLink
-  ],
-  templateUrl: './store-home.component.html',
-  styleUrl: './store-home.component.css',
+  imports: [CommonModule,StoreNavComponent],
+  templateUrl: './see-more.component.html',
+  styleUrl: './see-more.component.css'
 })
-export class StoreHomeComponent implements OnInit {
+export class SeeMoreComponent implements OnInit{
   products: any[] = []; // Store fetched products
+  expandedIndex: number | null = null;
 
   constructor(private productService: ProductService) {}
+
   ngOnInit(): void {
     this.loadFeaturedProducts(); // Call function to fetch products
   }
@@ -43,5 +37,9 @@ export class StoreHomeComponent implements OnInit {
 
   getImageUrl(productId: number): string {
     return this.productService.getImageUrl(productId); // Get image URL
+  }
+
+  toggleDescription(index: number) {
+    this.expandedIndex = this.expandedIndex === index ? null : index;
   }
 }

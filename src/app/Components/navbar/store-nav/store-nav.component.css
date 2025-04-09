@@ -1,9 +1,9 @@
 #nav-container {
-
-  background-color: #84B7FF;
-  color: #FFF;
-  font-weight: 600;
+  background-color: #FFF;
+  color: #333;
+  font-weight: 500;
   font-size: 1.1em;
+  width: 100%;
 }
 
 #navbar {
@@ -94,7 +94,7 @@ li {
   position: relative;
   text-decoration: none;
   padding: 0.3em 0;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -105,8 +105,8 @@ li::after,
   left: 50%;
   bottom: 0;
   width: 0;
-  background-color: #FFF;
-  height: 3.5px;
+  background-color: #333;
+  height: 3px;
   transition: all 0.2s ease-in-out;
   transform: translateX(-50%);
 }

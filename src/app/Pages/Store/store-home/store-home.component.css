@@ -199,26 +199,25 @@
 
 .daily_sells_outer_box {
   text-align: justify;
-  padding: 0 1em;
+  padding: 1em;
   /* height: 325px; */
   width: 30em;
   background-color: #fafafa;
   border-radius: 10px;
   margin: 0 0 4em 4em;
-  padding: 0 2em;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-#oven_img {
-  height: 150px;
-  width: 230px;
+#oven_img,#fridge_img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #daily_sells_description {
-  font-family: poppins;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .daily_sells_txt {
@@ -227,11 +226,10 @@
 #img_description {
   width: 40%;
 }
-#fridge_img {
+/* #fridge_img {
   height: 280px;
   width: 140px;
-  /* border: 1px solid rgb(85, 184, 85); */
-}
+} */
 .mrp-tag {
   color: #828282;
   margin-left: 0.7em;

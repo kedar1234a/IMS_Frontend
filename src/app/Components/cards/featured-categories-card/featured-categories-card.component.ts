@@ -7,12 +7,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './featured-categories-card.component.html',
-  styleUrl: './featured-categories-card.component.css'
+  styleUrl: './featured-categories-card.component.css',
 })
 export class FeaturedCategoriesCardComponent implements OnInit {
   products: any[] = []; // Store fetched products
   expandedIndex: number | null = null;
-
 
   constructor(private productService: ProductService) {}
 
@@ -23,14 +22,14 @@ export class FeaturedCategoriesCardComponent implements OnInit {
   loadFeaturedProducts(): void {
     this.productService.getProducts().subscribe({
       next: (data) => {
-        this.products = data.map(product => ({
+        this.products = data.map((product) => ({
           ...product,
-          expanded: false // Add expanded property dynamically
+          expanded: false, // Add expanded property dynamically
         }));
       },
       error: (err) => {
         console.error('Error fetching products:', err);
-      }
+      },
     });
   }
 

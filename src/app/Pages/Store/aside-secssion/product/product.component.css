@@ -44,10 +44,6 @@ button {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-#edit-product:hover,
-#delete-product:hover {
-  transform: scale(1.3);
-}
 table {
   width: 100%;
   margin-top: 20px;
@@ -68,24 +64,6 @@ th {
 }
 tr:nth-child(even) {
   background: #f9f9f9;
-}
-.edit-btn {
-  margin: 0px 8px;
-  background: #ffc107;
-  color: white;
-}
-.edit-btn:hover {
-  margin: 0px 8px;
-  background: #e0a800;
-}
-.delete-btn {
-  margin: 0px 8px;
-  background: #dc3545;
-  color: white;
-}
-.delete-btn:hover {
-  margin: 0px 8px;
-  background: #c82333;
 }
 
 /* Image Styling */
@@ -113,8 +91,12 @@ form button {
 form button:hover {
   background-color: #00b8cc;
 }
-
 #search-product {
-  /* float: right; */
   width: 25em;
+}
+.action-btn{
+  transition: all .15s ease-in-out;
+}
+.action-btn:hover{
+  transform: scale(1.15);
 }

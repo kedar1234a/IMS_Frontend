@@ -1,7 +1,8 @@
 <div class="container">
   <h2>Product Management</h2>
-
-  <form [formGroup]="productForm" enctype="multipart/form-data">
+<!-- <div class="add-product-modal" *ngIf="isOpen"> -->
+<!-- </div> -->
+  <!-- <form [formGroup]="productForm" enctype="multipart/form-data">
     <input
       type="text"
       formControlName="product_name"
@@ -34,14 +35,14 @@
       formControlName="product_description"
       placeholder="Product Description"
       cols="30"
-     maxlength="200"
+      maxlength="200"
     ></textarea>
 
     <input type="file" (change)="onFileSelected($event)" required />
-    <button *ngIf="!editingProductId" (click)="saveProduct()" >Save</button>
+    <button *ngIf="!editingProductId" (click)="saveProduct()">Save</button>
     <button *ngIf="editingProductId" (click)="updateProduct()">Update</button>
-    <!-- 🔍 Search input field -->
-  </form>
+  </form> -->
+  <!-- 🔍 Search input field -->
   <input
     type="text"
     [(ngModel)]="searchTerm"
@@ -74,33 +75,40 @@
     </thead>
     <tbody>
       <!-- 👇 Use filtered array instead of full array -->
-      <tr *ngFor="let product of filteredProducts; let i =index">
-        <td>{{ i+1}}</td>
+      <tr *ngFor="let product of filteredProducts; let i = index">
+        <td>{{ i + 1 }}</td>
         <td>{{ product.product_name }}</td>
         <td id="product_description">{{ product.product_description }}</td>
         <td>{{ product.product_category }}</td>
         <td>{{ product.product_available_stock_quantity }}</td>
         <td>{{ product.product_price }}</td>
         <td>
-          <img [src]="product.imageUrl" class="product-image" alt="Product image"/>
-          
+          <img
+            [src]="product.imageUrl"
+            class="product-image"
+            alt="Product image"
+          />
         </td>
         <td id="action">
-          <button (click)="editProduct(product)" id="edit-product">
+          <button (click)="editProduct(product)" class="action-btn">
             <img
-            src="../../../../../assets/edit-black.png"
-            width="20px"
-            alt=""
+              src="../../../../../assets/edit-black.png"
+              width="20px"
+              alt=""
             />
           </button>
           <button
-          (click)="deleteProduct(product.product_id)"
-          id="delete-product"
+            (click)="deleteProduct(product.product_id)"
+            id="delete-product"
           >
-          <img src="../../../../../assets/delete-black.png" width="20px" />
-        </button>
-      </td>
-      <td>{{ product.product_id }}</td>
+            <img
+              src="../../../../../assets/delete-black.png"
+              width="20px"
+              class="action-btn"
+            />
+          </button>
+        </td>
+        <td>{{ product.product_id }}</td>
       </tr>
     </tbody>
   </table>

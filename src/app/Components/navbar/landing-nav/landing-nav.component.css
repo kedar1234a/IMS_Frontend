@@ -1,7 +1,7 @@
 #nav-container {
-  background-color: #84B7FF;
-  color: #FFF;
-  font-weight: 600;
+  background-color: #fff;
+  color: #333;
+  font-weight: 500;
   font-size: 1.1em;
 }
 
@@ -20,8 +20,8 @@
   align-items: center;
   justify-content: left;
   border-radius: 8px;
-  border: 2px solid #E6E6E6;
-  background-color: #FFF;
+  border: 2px solid #e6e6e6;
+  background-color: #fff;
   width: 350px;
 }
 
@@ -39,43 +39,27 @@
   width: 100%;
   padding: 0 10px 0 43px;
   color: #373737;
-  font-size: .9em;
+  font-size: 0.9em;
   font-weight: 500;
 }
-#search_bar::placeholder{
-  color: #A7A7A7;
-  font-weight: 400;
+#search_bar::placeholder {
+  color: #a7a7a7;
+  font-weight: 500;
 }
 #search_btn {
   width: 120px;
   height: 35px;
   margin-left: 5px;
 }
-#box{
+#box {
   /* border: 1px solid rgb(255, 0, 221); */
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 30px;
 }
-#Addtocart{
+#Addtocart {
   position: relative;
-}
-#box #Addtocart::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 0;
-  background-color: #FFFFFF;
-  height: 3.5px;
-  transition: all 0.2s ease-in-out;
-  transform: translateX(-50%);
-}
-
-#box #Addtocart:hover::after {
-  border-radius: 10px;
-  width: 100%;
 }
 
 #logo {
@@ -111,41 +95,56 @@ ul {
   /* padding-top: 10px; */
 }
 select {
-  color: #FFFFFF;
+  color: #333;
   background-color: transparent;
   border: none;
   font-size: 1em;
   outline: none;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.1em;
 }
-li{
+li {
   position: relative;
   text-decoration: none;
   padding: 0.3em 0;
-  font-weight: 600;
+  font-weight: 500;
 }
-
+#box #Addtocart::after,
 li::after {
   content: "";
   position: absolute;
   left: 50%;
   bottom: 0;
   width: 0;
-  background-color: #FFFFFF;
-  height: 3.5px;
+  background-color: #333;
+  height: 3px;
   transition: all 0.2s ease-in-out;
   transform: translateX(-50%);
 }
 
+#box #Addtocart:hover::after,
 li:hover::after {
   border-radius: 10px;
   width: 100%;
 }
-option{
+
+#select-store{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgb(98, 225, 98);
+  padding: 5px 10px;
+  height: 1.6em;
+  width: 9em;
+}
+#select-store select{
+  color: #fff;
+
+}
+option {
   color: #1e1e1e;
 }
-li:hover{
+li:hover {
   cursor: pointer;
 }
-

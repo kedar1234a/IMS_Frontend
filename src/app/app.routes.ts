@@ -70,19 +70,25 @@ export const routes: Routes = [
   },
 
   // <--------------------- Store Routes --------------------->
+
   {
-    path:'storeHome',
-    component: StoreHomeComponent
+    path: 'storeHome',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import('./Pages/Store/store-home/store-home.component').then(
+        (m) => m.StoreHomeComponent
+      );
+    },
   },
-  // {
-  //   path: 'storeHome',
-  //   pathMatch: 'full',
-  //   loadComponent: () => {
-  //     return import('./Pages/Store/store-home/store-home.component').then(
-  //       (m) => m.StoreHomeComponent
-  //     );
-  //   },
-  // },
+  {
+    path: 'seemore',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import('./Pages/Store/see-more/see-more.component').then(
+        (m) => m.SeeMoreComponent
+      );
+    },
+  },
   {
     path: 'dashboard',
     pathMatch: 'full',

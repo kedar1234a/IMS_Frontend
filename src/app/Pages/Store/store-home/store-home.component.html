@@ -21,7 +21,7 @@
 <div class="featured-categories-container">
   <div class="featured_categories_title">
     <div class="left">Featured categories</div>
-    <div class="right"><a href="#">See More</a></div>
+    <div class="right"><a routerLink="/seemore">See More</a></div>
   </div>
     <app-featured-categories-card></app-featured-categories-card>
 </div>
@@ -80,15 +80,15 @@
 
 <h2 id="Daily_best_sells">Daily best sells</h2>
 <div id="main_box">
-  <div class="daily_sells_outer_box">
-    <div id="oven_img"><img src="../../../../assets/oven.png" /></div>
+  <div class="daily_sells_outer_box" *ngFor="let product of products | slice:0:1" >
+    <div id="oven_img"><img [src]="getImageUrl(product.product_id)" width="150px"/></div>
     <div id="img_description">
-      <p id="daily_sells_description">Microwave Oven</p>
+      <p id="daily_sells_description">{{product.product_name}}</p>
       <p class="daily_sells_txt">
-        <span style="color: rgb(9, 169, 180)">₹ 2999 <s class="mrp-tag">₹ 5000</s></span>
+        <span style="color: rgb(9, 169, 180)">₹ {{product.product_price}} <s class="mrp-tag">₹ 30000</s></span>
       </p>
       <p class="daily_sells_txt">
-        Made with borosilicate glass and is heat resistant<span
+       {{product.product_description}}<span
           style="color: rgb(9, 169, 180)"
           > Read more...</span
         >
@@ -104,15 +104,15 @@
       </div>
     </div>
   </div>
-  <div class="daily_sells_outer_box">
-    <div id="fridge_img"><img src="../../../../assets/fridge.png" /></div>
+  <div class="daily_sells_outer_box" *ngFor="let product of products | slice:3:4">
+    <div id="fridge_img"><img [src]="getImageUrl(product.product_id)" width="120px"/></div>
     <div id="img_description">
-      <p id="daily_sells_description">Refridgerator</p>
+      <p id="daily_sells_description">{{product.product_name}}</p>
       <p class="daily_sells_txt">
-        <span style="color: rgb(9, 169, 180)">₹ 27899<s class="mrp-tag">₹ 35000</s></span>
+        <span style="color: rgb(9, 169, 180)">₹ {{product.product_price}}<s class="mrp-tag">₹ 100000</s></span>
       </p>
       <p class="daily_sells_txt">
-        Designed with insulated walls and energy efficient cooling<span
+        {{product.product_description}}<span
           style="color: rgb(9, 169, 180)"
           > Read more...</span
         >

@@ -1,6 +1,6 @@
 <div id="nav-container">
   <div id="navbar">
-    <div id="logo"><img src="../../../../assets/inventory-30.png" alt=""> <h5>IMS</h5></div>
+    <div id="logo"><img src="../../../../assets/inventory-black.png" alt=""> <h5>IMS</h5></div>
     <div id="input">
       <img src="../../../../assets/search.png" width="30px" height="30px" id="search-logo">
       <input type="search" placeholder="Search..." id="search_bar" />
@@ -15,12 +15,13 @@
   <!--navbar starts  -->
   <div id="nav">
     <ul>
-      <li>
+      <li id="select-store">
+        <img src="../../../../assets/logos/windows.png" alt="" width="25px">
         <select name="store-type" id="store-type" (change)="navigate($event)">
-          <option value="" selected disabled>Select Store Type</option>
+          <option value="" selected disabled>All Store</option>
           <option value="grocery">Grocery</option>
           <option value="electronics">Electronics</option>
-          <option value="hardware">Hardware</option>
+          <option value="hardware">Industrial Hardware</option>
         </select>
       </li>
       <li>Home</li>
