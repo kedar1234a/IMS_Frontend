@@ -19,7 +19,12 @@ export class DashboardNavComponent {
   }
   storeHome(){
     this.router.navigate(
-      [{ outlets: { primary: ['storeHome'], outlet2: null } }]
+      [{ outlets: { primary: ['electronics-store-home'], outlet2: null } }]
+    );
+  }
+  profile(){
+    this.router.navigate(
+      [{ outlets: { primary: ['profile'], outlet2: null } }]
     );
   }
 }

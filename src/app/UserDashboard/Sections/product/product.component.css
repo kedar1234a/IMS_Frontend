@@ -1,8 +1,21 @@
+.product-navbar{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  position: fixed;
+  top:80px;
+  right: 55px;
+  z-index: 1;
+  width: 70%;
+}
 .container {
   width: 70%;
   position: absolute;
   left: 25%;
-  top: 90px;
+  top: 140px;
   margin: 20px auto;
   padding: 20px;
   background: #fff;

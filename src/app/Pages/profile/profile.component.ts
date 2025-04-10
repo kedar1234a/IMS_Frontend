@@ -19,7 +19,6 @@ export class ProfileComponent {
 
   // ✅ Function to Navigate Back to Dashboard
   goToDashboard() {
-    console.log("Navigating to Dashboard...");  // ✅ Debugging Log
     this.router.navigate(['/grocery_dashboard']); // Make sure this matches your routes
   }
 }

@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-import { authgardGuard } from './authgard.guard';
-import { StoreHomeComponent } from './Pages/Store/store-home/store-home.component';
-import { HomeComponent } from './Pages/Store/aside-secssion/home/home.component';
-import { ProductComponent } from './Pages/Store/aside-secssion/product/product.component';
-import { UserdashboardComponent } from './UserDashboard/userdashboard/userdashboard.component';
-import { BillingComponent } from './UserDashboard/Sections/billing/billing.component';
+// import { authgardGuard } from './authgard.guard';
+// import { UserdashboardComponent } from './UserDashboard/userdashboard/userdashboard.component';
+// import { BillingComponent } from './UserDashboard/Sections/billing/billing.component';
+// import { ProductComponent } from './UserDashboard/Sections/product/product.component';
+// import { HomeComponent } from './UserDashboard/Sections/home/home.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +22,7 @@ export const routes: Routes = [
     path: 'signup',
     pathMatch: 'full',
     loadComponent: () => {
-      return import('./Pages/sign-up/sign-up.component').then(
+      return import('./Pages/Authentication/sign-up/sign-up.component').then(
         (m) => m.SignUpComponent
       );
     },
@@ -32,7 +31,7 @@ export const routes: Routes = [
     path: 'login',
     pathMatch: 'full',
     loadComponent: () => {
-      return import('./Pages/login/login.component').then(
+      return import('./Pages/Authentication/login/login.component').then(
         (m) => m.LoginComponent
       );
     },
@@ -70,34 +69,102 @@ export const routes: Routes = [
     },
   },
 
-  // <--------------------- Store Routes --------------------->
+  // <--------------------- Electronics Store Routes --------------------->
 
   {
-    path: 'storeHome',
+    path: 'electronics-store-home',
     pathMatch: 'full',
     loadComponent: () => {
-      return import('./Pages/Store/store-home/store-home.component').then(
-        (m) => m.StoreHomeComponent
+      return import(
+        './Pages/Electronics-Store/electronics-store-home/electronics-store-home.component'
+      ).then((m) => m.ElectronicsStoreHomeComponent);
+    },
+  },
+  {
+    path: 'electronics-store-see-more',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/electronics-store-home/electronics-see-more/electronics-see-more.component'
+      ).then((m) => m.ElectronicsSeeMoreComponent);
+    },
+  },
+
+  // <--------------------- Grocery Store Routes --------------------->
+
+  {
+    path: 'grocery-store-home',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Grocery-Store/grocery-store-home/grocery-store-home.component'
+      ).then((m) => m.GroceryStoreHomeComponent);
+    },
+  },
+  {
+    path: 'grocery-store-see-more',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Grocery-Store/grocery-store-home/grocery-see-more/grocery-see-more.component'
+      ).then((m) => m.GrocerySeeMoreComponent);
+    },
+  },
+
+  // <--------------------- Industrial Store Routes --------------------->
+
+  {
+    path: 'industrial-hardware-store-home',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Industrial-Hardware-Store/industrial-hardware-store-home/industrial-hardware-store-home.component'
+      ).then((m) => m.IndustrialHardwareStoreHomeComponent);
+    },
+  },
+  {
+    path: 'industrial-hardware-store-see-more',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Industrial-Hardware-Store/industrial-hardware-store-home/industrial-hardware-store-home.component'
+      ).then((m) => m.IndustrialHardwareStoreHomeComponent);
+    },
+  },
+
+  {
+    path: 'dashboardHome',
+    outlet: 'outlet2',
+    loadComponent: () => {
+      return import('./UserDashboard/Sections/home/home.component').then(
+        (m) => m.HomeComponent
       );
     },
   },
   {
-    path: 'seemore',
-    pathMatch: 'full',
+    path: 'product',
     loadComponent: () => {
-      return import('./Pages/Store/see-more/see-more.component').then(
-        (m) => m.SeeMoreComponent
+      return import('./UserDashboard/Sections/product/product.component').then(
+        (m) => m.ProductComponent
       );
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'userdashboard',
+    loadComponent: () => {
+      return import(
+        './UserDashboard/userdashboard/userdashboard.component'
+      ).then((m) => m.UserdashboardComponent);
     },
   },
   {
-    path: 'dashboardHome',component: HomeComponent,
+    path: 'billing',
+    loadComponent: () => {
+      return import('./UserDashboard/Sections/billing/billing.component').then(
+        (m) => m.BillingComponent
+      );
+    },
     outlet: 'outlet2',
   },
-  {
-    path: 'product',component:ProductComponent,
-    outlet: 'outlet2',
-  },
-  {path:'userdashboard', component:UserdashboardComponent},
-  {path:'billing', component:BillingComponent,outlet: 'outlet2'}
 ];
