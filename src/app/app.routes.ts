@@ -132,39 +132,4 @@ export const routes: Routes = [
     },
   },
 
-  {
-    path: 'dashboardHome',
-    outlet: 'outlet2',
-    loadComponent: () => {
-      return import('./UserDashboard/Sections/home/home.component').then(
-        (m) => m.HomeComponent
-      );
-    },
-  },
-  {
-    path: 'product',
-    loadComponent: () => {
-      return import('./UserDashboard/Sections/product/product.component').then(
-        (m) => m.ProductComponent
-      );
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'userdashboard',
-    loadComponent: () => {
-      return import(
-        './UserDashboard/userdashboard/userdashboard.component'
-      ).then((m) => m.UserdashboardComponent);
-    },
-  },
-  {
-    path: 'billing',
-    loadComponent: () => {
-      return import('./UserDashboard/Sections/billing/billing.component').then(
-        (m) => m.BillingComponent
-      );
-    },
-    outlet: 'outlet2',
-  },
 ];
