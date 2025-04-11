@@ -16,7 +16,10 @@ export class LoginComponent {
   password = '';
   showPassword = false;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -25,14 +28,30 @@ export class LoginComponent {
   onSubmit() {
     this.authenticationService.login(this.email, this.password).subscribe({
       next: (response) => {
-        console.log('Response from backend:', response);                      
-        this.router.navigate(['/electronics-store-home']);
+        console.log('Response from backend:', response);
+        alert('Login Successfully');
+        const store_type = response.store_type;
+
+        const storeRoutes: { [key: string]: string } = {
+          electronics: '/electronics-store-home',
+          grocery: '/grocery-store-home',
+          'industrial hardware': '/industrial-hardware-store-home',
+        };
+
+        const route = storeRoutes[store_type];
+
+        if (route) {
+          this.router.navigate([route]);
+        } else {
+          alert('Store Does Not Exist');
+        }
+
+        // this.router.navigate(['/electronics-store-home']);
       },
       error: (error) => {
         console.error('Login failed:', error);
         alert('Invalid email or password. Try again.');
-      }
+      },
     });
   }
-  
 }

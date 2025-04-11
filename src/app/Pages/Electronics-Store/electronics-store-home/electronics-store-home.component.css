@@ -1,26 +1,25 @@
 #banner {
   margin: 20px;
-background: url('../../../../assets/Blue-BG.svg');
-background-size: cover;
-background-repeat: no-repeat;
+  background: url("../../../../assets/Blue-BG.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
   height: 651px;
-  /* width: 100%; */
   display: flex;
   align-items: center;
 }
 #banner_img {
   height: 450px;
   width: 550px;
-  /* border: 1px solid blue; */
   margin-left: 150px;
 }
 
 #banner_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: xx-large;
-  font-family: Arial, Helvetica, sans-serif;
   height: 435px;
   margin-left: 120px;
-  margin-top: 30px;
 }
 
 .p {
@@ -150,7 +149,8 @@ background-repeat: no-repeat;
 #view_more_products {
   height: 60px;
   width: 347px;
-  background-color: rgb(240, 245, 245);
+  background-color: transparent;
+  border: 1px solid #adadad;
   border-radius: 15px;
   margin-top: 10px;
   font-size: 20px;
