@@ -1,0 +1,38 @@
+/* -----------------------Side Bar --------------------- */
+.sidebar {
+    position: absolute;
+    margin-top: 8px;
+    width: 20%;
+    background: #e9f5e9;
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    color: #333;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+    color: #555;
+}
+
+.sidebar ul li.active {
+    background: #c4e5c4;
+    font-weight: bold;
+}
+
+.active {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+
+/* ----------------------------Main content ------------------------ */

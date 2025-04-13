@@ -1,0 +1,87 @@
+.container {
+    width: 70%;
+    position:absolute;
+    left: 26%;
+    top: 68px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  input {
+    
+    padding: 10px;
+    margin: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  select{
+
+    padding: 10px;
+    margin: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button {
+   
+    margin: 0px 10px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+  table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  th {
+    background: #007bff;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  .edit-btn {
+    margin: 0px 8px;
+    background: #ffc107;
+    color: white;
+  }
+  .edit-btn:hover {
+    margin: 0px 8px;
+    background: #e0a800;
+  }
+  .delete-btn {
+    margin: 0px 8px;
+    background: #dc3545;
+    color: white;
+  }
+  .delete-btn:hover {
+    margin: 0px 8px;
+    background: #c82333;
+  }
+
+  /* Image Styling */
+.product-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  object-fit: cover;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
