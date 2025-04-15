@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ProductService } from '../../../Services/productServices/product-service.service';
+import { ProductService } from '../../../../../Services/productServices/product-service.service';
 
 
 @Component({

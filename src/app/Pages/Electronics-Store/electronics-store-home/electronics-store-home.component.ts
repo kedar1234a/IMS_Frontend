@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../Services/productServices/product-service.service';
-import { StoreNavComponent } from '../../../Components/navbar/store-nav/store-nav.component';
 import { FeaturedCategoriesCardComponent } from '../../../Components/cards/featured-categories-card/featured-categories-card.component';
 import { LandingFooterComponent } from '../../../Components/footer/landing-footer/landing-footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ElectronicsNavComponent } from '../../../Components/navbar/store-navbars/electronics-nav/electronics-nav.component';
 
 @Component({
   selector: 'app-electronics-store-home',
   standalone: true,
   imports: [
-    StoreNavComponent,
+    ElectronicsNavComponent,
     FeaturedCategoriesCardComponent,
     LandingFooterComponent,
     CommonModule,

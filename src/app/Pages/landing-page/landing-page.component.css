@@ -11,8 +11,10 @@ swiper-slide {
   font-size: 24px;
 }
 swiper-slide img{
-  width: 100vw;
-  /* height: 80.1vh; */
+  /* padding: 0 20px; */
+  width: 85vw;
+  border-radius: 20px;
+  height: 75vh;
 }
 
 /* #banner{

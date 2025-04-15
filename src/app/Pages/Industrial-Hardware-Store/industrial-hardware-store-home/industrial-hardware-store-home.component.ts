@@ -4,13 +4,13 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LandingFooterComponent } from '../../../Components/footer/landing-footer/landing-footer.component';
 import { FeaturedCategoriesCardComponent } from '../../../Components/cards/featured-categories-card/featured-categories-card.component';
-import { StoreNavComponent } from '../../../Components/navbar/store-nav/store-nav.component';
+import { IndsutrialHardwareNavComponent } from '../../../Components/navbar/store-navbars/indsutrial-hardware-nav/indsutrial-hardware-nav.component';
 
 @Component({
   selector: 'app-industrial-hardware-store-home',
   standalone: true,
   imports: [
-    StoreNavComponent,
+    IndsutrialHardwareNavComponent,
     FeaturedCategoriesCardComponent,
     LandingFooterComponent,
     CommonModule,

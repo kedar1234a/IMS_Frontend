@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../../../Services/productServices/product-service.service';
-import { StoreNavComponent } from '../../../../Components/navbar/store-nav/store-nav.component';
 import { CommonModule } from '@angular/common';
+import { IndsutrialHardwareNavComponent } from '../../../../Components/navbar/store-navbars/indsutrial-hardware-nav/indsutrial-hardware-nav.component';
 
 @Component({
   selector: 'app-industrial-hardware-see-more',
   standalone: true,
-  imports: [CommonModule, StoreNavComponent],
+  imports: [CommonModule, IndsutrialHardwareNavComponent],
   templateUrl: './industrial-hardware-see-more.component.html',
   styleUrl: './industrial-hardware-see-more.component.css'
 })

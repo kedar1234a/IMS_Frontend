@@ -1,9 +1,4 @@
 import { Routes } from '@angular/router';
-// import { authgardGuard } from './authgard.guard';
-// import { UserdashboardComponent } from './UserDashboard/userdashboard/userdashboard.component';
-// import { BillingComponent } from './UserDashboard/Sections/billing/billing.component';
-// import { ProductComponent } from './UserDashboard/Sections/product/product.component';
-// import { HomeComponent } from './UserDashboard/Sections/home/home.component';
 
 export const routes: Routes = [
   {
@@ -39,7 +34,7 @@ export const routes: Routes = [
   // <--------------------- Profile Routee --------------------->
 
   {
-    path: 'profile',
+    path: 'user-profile',
     pathMatch: 'full',
     loadComponent: () => {
       return import('./Pages/profile/profile.component').then(
@@ -89,9 +84,48 @@ export const routes: Routes = [
       ).then((m) => m.ElectronicsSeeMoreComponent);
     },
   },
-
+  // <--------------------- Electronics Store Dashboard Routes --------------------->
+  {
+    path: 'electronics-user-dashboard',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/userdashboard/userdashboard.component'
+      ).then((m) => m.UserdashboardComponent);
+    },
+  },
+  {
+    path: 'electronics-user-dashboard-home',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/home/home.component'
+      ).then((m) => m.HomeComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'electronics-user-dashboard-product',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/product/product.component'
+      ).then((m) => m.ProductComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'electronics-user-dashboard-billing',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/billing/billing.component'
+      ).then((m) => m.BillingComponent);
+    },
+    outlet: 'outlet2',
+  },
   // <--------------------- Grocery Store Routes --------------------->
-
+  
   {
     path: 'grocery-store-home',
     pathMatch: 'full',
@@ -109,6 +143,49 @@ export const routes: Routes = [
         './Pages/Grocery-Store/grocery-store-home/grocery-see-more/grocery-see-more.component'
       ).then((m) => m.GrocerySeeMoreComponent);
     },
+  },
+
+  // <--------------------- Grocery Store Dashboard Routes --------------------->
+  
+  {
+    path: 'grocery-user-dashboard',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Grocery-Store/UserDashboard/userdashboard/userdashboard.component'
+      ).then((m) => m.UserdashboardComponent);
+    },
+
+  },
+  {
+    path: 'grocery-user-dashboard-home',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Grocery-Store/UserDashboard/Sections/home/home.component'
+      ).then((m) => m.HomeComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'grocery-user-dashboard-product',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Grocery-Store/UserDashboard/Sections/product/product.component'
+      ).then((m) => m.ProductComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'grocery-user-dashboard-billing',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Grocery-Store/UserDashboard/Sections/billing/billing.component'
+      ).then((m) => m.BillingComponent);
+    },
+    outlet: 'outlet2',
   },
 
   // <--------------------- Industrial Store Routes --------------------->
@@ -131,5 +208,48 @@ export const routes: Routes = [
       ).then((m) => m.IndustrialHardwareStoreHomeComponent);
     },
   },
+  // <--------------------- Grocery Store Dashboard Routes --------------------->
+  
+  {
+    path: 'industrial-hardware-user-dashboard',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Industrial-Hardware-Store/UserDashboard/userdashboard/userdashboard.component'
+      ).then((m) => m.UserdashboardComponent);
+    },
+  
+  },
+  {
+    path: 'industrial-hardware-user-dashboard-home',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/home/home.component'
+      ).then((m) => m.HomeComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'industrial-hardware-user-dashboard-product',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/product/product.component'
+      ).then((m) => m.ProductComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'industrial-hardware-user-dashboard-billing',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/billing/billing.component'
+      ).then((m) => m.BillingComponent);
+    },
+    outlet: 'outlet2',
+  },
 
 ];
+

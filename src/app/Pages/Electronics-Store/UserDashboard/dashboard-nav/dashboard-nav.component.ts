@@ -24,7 +24,8 @@ export class DashboardNavComponent {
   }
   profile(){
     this.router.navigate(
-      [{ outlets: { primary: ['profile'], outlet2: null } }]
+      // [{ outlets: { primary: ['electronics-user-profile'], outlet2: null } }]
+      [{ outlets: { primary: ['user-profile'], outlet2: null } }]
     );
   }
 }

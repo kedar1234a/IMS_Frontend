@@ -18,11 +18,11 @@ export class AsideComponent {
   onItemClick(item: string): void {
     switch (item) {
       case 'Dashboard':
-        this.router.navigate([{ outlets: { outlet2: ['dashboardHome'] } }]);
+        this.router.navigate([{ outlets: { outlet2: ['industrial-hardware-user-dashboard-home'] } }]);
         this.activeItem = item; // Set the clicked item as active
         break;
       case 'Products':
-        this.router.navigate([{ outlets: { outlet2: ['product'] } }]);
+        this.router.navigate([{ outlets: { outlet2: ['industrial-hardware-user-dashboard-product'] } }]);
         this.activeItem = item; // Set the clicked item as active
         break;
       case 'Categories':
@@ -34,8 +34,7 @@ export class AsideComponent {
         this.activeItem = item; // Set the clicked item as active
         break;
       case 'Billing':
-        console.log('Navigating to Billing...');
-        this.router.navigate([{ outlets: { outlet2: ['billing'] } }]);
+        this.router.navigate([{ outlets: { outlet2: ['industrial-hardware-user-dashboard-billing'] } }]);
         this.activeItem = item; // Set the clicked item as active
         break;
       case 'Sellers / Vendors':

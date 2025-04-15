@@ -29,3 +29,40 @@ select{
   font-size: 1.1em;
   outline: none;
 }
+
+.approve-container{
+  margin-top: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+table {
+  max-width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+th {
+  background: #333;
+  color: #fff;
+}
+tr:nth-child(even) {
+  background: #f9f9f9;
+}
+button {
+  margin: 5px;
+  padding: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+#approve:hover,
+#reject:hover {
+  transform: scale(1.2);
+}

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../../../../Services/productServices/product-service.service';
 import { CommonModule } from '@angular/common';
-import { StoreNavComponent } from '../../../../Components/navbar/store-nav/store-nav.component';
+import { GroceryNavComponent } from '../../../../Components/navbar/store-navbars/grocery-nav/grocery-nav.component';
 
 @Component({
   selector: 'app-grocery-see-more',
   standalone: true,
-  imports: [CommonModule, StoreNavComponent],
+  imports: [CommonModule, GroceryNavComponent],
   templateUrl: './grocery-see-more.component.html',
   styleUrl: './grocery-see-more.component.css'
 })

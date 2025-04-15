@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { StoreNavComponent } from '../../../../Components/navbar/store-nav/store-nav.component';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../../../Services/productServices/product-service.service';
+import { ElectronicsNavComponent } from '../../../../Components/navbar/store-navbars/electronics-nav/electronics-nav.component';
 
 @Component({
   selector: 'app-electronics-see-more',
   standalone: true,
-  imports: [CommonModule, StoreNavComponent],
+  imports: [CommonModule,ElectronicsNavComponent],
   templateUrl: './electronics-see-more.component.html',
   styleUrl: './electronics-see-more.component.css',
 })
