@@ -14,6 +14,7 @@ export class BillingComponent {
   name = '';
   price: number = 0;
   qty: number = 0;
+  gst:number=0;
   sum: number = 0;
   total: number = 0;
   users: any[] = [];
@@ -21,9 +22,17 @@ export class BillingComponent {
   showPDF: boolean = false;
   pdfUrl: string | null = null;
 
+  calculateGST(price: number, gst:number){
+
+   this.gst = price * 18 * gst /100;
+    
+  }
+
   calculateTotal(price: number, qty: number) {
     this.sum = price * qty;
   }
+
+  
 
   addProduct() {
     if (this.name && this.price && this.qty) {
