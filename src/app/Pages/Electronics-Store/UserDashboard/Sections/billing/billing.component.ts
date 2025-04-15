@@ -12,123 +12,55 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 })
 export class BillingComponent {
 
+  invoiceDate = '';
+  name = '';
+  price: number = 0;
+  qty: number = 0;
+  selectedTaxRate:number=0;
+  sum: number = 0;
+  total: number = 0;
+  users: any[] = [];
+
   showPDF: boolean = false;
   pdfUrl: string | null = null;
 
-  name: string = '';
-  price: number = 0;
-  qty: number = 1;
-  sum: number = 0;
-  total: number = 0;
-  gstAmount: number = 0;
-  grandTotal: number = 0;
+  calculateGST(price: number, gst:number, selTax:number){
 
-  users: any[] = [];
+   this.selectedTaxRate = price * 18 * gst /100;
+    
+  }
 
-  calculateTotal(price: number, qty: number): void {
+  calculateTotal(price: number, qty: number) {
     this.sum = price * qty;
   }
 
-  addProduct(): void {
-    const newProduct = {
-      name: this.name,
-      price: this.price,
-      qty: this.qty,
-      sum: this.price * this.qty
-    };
+  
 
-    this.users.push(newProduct);
-
-    // Clear inputs
-    this.name = '';
-    this.price = 0;
-    this.qty = 1;
-    this.sum = 0;
-
-    // Recalculate total, GST, and grand total
-    this.calculateInvoiceTotals();
+  addProduct() {
+    if (this.name && this.price && this.qty) {
+      const amount = this.price * this.qty;
+      const gst = amount * this.selectedTaxRate /100;
+      const amountWithGST = amount + gst;
+      this.users.push({
+        name: this.name,
+        price: this.price,
+        qty: this.qty,
+        gst:gst,
+        sum: amountWithGST
+      });
+      this.total += amountWithGST;
+      this.name = '';
+      this.price = 0;
+      this.qty = 0;
+      this.sum = 0;
+    }
   }
 
-  calculateInvoiceTotals(): void {
-    this.total = this.users.reduce((acc, item) => acc + item.sum, 0);
-    this.gstAmount = this.total * 0.18;
-    this.grandTotal = this.total + this.gstAmount;
-  }
   refreshPage() {
     window.location.reload();
   }
 
-  async showPDFPreview() {
-    const pdfDoc = await PDFDocument.create();
-    const page = pdfDoc.addPage([595.28, 841.89]); // A4 size in points
-    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontSize = 12;
-    let y = 800;
-
-    // Title
-    page.drawText('Invoice Summary', {
-      x: 50,
-      y,
-      size: 18,
-      font,
-      color: rgb(0.2, 0.2, 0.6),
-    });
-
-    y -= 40;
-
-    // Headers
-    page.drawText(`Name`, { x: 50, y, size: fontSize, font });
-    page.drawText(`Price`, { x: 200, y, size: fontSize, font });
-    page.drawText(`Qty`, { x: 300, y, size: fontSize, font });
-    page.drawText(`Amount`, { x: 400, y, size: fontSize, font });
-
-    y -= 20;
-
-    // Items
-    this.users.forEach(user => {
-      page.drawText(user.name, { x: 50, y, size: fontSize, font });
-      page.drawText(user.price.toString(), { x: 200, y, size: fontSize, font });
-      page.drawText(user.qty.toString(), { x: 300, y, size: fontSize, font });
-      page.drawText(user.sum.toString(), { x: 400, y, size: fontSize, font });
-      y -= 20;
-    });
-
-    // Total
-y -= 20;
-page.drawText(`Total: ${this.total.toFixed(2)}`, {
-  x: 400,
-  y,
-  size: fontSize + 2,
-  font,
-  color: rgb(0, 0, 0.8)
-});
-
-// GST (18%)
-y -= 20;
-page.drawText(`GST (18%): ${this.gstAmount.toFixed(2)}`, {
-  x: 400,
-  y,
-  size: fontSize + 2,
-  font,
-  color: rgb(0, 0, 0.8)
-});
-
-// Grand Total
-y -= 20;
-page.drawText(`Grand Total: ${this.grandTotal.toFixed(2)}`, {
-  x: 400,
-  y,
-  size: fontSize + 2,
-  font,
-  color: rgb(0, 0, 0.8)
-});
-
-
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    this.pdfUrl = URL.createObjectURL(blob);
-    this.showPDF = true;
-  }
+  
 
   async downloadPDF() {
     const pdfDoc = await PDFDocument.create();
@@ -148,23 +80,12 @@ page.drawText(`Grand Total: ${this.grandTotal.toFixed(2)}`, {
   
     y -= 40;
   
-   // Header background color
-const headerHeight = 20;
-const headerY = y;
-const headerBgColor = rgb(0.8, 0.9, 1); // light blue
-
-// Draw background rectangles behind each header text
-page.drawRectangle({ x: 45, y: headerY - 5, width: 200, height: headerHeight, color: headerBgColor });
-page.drawRectangle({ x: 195, y: headerY - 5, width: 200, height: headerHeight, color: headerBgColor });
-page.drawRectangle({ x: 295, y: headerY - 5, width: 200, height: headerHeight, color: headerBgColor });
-page.drawRectangle({ x: 395, y: headerY - 5, width: 150, height: headerHeight, color: headerBgColor });
-
-// Draw header text
-page.drawText(`Name`, { x: 50, y: headerY, size: fontSize, font, color: rgb(0, 0, 0) });
-page.drawText(`Price`, { x: 200, y: headerY, size: fontSize, font, color: rgb(0, 0, 0) });
-page.drawText(`Qty`, { x: 300, y: headerY, size: fontSize, font, color: rgb(0, 0, 0) });
-page.drawText(`Amount`, { x: 400, y: headerY, size: fontSize, font, color: rgb(0, 0, 0) });
-
+    // Headers
+    page.drawText(`Name`, { x: 50, y, size: fontSize, font });
+    page.drawText(`Price`, { x: 200, y, size: fontSize, font });
+    page.drawText(`Qty`, { x: 300, y, size: fontSize, font });
+    page.drawText(`Amount`, { x: 400, y, size: fontSize, font });
+  
     y -= 20;
   
     // Items
@@ -175,35 +96,16 @@ page.drawText(`Amount`, { x: 400, y: headerY, size: fontSize, font, color: rgb(0
       page.drawText(user.sum.toString(), { x: 400, y, size: fontSize, font });
       y -= 20;
     });
-  // Total
-y -= 20;
-page.drawText(`Total: ${this.total.toFixed(2)}`, {
-  x: 400,
-  y,
-  size: fontSize + 2,
-  font,
-  color: rgb(0, 0, 0.8)
-});
-
-// GST (18%)
-y -= 20;
-page.drawText(`GST (18%): ${this.gstAmount.toFixed(2)}`, {
-  x: 400,
-  y,
-  size: fontSize + 2,
-  font,
-  color: rgb(0, 0, 0.8)
-});
-
-// Grand Total
-y -= 20;
-page.drawText(`Grand Total: ${this.grandTotal.toFixed(2)}`, {
-  x: 400,
-  y,
-  size: fontSize + 2,
-  font,
-  color: rgb(0, 0, 0.8)
-});
+  
+    // Total
+    y -= 20;
+    page.drawText(`Total: ${this.total.toFixed(2)}`, {
+      x: 400,
+      y,
+      size: fontSize + 2,
+      font,
+      color: rgb(0, 0, 0.8)
+    });
   
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
