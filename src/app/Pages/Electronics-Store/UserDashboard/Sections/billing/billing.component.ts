@@ -54,10 +54,22 @@ export class BillingComponent {
       this.qty = 0;
       this.sum = 0;
     }
+
   }
+
+  
 
   refreshPage() {
     window.location.reload();
+  }
+
+  removeProduct(index: number) {
+    const removedProduct = this.users[index];
+    if (removedProduct) {
+      this.total -= removedProduct.sum;
+      this.users.splice(index, 1);
+    }
+
   }
 
   
