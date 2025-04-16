@@ -13,6 +13,7 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 export class BillingComponent {
 
   invoiceDate = '';
+  invoiceName ='';
   name = '';
   price: number = 0;
   qty: number = 0;
@@ -86,18 +87,44 @@ export class BillingComponent {
     page.drawText('Invoice Summary', {
       x: 50,
       y,
-      size: 18,
+      size: 12,
       font,
       color: rgb(0.2, 0.2, 0.6),
     });
+
+    y -= 40;
+
+    //Customer details 
+    page.drawText(`Invoice no :`, { x: 50, y, size: fontSize, font });
+    y -= 20;
+    page.drawText(`Date : ${this.invoiceDate}`, { x: 50, y, size: fontSize, font });
+    y -=20;
+    page.drawText(`Customer Name : ${this.invoiceName}`, {x: 50, y, size: fontSize, font});
   
     y -= 40;
   
-    // Headers
-    page.drawText(`Name`, { x: 50, y, size: fontSize, font });
-    page.drawText(`Price`, { x: 200, y, size: fontSize, font });
-    page.drawText(`Qty`, { x: 300, y, size: fontSize, font });
-    page.drawText(`Amount`, { x: 400, y, size: fontSize, font });
+   // Set background color (e.g., light gray)
+const backgroundColor = rgb(0.9, 0.9, 0.9); // adjust RGB values as needed
+const headerHeight = 20; // height of the background box
+const headerY = y - 5;   // adjust Y to position the background properly
+
+// Draw a rectangle as background for the header row
+page.drawRectangle({
+  x: 40,              // starting X position
+  y: headerY,         // Y position of the rectangle
+  width: 450,         // total width covering all headers
+  height: headerHeight,
+  color: backgroundColor,
+});
+
+// Draw the header texts on top of the background
+page.drawText(`Name`, { x: 50, y, size: fontSize, font });
+page.drawText(`Price`, { x: 200, y, size: fontSize, font });
+page.drawText(`Qty`, { x: 250, y, size: fontSize, font });
+page.drawText(`GST`, { x: 300, y, size: fontSize, font });
+page.drawText(`GST Amt`, { x: 350, y, size: fontSize, font });
+page.drawText(`Amount`, { x: 430, y, size: fontSize, font });
+
   
     y -= 20;
   
@@ -105,11 +132,20 @@ export class BillingComponent {
     this.users.forEach(user => {
       page.drawText(user.name, { x: 50, y, size: fontSize, font });
       page.drawText(user.price.toString(), { x: 200, y, size: fontSize, font });
-      page.drawText(user.qty.toString(), { x: 300, y, size: fontSize, font });
-      page.drawText(user.sum.toString(), { x: 400, y, size: fontSize, font });
+      page.drawText(user.qty.toString(), { x: 250, y, size: fontSize, font });
+      page.drawText(`${user.tax.toString()}%`, {x: 300, y, size: fontSize, font});
+      page.drawText(user.gst.toString(), {x: 350, y, size: fontSize, font});
+      page.drawText(user.sum.toString(), { x: 430, y, size: fontSize, font });
       y -= 20;
     });
   
+    page.drawLine({
+      start: { x: 40, y},  // starting point
+      end: { x: 500,y },   // ending point
+      thickness: 1,              // line thickness
+      color: rgb(0, 0, 0),       // black line
+    });
+    
     // Total
     y -= 20;
     page.drawText(`Total: ${this.total.toFixed(2)}`, {

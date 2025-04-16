@@ -24,7 +24,7 @@
         <span class="sub_heading">Bill To:</span>
       </div>
       <p class="content">Customer Name:</p>
-      <input type="text" />
+      <input type="text"  name="invoiceName" [(ngModel)]="invoiceName"/>
     </div>
   </div>
 
@@ -86,8 +86,8 @@
           <th>Item Name</th>
           <th>Qty</th>
           <th>Price</th>
-          <th>Tax</th>
           <th>GST</th>
+          <th>GST Amt</th>
           <th>Total Amt</th>
           <th>Remove</th>
         </tr>
