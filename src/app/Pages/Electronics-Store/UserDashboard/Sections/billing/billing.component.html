@@ -86,6 +86,7 @@
           <th>Item Name</th>
           <th>Qty</th>
           <th>Price</th>
+          <th>Tax</th>
           <th>GST</th>
           <th>Total Amt</th>
           <th>Remove</th>
@@ -96,6 +97,7 @@
           <td>{{ item.name }}</td>
           <td>{{ item.qty }}</td>
           <td>{{ item.price }}</td>
+          <td>{{ item.tax}}%</td>
           <td>{{item.gst}}</td>
           <td>{{ item.sum }}</td>
           <td> <img src="../../../../assets/billing_icons/Trash.png" style="cursor: pointer;" (click)="removeProduct(i)" /></td>

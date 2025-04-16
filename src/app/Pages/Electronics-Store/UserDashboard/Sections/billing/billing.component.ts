@@ -45,6 +45,7 @@ export class BillingComponent {
         name: this.name,
         price: this.price,
         qty: this.qty,
+        tax: this.selectedTaxRate,
         gst:gst,
         sum: amountWithGST
       });
