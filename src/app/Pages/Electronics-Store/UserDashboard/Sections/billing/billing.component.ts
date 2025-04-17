@@ -18,13 +18,26 @@ export class BillingComponent {
   name = '';
   price: number = 0;
   qty: number = 0;
+  netAmount =0;
+  gstType ='';
   selectedTaxRate: number = 0;
   sum: number = 0;
   total: number = 0;
   products: any[] = [];
 
+  CGST = "CGST";
+SGST = "SGST";
+IGST = "IGST"; //integrated
+UTGST = "UTGST"; //union territory
+
+
   showPDF: boolean = false;
   pdfUrl: string | null = null;
+
+  calculateNetAmount(price: number, qty:number){
+
+    this.netAmount = price * qty;
+  }
 
   calculateGST(price: number, gst: number, selTax: number) {
 
@@ -47,6 +60,8 @@ export class BillingComponent {
         name: this.name,
         price: this.price,
         qty: this.qty,
+        netAmt: amount,
+        typeOfGST: this.gstType,
         tax: this.selectedTaxRate,
         gst: gst,
         sum: amountWithGST
@@ -81,98 +96,99 @@ export class BillingComponent {
     const pdfDoc = await PDFDocument.create();
     const page = pdfDoc.addPage([595.28, 841.89]); // A4 size in points
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-    const fontSize = 12;
+    const fontSize = 10; // Reduced font size
     let y = 800;
-
+  
     // Title
     page.drawText('Invoice Summary', {
       x: 50,
       y,
-      size: 12,
+      size: fontSize + 2, // Slightly bigger title
       font,
       color: rgb(0.2, 0.2, 0.6),
     });
-
+  
     y -= 40;
-
-    //Customer details 
-    page.drawText(`Invoice no :`, { x: 50, y, size: fontSize, font });
-    y -= 20;
-    page.drawText(`Date : ${this.invoiceDate}`, { x: 50, y, size: fontSize, font });
-    y -= 20;
-    page.drawText(`Customer Name : ${this.invoiceName}`, { x: 50, y, size: fontSize, font });
-
-    y -= 40;
-
-    // Set background color (e.g., light gray)
-    const backgroundColor = rgb(0.9, 0.9, 0.9); // adjust RGB values as needed
-    const headerHeight = 20; // height of the background box
-    const headerY = y - 5;   // adjust Y to position the background properly
-
-    // Draw a rectangle as background for the header row
+  
+    // Customer details 
+    page.drawText(`Invoice no:`, { x: 50, y, size: fontSize, font });
+    y -= 15;
+    page.drawText(`Date: ${this.invoiceDate}`, { x: 50, y, size: fontSize, font });
+    y -= 15;
+    page.drawText(`Customer Name: ${this.invoiceName}`, { x: 50, y, size: fontSize, font });
+  
+    y -= 30;
+  
+    // Header background
+    const backgroundColor = rgb(0.9, 0.9, 0.9);
+    const headerHeight = 18;
+    const headerY = y - 4;
+  
     page.drawRectangle({
-      x: 40,              // starting X position
-      y: headerY,         // Y position of the rectangle
-      width: 450,         // total width covering all headers
+      x: 40,
+      y: headerY,
+      width: 515,
       height: headerHeight,
       color: backgroundColor,
     });
-
-    // Draw the header texts on top of the background
-    page.drawText(`Name`, { x: 50, y, size: fontSize, font });
-    page.drawText(`Price`, { x: 200, y, size: fontSize, font });
-    page.drawText(`Qty`, { x: 250, y, size: fontSize, font });
-    page.drawText(`GST`, { x: 300, y, size: fontSize, font });
-    page.drawText(`GST Amt`, { x: 350, y, size: fontSize, font });
-    page.drawText(`Amount`, { x: 430, y, size: fontSize, font });
-
-
-    y -= 20;
-
+  
+    // Header Text
+    page.drawText('Name', { x: 50, y, size: fontSize, font });
+    page.drawText('Price', { x: 150, y, size: fontSize, font });
+    page.drawText('Qty', { x: 210, y, size: fontSize, font });
+    page.drawText('Net Amt', { x: 260, y, size: fontSize, font });
+    page.drawText('GST Type', { x: 330, y, size: fontSize, font });
+    page.drawText('GST %', { x: 400, y, size: fontSize, font });
+    page.drawText('GST Amt', { x: 450, y, size: fontSize, font });
+    page.drawText('Amount', { x: 510, y, size: fontSize, font });
+  
+    y -= 18;
+  
     // Items
     this.products.forEach(product => {
       page.drawText(product.name, { x: 50, y, size: fontSize, font });
-      page.drawText(product.price.toString(), { x: 200, y, size: fontSize, font });
-      page.drawText(product.qty.toString(), { x: 250, y, size: fontSize, font });
-      page.drawText(`${product.tax.toString()}%`, { x: 300, y, size: fontSize, font });
-      page.drawText(product.gst.toString(), { x: 350, y, size: fontSize, font });
-      page.drawText(product.sum.toString(), { x: 430, y, size: fontSize, font });
-      y -= 20;
+      page.drawText(product.price.toFixed(2), { x: 150, y, size: fontSize, font });
+      page.drawText(product.qty.toString(), { x: 210, y, size: fontSize, font });
+      page.drawText(product.netAmt.toFixed(2), { x: 260, y, size: fontSize, font });
+      page.drawText(product.typeOfGST, { x: 330, y, size: fontSize, font });
+      page.drawText(`${product.tax}%`, { x: 400, y, size: fontSize, font });
+      page.drawText(product.gst.toFixed(2), { x: 450, y, size: fontSize, font });
+      page.drawText(product.sum.toFixed(2), { x: 510, y, size: fontSize, font });
+      y -= 15;
     });
-
+  
+    // Divider line
     page.drawLine({
-      start: { x: 40, y },  // starting point
-      end: { x: 500, y },   // ending point
-      thickness: 1,              // line thickness
-      color: rgb(0, 0, 0),       // black line
+      start: { x: 40, y },
+      end: { x: 560, y },
+      thickness: 0.6,
+      color: rgb(0, 0, 0),
     });
-
-    // Total
+  
     y -= 20;
+  
+    // Total
     page.drawText(`Total: ${this.total.toFixed(2)}`, {
-      x: 400,
+      x: 410,
       y,
-      size: fontSize + 2,
+      size: fontSize + 1,
       font,
-      color: rgb(0, 0, 0.8)
+      color: rgb(0, 0, 0.8),
     });
-
+  
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-
-    // Create a temporary anchor to trigger the download
+  
     const a = document.createElement('a');
     a.href = url;
     a.download = 'invoice.pdf';
     a.click();
-
-    // Cleanup
     URL.revokeObjectURL(url);
-
-    //save bill to database
+  
     this.saveBill();
   }
+  
 
   constructor(private billingService: SalesProductService) {}
 

@@ -66,13 +66,13 @@
 }
 
 .item-header {
-  font-weight: bold;
+  font-size: 12px;
   margin-bottom: 10px;
 }
 
 .item-header div,
 .item-entry > div {
-  flex: 1;
+  
   text-align: left;
 }
 
