@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { SalesProductService } from '../../../../../Services/Billing/sales-product.service';
 
 @Component({
   selector: 'app-billing',
@@ -13,41 +14,41 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 export class BillingComponent {
 
   invoiceDate = '';
-  invoiceName ='';
+  invoiceName = '';
   name = '';
   price: number = 0;
   qty: number = 0;
-  selectedTaxRate:number=0;
+  selectedTaxRate: number = 0;
   sum: number = 0;
   total: number = 0;
-  users: any[] = [];
+  products: any[] = [];
 
   showPDF: boolean = false;
   pdfUrl: string | null = null;
 
-  calculateGST(price: number, gst:number, selTax:number){
+  calculateGST(price: number, gst: number, selTax: number) {
 
-   this.selectedTaxRate = price * 18 * gst /100;
-    
+    this.selectedTaxRate = price * 18 * gst / 100;
+
   }
 
   calculateTotal(price: number, qty: number) {
     this.sum = price * qty;
   }
 
-  
+
 
   addProduct() {
     if (this.name && this.price && this.qty) {
       const amount = this.price * this.qty;
-      const gst = amount * this.selectedTaxRate /100;
+      const gst = amount * this.selectedTaxRate / 100;
       const amountWithGST = amount + gst;
-      this.users.push({
+      this.products.push({
         name: this.name,
         price: this.price,
         qty: this.qty,
         tax: this.selectedTaxRate,
-        gst:gst,
+        gst: gst,
         sum: amountWithGST
       });
       this.total += amountWithGST;
@@ -59,22 +60,22 @@ export class BillingComponent {
 
   }
 
-  
+
 
   refreshPage() {
     window.location.reload();
   }
 
   removeProduct(index: number) {
-    const removedProduct = this.users[index];
+    const removedProduct = this.products[index];
     if (removedProduct) {
       this.total -= removedProduct.sum;
-      this.users.splice(index, 1);
+      this.products.splice(index, 1);
     }
 
   }
 
-  
+
 
   async downloadPDF() {
     const pdfDoc = await PDFDocument.create();
@@ -82,7 +83,7 @@ export class BillingComponent {
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const fontSize = 12;
     let y = 800;
-  
+
     // Title
     page.drawText('Invoice Summary', {
       x: 50,
@@ -98,54 +99,54 @@ export class BillingComponent {
     page.drawText(`Invoice no :`, { x: 50, y, size: fontSize, font });
     y -= 20;
     page.drawText(`Date : ${this.invoiceDate}`, { x: 50, y, size: fontSize, font });
-    y -=20;
-    page.drawText(`Customer Name : ${this.invoiceName}`, {x: 50, y, size: fontSize, font});
-  
-    y -= 40;
-  
-   // Set background color (e.g., light gray)
-const backgroundColor = rgb(0.9, 0.9, 0.9); // adjust RGB values as needed
-const headerHeight = 20; // height of the background box
-const headerY = y - 5;   // adjust Y to position the background properly
-
-// Draw a rectangle as background for the header row
-page.drawRectangle({
-  x: 40,              // starting X position
-  y: headerY,         // Y position of the rectangle
-  width: 450,         // total width covering all headers
-  height: headerHeight,
-  color: backgroundColor,
-});
-
-// Draw the header texts on top of the background
-page.drawText(`Name`, { x: 50, y, size: fontSize, font });
-page.drawText(`Price`, { x: 200, y, size: fontSize, font });
-page.drawText(`Qty`, { x: 250, y, size: fontSize, font });
-page.drawText(`GST`, { x: 300, y, size: fontSize, font });
-page.drawText(`GST Amt`, { x: 350, y, size: fontSize, font });
-page.drawText(`Amount`, { x: 430, y, size: fontSize, font });
-
-  
     y -= 20;
-  
+    page.drawText(`Customer Name : ${this.invoiceName}`, { x: 50, y, size: fontSize, font });
+
+    y -= 40;
+
+    // Set background color (e.g., light gray)
+    const backgroundColor = rgb(0.9, 0.9, 0.9); // adjust RGB values as needed
+    const headerHeight = 20; // height of the background box
+    const headerY = y - 5;   // adjust Y to position the background properly
+
+    // Draw a rectangle as background for the header row
+    page.drawRectangle({
+      x: 40,              // starting X position
+      y: headerY,         // Y position of the rectangle
+      width: 450,         // total width covering all headers
+      height: headerHeight,
+      color: backgroundColor,
+    });
+
+    // Draw the header texts on top of the background
+    page.drawText(`Name`, { x: 50, y, size: fontSize, font });
+    page.drawText(`Price`, { x: 200, y, size: fontSize, font });
+    page.drawText(`Qty`, { x: 250, y, size: fontSize, font });
+    page.drawText(`GST`, { x: 300, y, size: fontSize, font });
+    page.drawText(`GST Amt`, { x: 350, y, size: fontSize, font });
+    page.drawText(`Amount`, { x: 430, y, size: fontSize, font });
+
+
+    y -= 20;
+
     // Items
-    this.users.forEach(user => {
-      page.drawText(user.name, { x: 50, y, size: fontSize, font });
-      page.drawText(user.price.toString(), { x: 200, y, size: fontSize, font });
-      page.drawText(user.qty.toString(), { x: 250, y, size: fontSize, font });
-      page.drawText(`${user.tax.toString()}%`, {x: 300, y, size: fontSize, font});
-      page.drawText(user.gst.toString(), {x: 350, y, size: fontSize, font});
-      page.drawText(user.sum.toString(), { x: 430, y, size: fontSize, font });
+    this.products.forEach(product => {
+      page.drawText(product.name, { x: 50, y, size: fontSize, font });
+      page.drawText(product.price.toString(), { x: 200, y, size: fontSize, font });
+      page.drawText(product.qty.toString(), { x: 250, y, size: fontSize, font });
+      page.drawText(`${product.tax.toString()}%`, { x: 300, y, size: fontSize, font });
+      page.drawText(product.gst.toString(), { x: 350, y, size: fontSize, font });
+      page.drawText(product.sum.toString(), { x: 430, y, size: fontSize, font });
       y -= 20;
     });
-  
+
     page.drawLine({
-      start: { x: 40, y},  // starting point
-      end: { x: 500,y },   // ending point
+      start: { x: 40, y },  // starting point
+      end: { x: 500, y },   // ending point
       thickness: 1,              // line thickness
       color: rgb(0, 0, 0),       // black line
     });
-    
+
     // Total
     y -= 20;
     page.drawText(`Total: ${this.total.toFixed(2)}`, {
@@ -155,19 +156,46 @@ page.drawText(`Amount`, { x: 430, y, size: fontSize, font });
       font,
       color: rgb(0, 0, 0.8)
     });
-  
+
     const pdfBytes = await pdfDoc.save();
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
-  
+
     // Create a temporary anchor to trigger the download
     const a = document.createElement('a');
     a.href = url;
     a.download = 'invoice.pdf';
     a.click();
-  
+
     // Cleanup
     URL.revokeObjectURL(url);
+
+    //save bill to database
+    this.saveBill();
   }
-  
+
+  constructor(private billingService: SalesProductService) {}
+
+  // other properties and methods...
+
+  saveBill() {
+    const billData = {
+      invoiceDate: this.invoiceDate,
+      invoiceName: this.invoiceName,
+      ProductsList: this.products,
+      total: this.total
+    };
+
+    this.billingService.saveBill(billData).subscribe({
+      next: (response) => {
+        console.log('Bill saved successfully:', response);
+        alert('Invoice saved to database!');
+      },
+      error: (error) => {
+        console.error('Error saving bill:', error);
+        alert('Error saving invoice.');
+      }
+    });
+  }
+
 }
