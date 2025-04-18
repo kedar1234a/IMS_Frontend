@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { SalesProductService } from '../../../../../Services/Billing/sales-product.service';
+import { ProductService } from '../../../../../Services/productServices/product-service.service';
 
 @Component({
   selector: 'app-billing',
@@ -11,7 +12,7 @@ import { SalesProductService } from '../../../../../Services/Billing/sales-produ
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.css']
 })
-export class BillingComponent {
+export class BillingComponent implements OnInit{
 
   invoiceDate = '';
   invoiceName = '';
@@ -25,6 +26,8 @@ export class BillingComponent {
   total: number = 0;
   products: any[] = [];
 
+  items:any[]=[];  
+
   CGST = "CGST";
 SGST = "SGST";
 IGST = "IGST"; //integrated
@@ -34,21 +37,39 @@ UTGST = "UTGST"; //union territory
   showPDF: boolean = false;
   pdfUrl: string | null = null;
 
-  calculateNetAmount(price: number, qty:number){
+  constructor(private billingService: SalesProductService, private itemService:ProductService) {}
 
-    this.netAmount = price * qty;
+
+
+
+  ngOnInit(): void {
+
+    
+
+     this.loadProducts(); 
   }
 
-  calculateGST(price: number, gst: number, selTax: number) {
+  loadProducts(): void {
+    this.itemService.getProducts().subscribe({
+      next: (data) => {
 
-    this.selectedTaxRate = price * 18 * gst / 100;
-
+        this.items = data;
+     
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      }
+    });
   }
 
-  calculateTotal(price: number, qty: number) {
-    this.sum = price * qty;
+  onProductSelected(){
+    const selectedItem = this.items.find(item => item.product_name === this.name);
+  if (selectedItem) {
+    this.price = selectedItem.product_price;
+  } else {
+    this.price = 0; // Reset if not found
   }
-
+  }
 
 
   addProduct() {
@@ -193,9 +214,7 @@ UTGST = "UTGST"; //union territory
   }
   
 
-  constructor(private billingService: SalesProductService) {}
-
-  // other properties and methods...
+  
 
   saveBill() {
     const billData = {
@@ -208,7 +227,8 @@ UTGST = "UTGST"; //union territory
     this.billingService.saveBill(billData).subscribe({
       next: (response) => {
         console.log('Bill saved successfully:');
-        alert('Invoice saved successfully'); 
+        alert(response); 
+        this.clearForm();
       },
       error: (error) => {
         console.error('Error saving bill:', error);
@@ -220,4 +240,11 @@ UTGST = "UTGST"; //union territory
   }
   
 
+  // Clear form method
+clearForm() {
+  this.invoiceDate = '';
+  this.invoiceName = '';
+  this.products = [];
+  this.total = 0;
+}
 }
