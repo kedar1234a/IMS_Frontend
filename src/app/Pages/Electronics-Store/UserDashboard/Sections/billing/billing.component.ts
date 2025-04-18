@@ -57,20 +57,23 @@ UTGST = "UTGST"; //union territory
       const gst = amount * this.selectedTaxRate / 100;
       const amountWithGST = amount + gst;
       this.products.push({
-        name: this.name,
+        productName: this.name,
         price: this.price,
-        qty: this.qty,
-        netAmt: amount,
+        quantity: this.qty,
+        netAmount: amount,
         typeOfGST: this.gstType,
         tax: this.selectedTaxRate,
         gst: gst,
-        sum: amountWithGST
+        totalAmount: amountWithGST
       });
+      this.name ='',
+      this.price =0,
+      this.qty =0,
+      this.netAmount=0,
+      this.gstType='',
+      this.selectedTaxRate=0,
+      this.sum =0,
       this.total += amountWithGST;
-      this.name = '';
-      this.price = 0;
-      this.qty = 0;
-      this.sum = 0;
     }
 
   }
@@ -146,14 +149,14 @@ UTGST = "UTGST"; //union territory
   
     // Items
     this.products.forEach(product => {
-      page.drawText(product.name, { x: 50, y, size: fontSize, font });
+      page.drawText(product.productName, { x: 50, y, size: fontSize, font });
       page.drawText(product.price.toFixed(2), { x: 150, y, size: fontSize, font });
-      page.drawText(product.qty.toString(), { x: 210, y, size: fontSize, font });
-      page.drawText(product.netAmt.toFixed(2), { x: 260, y, size: fontSize, font });
+      page.drawText(product.quantity.toString(), { x: 210, y, size: fontSize, font });
+      page.drawText(product.netAmount.toFixed(2), { x: 260, y, size: fontSize, font });
       page.drawText(product.typeOfGST, { x: 330, y, size: fontSize, font });
       page.drawText(`${product.tax}%`, { x: 400, y, size: fontSize, font });
       page.drawText(product.gst.toFixed(2), { x: 450, y, size: fontSize, font });
-      page.drawText(product.sum.toFixed(2), { x: 510, y, size: fontSize, font });
+      page.drawText(product.totalAmount.toFixed(2), { x: 510, y, size: fontSize, font });
       y -= 15;
     });
   
@@ -196,22 +199,25 @@ UTGST = "UTGST"; //union territory
 
   saveBill() {
     const billData = {
-      invoiceDate: this.invoiceDate,
-      invoiceName: this.invoiceName,
-      ProductsList: this.products,
-      total: this.total
+      name: this.invoiceName,
+      billDate: this.invoiceDate,
+      totalAmount: this.total,
+      customerProductList: this.products
     };
-
+  
     this.billingService.saveBill(billData).subscribe({
       next: (response) => {
-        console.log('Bill saved successfully:', response);
-        alert('Invoice saved to database!');
+        console.log('Bill saved successfully:');
+        alert('Invoice saved successfully'); 
       },
       error: (error) => {
         console.error('Error saving bill:', error);
         alert('Error saving invoice.');
+        alert('Error saving invoice: ' + (error.message || error.statusText));
+
       }
     });
   }
+  
 
 }

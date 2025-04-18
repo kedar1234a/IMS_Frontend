@@ -8,11 +8,11 @@ import { Observable } from 'rxjs';
 export class SalesProductService {
 
 
-  private apiUrl = 'http://localhost:8080/api/customer'; // Change this to your actual Spring Boot API endpoint
+  private apiUrl = 'http://localhost:8080/api/customers';
 
   constructor(private http: HttpClient) {}
 
   saveBill(billData: any): Observable<any> {
-    return this.http.post(this.apiUrl, billData);
+    return this.http.post(this.apiUrl, billData,  { responseType: 'text' });
   }
 }
