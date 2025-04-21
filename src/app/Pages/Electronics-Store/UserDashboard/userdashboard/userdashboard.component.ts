@@ -16,7 +16,7 @@ export class UserdashboardComponent implements OnInit {
 
 ngOnInit(): void {
 
-  this.router.navigate([{ outlets: { outlet2: ['dashboardHome'] } }]);
+  this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-home'] } }]);
     
 }
 
