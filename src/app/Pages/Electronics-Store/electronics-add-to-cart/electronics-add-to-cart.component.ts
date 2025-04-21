@@ -24,7 +24,7 @@ export class ElectronicsAddToCartComponent{
     //   item.quantity++;
     // }
     // console.log(this.item);
-    console.log(this.CartService.getCartItems());
+  
     
     item.total = item.product_price * item.quantity;
   }

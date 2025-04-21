@@ -55,7 +55,7 @@ export class FeaturedCategoriesCardComponent implements OnInit {
   };
   
   addToCart(): void {
-    this.cartService.setCartItems(this.items);
+   
     
     const userConfirmed = confirm('✅ Item added to your cart.\n\nWould you like to view your cart now?');
     if (userConfirmed) {
