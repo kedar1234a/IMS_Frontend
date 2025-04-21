@@ -14,6 +14,7 @@ import { ProductService } from '../../../../../Services/productServices/product-
 })
 export class BillingComponent implements OnInit{
 
+  invoiceNo : number =0;
   invoiceDate = '';
   invoiceName = '';
   name = '';
@@ -25,6 +26,8 @@ export class BillingComponent implements OnInit{
   sum: number = 0;
   total: number = 0;
   products: any[] = [];
+
+  
 
   items:any[]=[];  
 
@@ -45,8 +48,25 @@ UTGST = "UTGST"; //union territory
   ngOnInit(): void {
 
     
-
+    this.CalculateInvoiceNo();
      this.loadProducts(); 
+  }
+
+  CalculateInvoiceNo(){
+    this.billingService.getAllBill().subscribe({
+      next: (bills) => {
+
+       
+       this.invoiceNo= bills+1;
+     
+      },
+      error: (error) => {
+     
+        alert("no invoice no");
+        console.error('Error loading products:', error);
+        alert('Error saving invoice: ' + (error.message || error.statusText));
+      }
+    });
   }
 
   loadProducts(): void {
@@ -114,7 +134,30 @@ UTGST = "UTGST"; //union territory
 
   }
 
+   saveBill() {
+    const billData = {
+      name: this.invoiceName,
+      billDate: this.invoiceDate,
+      totalAmount: this.total,
+      customerProductList: this.products
+    };
+  
+    this.billingService.saveBill(billData).subscribe({
+      next: (response) => {
+        console.log('Bill saved successfully:');
+        alert(response); 
+        this.clearForm();
+        this.CalculateInvoiceNo();
+      },
+      error: (error) => {
+        console.error('Error saving bill:', error);
+        alert('Error saving invoice.');
+        alert('Error saving invoice: ' + (error.message || error.statusText));
 
+      }
+    });
+  }
+  
 
   async downloadPDF() {
     const pdfDoc = await PDFDocument.create();
@@ -135,7 +178,7 @@ UTGST = "UTGST"; //union territory
     y -= 40;
   
     // Customer details 
-    page.drawText(`Invoice no:`, { x: 50, y, size: fontSize, font });
+    page.drawText(`Invoice no: ${this.invoiceNo}`, { x: 50, y, size: fontSize, font });
     y -= 15;
     page.drawText(`Date: ${this.invoiceDate}`, { x: 50, y, size: fontSize, font });
     y -= 15;
@@ -216,29 +259,7 @@ UTGST = "UTGST"; //union territory
 
   
 
-  saveBill() {
-    const billData = {
-      name: this.invoiceName,
-      billDate: this.invoiceDate,
-      totalAmount: this.total,
-      customerProductList: this.products
-    };
-  
-    this.billingService.saveBill(billData).subscribe({
-      next: (response) => {
-        console.log('Bill saved successfully:');
-        alert(response); 
-        this.clearForm();
-      },
-      error: (error) => {
-        console.error('Error saving bill:', error);
-        alert('Error saving invoice.');
-        alert('Error saving invoice: ' + (error.message || error.statusText));
-
-      }
-    });
-  }
-  
+ 
 
   // Clear form method
 clearForm() {
