@@ -1,4 +1,4 @@
-<!-- <div class="featured-categories-product-container">
+<div class="featured-categories-product-container">
   <div
     class="featured-categories-product-card-container"
     *ngFor="let product of products | slice:0:4; let i = index"
@@ -33,34 +33,6 @@
         {{ product.product_description }}
       </ng-template>
     </div>
-    <div class="featured-product-bottom">
-      <button id="add-to-cart-btn" (click)="addToCart(product)" >Add To Cart</button>
-    </div>
-  </div>
-</div> -->
-<div class="featured-categories-product-container">
-  <div
-    class="featured-categories-product-card-container"
-  >
-    <div class="featured-product-discount">
-      <img src="../../../../assets/disc-tag.png" alt="" />
-    </div>
-    <div class="featured-categories-product-info">
-      <div class="featured-product-image">
-        <img
-          [src]="items.ImageURL"
-          alt="Product Image"
-          class="product-image"
-        />
-      </div>
-      <div class="featured-product-head">
-        <p id="product_name">{{ items.item }}</p>
-      </div>
-    </div>
-    <div class="featured-product-rating">
-      <img src="../../../../assets/stars.png" alt="" />
-    </div>
-
     <div class="featured-product-bottom">
       <button id="add-to-cart-btn" (click)="addToCart()" >Add To Cart</button>
     </div>

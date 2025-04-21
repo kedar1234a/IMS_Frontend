@@ -1,6 +1,5 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,40 +17,77 @@ export class AsideComponent {
   onItemClick(item: string): void {
     switch (item) {
       case 'Dashboard':
-        this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-home'] } }]);
-        this.activeItem = item; // Set the clicked item as active
+        this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-home'] } },
+        ]);
+        this.activeItem = item;
         break;
+
       case 'Products':
-        this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-product'] } }]);
-        this.activeItem = item; // Set the clicked item as active
+        this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-product'] } },
+        ]);
+        this.activeItem = item;
         break;
+
       case 'Categories':
         console.log('Navigating to Categories...');
-        this.activeItem = item; // Set the clicked item as active
+        this.activeItem = item;
         break;
+
       case 'Orders':
         console.log('Navigating to Orders...');
-        this.activeItem = item; // Set the clicked item as active
+        this.activeItem = item;
         break;
+
+      // Billing is handled via dropdown, so no navigation here
       case 'Billing':
-        console.log('Navigating to Billing...');
-        this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-billing'] } }]);
-        this.activeItem = item; // Set the clicked item as active
+        this.activeItem = item;
         break;
+
       case 'Sellers / Vendors':
         console.log('Navigating to Sellers / Vendors...');
-        this.activeItem = item; // Set the clicked item as active
+        this.activeItem = item;
         break;
+
       case 'Customers':
         console.log('Navigating to Customers...');
-        this.activeItem = item; // Set the clicked item as active
+        this.activeItem = item;
         break;
+
       case 'Reviews':
         console.log('Navigating to Reviews...');
-        this.activeItem = item; // Set the clicked item as active
+        this.activeItem = item;
         break;
+
       default:
         console.log('Unknown menu item clicked.');
+    }
+  }
+
+  onBillingChange(value: string): void {
+    this.activeItem = 'Billing';
+    switch (value) {
+      case 'auto-billing':
+        this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-auto-billing'] } },
+        ]);
+        break;
+
+      case 'manual-billing':
+        this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-manual-billing'] } },
+        ]);
+        break;
+
+      case 'show-bills':
+        this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-show-bills'] } },
+        ]);
+        break;
+
+      default:
+        console.warn('Unknown billing option selected.');
     }
   }
 }

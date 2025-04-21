@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BillingComponent } from './billing.component';
+import { AutomateBillingComponent } from './automate-billing.component';
 
-describe('BillingComponent', () => {
-  let component: BillingComponent;
-  let fixture: ComponentFixture<BillingComponent>;
+describe('AutomateBillingComponent', () => {
+  let component: AutomateBillingComponent;
+  let fixture: ComponentFixture<AutomateBillingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BillingComponent]
+      imports: [AutomateBillingComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BillingComponent);
+    fixture = TestBed.createComponent(AutomateBillingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

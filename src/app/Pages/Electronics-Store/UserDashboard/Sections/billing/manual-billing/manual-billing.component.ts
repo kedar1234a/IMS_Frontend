@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { SalesProductService } from '../../../../../../Services/Billing/sales-product.service';
+import { ProductService } from '../../../../../../Services/productServices/product-service.service';
+import { PDFDocument, StandardFonts,rgb} from 'pdf-lib';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import { SalesProductService } from '../../../../../Services/Billing/sales-product.service';
-import { ProductService } from '../../../../../Services/productServices/product-service.service';
 
 @Component({
-  selector: 'app-billing',
+  selector: 'app-manual-billing',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.css']
+  imports: [CommonModule,FormsModule],
+  templateUrl: './manual-billing.component.html',
+  styleUrl: './manual-billing.component.css'
 })
-export class BillingComponent implements OnInit{
-
+export class ManualBillingComponent implements OnInit{
   invoiceNo : number =0;
   invoiceDate = '';
   invoiceName = '';

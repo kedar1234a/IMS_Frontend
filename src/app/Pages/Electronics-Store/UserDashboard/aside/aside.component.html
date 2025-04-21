@@ -24,12 +24,23 @@
     >
       Orders
     </li>
-    <li
-      [ngClass]="{ active: activeItem === 'Billing' }"
-      (click)="onItemClick('Billing')"
-    >
-      Billing
+
+    <li [ngClass]="{ active: activeItem === 'Billing' }">
+      <select
+        #billingSelect
+        name="select-billing-type"
+        id="select-billing-type"
+        (change)="onBillingChange(billingSelect.value)"
+      >
+        <option value="" selected disabled>Select Billing Type</option>
+        <option value="auto-billing">Auto Billing</option>
+        <option value="manual-billing">Manual Billing</option>
+        <option value="show-bills">Show Bills</option>
+      </select>
     </li>
+    
+    
+
     <li
       [ngClass]="{ active: activeItem === 'Sellers / Vendors' }"
       (click)="onItemClick('Sellers / Vendors')"

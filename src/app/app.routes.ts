@@ -84,15 +84,6 @@ export const routes: Routes = [
       ).then((m) => m.ElectronicsSeeMoreComponent);
     },
   },
-  {
-    path: 'electronics-add-to-cart',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Electronics-Store/electronics-add-to-cart/electronics-add-to-cart.component'
-      ).then((m) => m.ElectronicsAddToCartComponent);
-    },
-  },
   // <--------------------- Electronics Store Dashboard Routes --------------------->
   {
     path: 'electronics-user-dashboard',
@@ -124,12 +115,32 @@ export const routes: Routes = [
     outlet: 'outlet2',
   },
   {
-    path: 'electronics-user-dashboard-billing',
+    path: 'electronics-user-dashboard-manual-billing',
     pathMatch: 'full',
     loadComponent: () => {
       return import(
-        './Pages/Electronics-Store/UserDashboard/Sections/billing/billing.component'
-      ).then((m) => m.BillingComponent);
+        './Pages/Electronics-Store/UserDashboard/Sections/billing/manual-billing/manual-billing.component'
+      ).then((m) => m.ManualBillingComponent);
+    },
+    outlet: 'outlet2',
+  },
+  {
+    path: 'electronics-user-dashboard-auto-billing',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/billing/automate-billing/automate-billing.component'
+      ).then((m) => m.AutomateBillingComponent);
+    },
+    // outlet: 'outlet2',
+  },
+  {
+    path: 'electronics-user-dashboard-show-bills',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/billing/show-bills/show-bills.component'
+      ).then((m) => m.ShowBillsComponent);
     },
     outlet: 'outlet2',
   },
