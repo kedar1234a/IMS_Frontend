@@ -42,3 +42,28 @@
 
 
 /* ----------------------------Main content ------------------------ */
+
+
+
+  
+  .billing-dropdown {
+    border:none;
+    background-color: transparent; /* Make background transparent */
+    width: 200px;
+    color: #000; /* Optional: ensure text is visible */
+    transition: border-color 0.3s ease;
+    font-size: 16px;
+   
+  }
+  
+  .billing-dropdown:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.2); /* optional soft highlight on focus */
+  }
+  
+  li.active .billing-dropdown {
+    border-color: #28a745;
+    background-color: rgba(0, 255, 0, 0.1); /* optional active effect */
+  }
+  

@@ -25,19 +25,21 @@
       Orders
     </li>
 
-    <li [ngClass]="{ active: activeItem === 'Billing' }">
+    <li [ngClass]="{ active: activeItem === 'Billing' }" >
       <select
         #billingSelect
         name="select-billing-type"
         id="select-billing-type"
         (change)="onBillingChange(billingSelect.value)"
+        class="billing-dropdown"
       >
-        <option value="" selected disabled>Select Billing Type</option>
+        <option value="" selected disabled>Billing</option>
         <option value="auto-billing">Auto Billing</option>
         <option value="manual-billing">Manual Billing</option>
         <option value="show-bills">Show Bills</option>
       </select>
     </li>
+    
     
     
 
