@@ -1,4 +1,4 @@
-<div class="featured-categories-product-container">
+<!-- <div class="featured-categories-product-container">
   <div
     class="featured-categories-product-card-container"
     *ngFor="let product of products | slice:0:4; let i = index"
@@ -34,33 +34,35 @@
       </ng-template>
     </div>
     <div class="featured-product-bottom">
-      <button type="submit" id="add-to-cart-btn">Add To Cart</button>
+      <button id="add-to-cart-btn" (click)="addToCart(product)" >Add To Cart</button>
+    </div>
+  </div>
+</div> -->
+<div class="featured-categories-product-container">
+  <div
+    class="featured-categories-product-card-container"
+  >
+    <div class="featured-product-discount">
+      <img src="../../../../assets/disc-tag.png" alt="" />
+    </div>
+    <div class="featured-categories-product-info">
+      <div class="featured-product-image">
+        <img
+          [src]="items.ImageURL"
+          alt="Product Image"
+          class="product-image"
+        />
+      </div>
+      <div class="featured-product-head">
+        <p id="product_name">{{ items.item }}</p>
+      </div>
+    </div>
+    <div class="featured-product-rating">
+      <img src="../../../../assets/stars.png" alt="" />
+    </div>
+
+    <div class="featured-product-bottom">
+      <button id="add-to-cart-btn" (click)="addToCart()" >Add To Cart</button>
     </div>
   </div>
 </div>
-
-
-<!-- <div id="featured_categories_mainbox">
-  <div class="featured_categories_outerbox" *ngFor="let product of products">
-    <div class="discount">20% OFF</div>
-
-    <div class="featured_categories_innerbox">
-      <img
-        [src]="getImageUrl(product.product_id)"
-        alt="Product Image"
-        class="product-image"
-        width="150px"
-      />
-    </div>
-
-    <div class="description">
-      <p class="glass"></p>
-      <p class="rupees"></p>
-    </div>
-    <img src="../../../../assets/stars.png" class="stars" />
-    <p id="product_description">
-      
-    </p>
-    <input type="submit" value="Add to Cart" class="btn" />
-  </div>
-</div> -->

@@ -35,9 +35,12 @@ export class ProductService {
     const timestamp = new Date().getTime(); // 👈 cache buster
     return `${this.imageBaseUrl}/${productId}?t=${timestamp}`;
   }
-  
-
-  deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/deleteProduct/${id}`);
+  //  deleteProduct(product_id: number): Observable<any> {
+  //   return this.http.delete<any>(`${this.apiUrl}/deleteProduct/${product_id}`);
+  // }
+  deleteProduct(product_id: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/deleteProduct/${product_id}`);
   }
+  
+ 
 }

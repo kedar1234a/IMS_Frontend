@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../Services/AuthenticationService/authentication.service';
-import { authData } from '../../model/auth-data';
+import { authData } from '../../model/User-Data';
 import { CommonModule } from '@angular/common';
 
 @Component({

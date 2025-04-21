@@ -48,9 +48,16 @@ export class LoginComponent {
 
         // this.router.navigate(['/electronics-store-home']);
       },
-      error: (error) => {
-        console.error('Login failed:', error);
-        alert('Invalid email or password. Try again.');
+      error: (err) => {
+        if(err.status == 403){
+          alert(err.error.message);
+        }
+        else if(err.status == 401){
+          alert("Invalid Email or Password");
+        }
+        else{
+          alert("Something Went Wrong, Please try again Later");
+        }
       },
     });
   }

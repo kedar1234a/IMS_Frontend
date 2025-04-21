@@ -5,11 +5,7 @@
     <ul>
       <li>Home</li>
       <li>
-        <select
-          name="admin-select"
-          id="admin-select"
-          (change)="navigate($event)"
-        >
+        <select name="admin-select" id="admin-select" (change)="navigate($event)">
           <option value="" selected disabled>Account</option>
           <option value="manage">Manage</option>
           <option value="logout">Logout</option>
@@ -18,6 +14,7 @@
     </ul>
   </div>
 </nav>
+
 <div class="approve-container">
   <table>
     <tr>
@@ -34,33 +31,18 @@
       <td>{{ user.full_name }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.store_type }}</td>
-      <td
-        id="user_status"
-        [style.color]="
-          isApproved == true ? 'green' : isApproved == false ? 'red' : 'black'
-        "
-      >
-        {{ status }}
+      <td [ngStyle]="{ color: getStatusColor(user.status) }">
+        {{ user.status }}
       </td>
       <td>
-        <img
-          [src]="imageURL"
-          alt=""
-          width="50px"
-          (click)="viewImage(imageURL)"
-          style="cursor: pointer;"
-        />
+        <img [src]="imageURL" alt="" width="50px" (click)="viewImage(imageURL)" style="cursor: pointer;" />
       </td>
       <td id="action">
-        <button id="approve" (click)="approve_user()">
-          <img
-            src="../../../../assets/logos/approve-black.png"
-            width="25px"
-            alt=""
-          />
+        <button id="approve" (click)="approveUser(user.id)">
+          <img src="../../../../assets/logos/approve-black.png" width="25px" alt="" />
         </button>
-        <button id="reject" (click)="reject_user()">
-          <img src="../../../../assets/logos/reject-black.png" width="26px" />
+        <button id="reject" (click)="rejectUser(user.id)">
+          <img src="../../../../assets/logos/reject-black.png" width="25px" alt="" />
         </button>
       </td>
     </tr>
