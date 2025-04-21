@@ -1,0 +1,35 @@
+<app-electronics-nav></app-electronics-nav>
+
+<div class="cart-container">
+  <h2>Your Shopping Cart</h2>
+
+  <div *ngIf="items.length === 0">
+    <p>Your cart is empty.</p>
+  </div>
+
+  <ul *ngIf="items.length > 0" class="cart-items">
+    <li *ngFor="let item of items" class="cart-item">
+      <div>
+        <strong>{{ item.name }}</strong><br />
+        Price: ₹{{ item.price }}
+        <br />
+        Quantity:
+        <input
+          type="number"
+          min="1"
+       
+          (change)="updateTotal()"
+        />
+        <br />
+        Subtotal: ₹{{ item.price * item.quantity }}
+      </div>
+      <button (click)="removeItem(item.id)">Remove</button>
+    </li>
+  </ul>
+
+  <div *ngIf="items.length > 0" class="cart-summary">
+    <h3>Total: ₹{{ total }}</h3>
+    <button (click)="exicuteBill()">Exicute Bill</button>
+    <button (click)="clearCart()">Clear Cart</button>
+  </div>
+</div>

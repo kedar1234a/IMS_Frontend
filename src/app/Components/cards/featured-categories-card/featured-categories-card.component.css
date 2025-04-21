@@ -95,6 +95,7 @@
   cursor: pointer;
   transition: all .2s ease-in-out;
   width: 90%; /* Ensures all buttons are same width */
+  
 }
 #add-to-cart-btn:hover{
   background-color: #01a6b8;

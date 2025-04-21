@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { MyCartComponent } from './Pages/Electronics-Store/my-cart/my-cart.component';
 
 export const routes: Routes = [
   {
@@ -270,6 +271,7 @@ export const routes: Routes = [
     },
     outlet: 'outlet2',
   },
+  {path:'electronics-myCart',component: MyCartComponent}
 
 ];
 

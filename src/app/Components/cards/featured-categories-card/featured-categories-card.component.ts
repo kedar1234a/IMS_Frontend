@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../Services/productServices/product-service.service';
 import { CommonModule } from '@angular/common';
 import { Router} from '@angular/router';
+import { AddToCartService ,CartItem} from '../../../Services/AddToCartService/add-to-cart-service.service';
 @Component({
   selector: 'app-featured-categories-card',
   standalone: true,
@@ -15,7 +16,7 @@ export class FeaturedCategoriesCardComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private router: Router,
+    private router: Router,private cartService: AddToCartService
   ) {}
 
   ngOnInit(): void {
@@ -44,12 +45,14 @@ export class FeaturedCategoriesCardComponent implements OnInit {
     this.expandedIndex = this.expandedIndex === index ? null : index;
   }
   
-  addToCart(): void {
-    const userConfirmed = confirm('✅ Item added to your cart.\n\nWould you like to view your cart now?');
-    if (userConfirmed) {
-      this.router.navigate(['electronics-user-dashboard-auto-billing']);
-    }
+  addToCart(name: string, price: number): void {
+    this.cartService.addToCart({
+      id: Date.now(), // generate unique id
+      name,
+      price,
+      quantity: 1
+    });
+    alert(`${name} added to cart!`);
   }
-  
   
 }

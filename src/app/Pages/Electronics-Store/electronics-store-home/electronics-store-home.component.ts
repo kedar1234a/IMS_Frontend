@@ -44,4 +44,5 @@ export class ElectronicsStoreHomeComponent implements OnInit{
   getImageUrl(productId: number): string {
     return this.productService.getImageUrl(productId); // Get image URL
   }
+
 }
