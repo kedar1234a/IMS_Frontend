@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HeroComponent } from "../hero/hero.component";
 import { CommonModule } from '@angular/common';
 
@@ -12,7 +12,12 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
 
+   constructor(private router:Router){}
+
   ngOnInit(): void {
+
+  
+    this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-home'] } }]);
       
   }
 

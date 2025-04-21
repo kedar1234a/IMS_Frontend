@@ -45,7 +45,6 @@ export class FeaturedCategoriesCardComponent implements OnInit {
   }
   
   addToCart(): void {
-
     const userConfirmed = confirm('✅ Item added to your cart.\n\nWould you like to view your cart now?');
     if (userConfirmed) {
       this.router.navigate(['electronics-user-dashboard-auto-billing']);
