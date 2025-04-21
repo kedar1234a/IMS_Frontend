@@ -1,0 +1,61 @@
+<app-electronics-nav></app-electronics-nav>
+<main>
+  <div class="cart-container">
+    <div class="cart-head">Your Cart</div>
+    <div class="cart-body">
+      <table>
+        <thead>
+          <tr class="line-below">
+            <th style="text-align: left; padding: 0 100px">Item</th>
+            <th>Price</th>
+            <th class="Quantity-info">Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="item-info-td">
+              <div class="item-info">
+                <img  width="30px" />
+                <span id="product-info"></span>
+              </div>
+            </td>
+            <td>₹</td>
+            <td class="Quantity-info Quantity-info-td">
+              <div class="item-quantity">
+                <button
+                  class="decrease-item"
+                  (click)="update_quantity(item, 'decrease')"
+                >-</button>
+                <span></span>
+                <button
+                  class="increase-item"
+                  (click)="update_quantity(item, 'increase')"
+                >+</button>
+              </div>
+            </td>
+            <td>₹</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Subtotal Section -->
+      <table id="sub-total">
+        <tbody>
+          <tr>
+            <th>Subtotal</th>
+            <td>₹ {{ subtotal }}</td>
+          </tr>
+          <tr>
+            <th>Tax</th>
+            <td>₹ {{ tax }} ({{ GST }}%)</td>
+          </tr>
+          <tr>
+            <th>Grand Total</th>
+            <td id="grand-total">₹ {{ grandTotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>

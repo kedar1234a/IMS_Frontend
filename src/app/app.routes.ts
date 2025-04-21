@@ -84,6 +84,15 @@ export const routes: Routes = [
       ).then((m) => m.ElectronicsSeeMoreComponent);
     },
   },
+  {
+    path: 'electronics-add-to-cart',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/electronics-add-to-cart/electronics-add-to-cart.component'
+      ).then((m) => m.ElectronicsAddToCartComponent);
+    },
+  },
   // <--------------------- Electronics Store Dashboard Routes --------------------->
   {
     path: 'electronics-user-dashboard',

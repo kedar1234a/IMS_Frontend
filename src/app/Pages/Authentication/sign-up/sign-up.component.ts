@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../../../Services/AuthenticationService/authentication.service';
-import { authData } from '../../../model/auth-data';
+import { UserData } from '../../../model/User-Data';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
-  signupData: authData = {
+  signupData: UserData = {
     full_name: '',
     email: '',
     store_type: '',
@@ -22,7 +22,6 @@ export class SignUpComponent {
   };
 
   confirm_password = '';
-
   showPassword = false;
   showConfirmPassword = false;
 
@@ -32,17 +31,25 @@ export class SignUpComponent {
   ) {}
 
   OnSignUp() {
+    // Check if all required fields are provided
     if (
       this.signupData.full_name &&
       this.signupData.email &&
       this.signupData.password &&
       this.signupData.store_type
     ) {
+      // Check if passwords match
       if (this.signupData.password === this.confirm_password) {
-        this.authenticationService.storeSignupDetails(this.signupData).subscribe(
+        // Add a pending status to the signup data before sending it
+        const signupRequest = {
+          ...this.signupData,
+          status: 'PENDING', // Setting default status as 'PENDING'
+        };
+
+        this.authenticationService.storeSignupDetails(signupRequest).subscribe(
           (response) => {
-            alert('SignUp Successful');
-            this.router.navigate(['/login']);
+            alert('Signup Successful. Please wait for admin approval.');
+            this.router.navigate(['/login']); // Navigate to login page
 
             // Reset form fields
             this.signupData = {
@@ -62,14 +69,16 @@ export class SignUpComponent {
         alert('Passwords do not match');
       }
     } else {
-      alert('Invalid Credentials');
+      alert('Please fill all the required fields.');
     }
   }
 
+  // Toggle password visibility
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
+  // Toggle confirm password visibility
   toggleConfirmPasswordVisibility() {
     this.showConfirmPassword = !this.showConfirmPassword;
   }

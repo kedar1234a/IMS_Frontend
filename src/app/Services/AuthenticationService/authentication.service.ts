@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { authData } from '../../model/auth-data';
+import { UserData } from '../../model/User-Data';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  storeSignupDetails(AuthData: authData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, AuthData, {
+  storeSignupDetails(UserData: UserData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, UserData, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
@@ -22,4 +22,5 @@ export class AuthenticationService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.signInUrl, { email, password }, { headers });
   }
+  
 }
