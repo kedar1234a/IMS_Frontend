@@ -46,4 +46,7 @@ export class AddToCartService {
     return this.cart.reduce((count, item) => count + item.quantity, 0);
   }
 
+
+  
+
 }

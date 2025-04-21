@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ElectronicsNavComponent } from "../../../Components/navbar/store-navbars/electronics-nav/electronics-nav.component";
 import { CommonModule } from '@angular/common';
 import { AddToCartService ,CartItem} from '../../../Services/AddToCartService/add-to-cart-service.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-cart',
   standalone: true,
-  imports: [ElectronicsNavComponent,CommonModule],
+  imports: [ElectronicsNavComponent,CommonModule,FormsModule],
   templateUrl: './my-cart.component.html',
   styleUrl: './my-cart.component.css'
 })

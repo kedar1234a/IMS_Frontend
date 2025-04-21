@@ -17,8 +17,8 @@
         <input
           type="number"
           min="1"
-       
-          (change)="updateTotal()"
+          [(ngModel)]="item.quantity"
+          (ngModelChange)="updateTotal()"
         />
         <br />
         Subtotal: ₹{{ item.price * item.quantity }}

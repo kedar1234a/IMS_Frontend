@@ -50,9 +50,29 @@ export class FeaturedCategoriesCardComponent implements OnInit {
       id: Date.now(), // generate unique id
       name,
       price,
-      quantity: 1
+      quantity:1
     });
-    alert(`${name} added to cart!`);
+    
   }
+
+  selectedProductIds: Set<number> = new Set<number>();
+
+  toggleProductSelection(product: any): void {
+    if (this.selectedProductIds.has(product.product_id)) {
+      this.selectedProductIds.delete(product.product_id);
+     
+    } else {
+      this.selectedProductIds.add(product.product_id);
+      this.addToCart(product.product_name, product.product_price);
+    }
+  }
+  
+
+  
+
+isProductSelected(productId: number): boolean {
+  return this.selectedProductIds.has(productId);
+}
+
   
 }
