@@ -27,11 +27,25 @@ export class MyCartComponent implements OnInit{
   }
 
   updateTotal(): void {
-    this.total = this.items.reduce(
-      (sum, item) => sum + item.totalAmount,
-      0
-    );
+    this.items = this.items.map(item => {
+      const netAmount = item.price * item.quantity;
+      const gstAmount = netAmount * item.gstRate / 100;
+      const totalAmount = netAmount + gstAmount;
+  
+      return {
+        ...item,
+        netAmount,
+        gstAmount,
+        totalAmount
+      };
+    });
+  
+    this.total = this.items.reduce((sum, item) => sum + item.totalAmount, 0);
+  
+    // Optional: update items in cart service too
+    this.cartService.cartItems = this.items;
   }
+  
   
 
   removeItem(id: number): void {

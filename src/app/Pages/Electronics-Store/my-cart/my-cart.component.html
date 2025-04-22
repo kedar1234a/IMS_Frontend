@@ -15,13 +15,18 @@
         <br />
         Quantity:
         <input
-          type="number"
-          min="1"
-          [(ngModel)]="item.quantity"
-          (change)="updateTotal()"
-        />
+        type="number"
+        min="1"
+        [(ngModel)]="item.quantity"
+        (ngModelChange)="updateTotal()"
+      />
+      
         <br />
-        Subtotal: ₹{{ item.price * item.quantity }}
+        Subtotal: ₹{{ item.price * item.quantity }}<br>
+        GST Type : {{ item.gstType}}<br>
+        GST Rate : {{ item.gstRate}}% <br>
+        GST Amount : {{ item.gstAmount}}<br>
+        Total Amount : {{ item.totalAmount}}
       </div>
       <button (click)="removeItem(item.id)">Remove</button>
     </li>
