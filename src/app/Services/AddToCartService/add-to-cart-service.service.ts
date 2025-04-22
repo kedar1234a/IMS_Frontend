@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { AddToCart } from '../../model/addToCart-data';
 
 export interface CartItem {
   id: number;
   name: string;
   price: number;
   quantity: number;
+  netAmount:number;
+  gstType: string;
+  gstRate: number;
+  gstAmount: number;
+  totalAmount: number;
 }
 
 @Injectable({
@@ -13,40 +17,26 @@ export interface CartItem {
 })
 export class AddToCartService {
 
-  private cart: CartItem[] = [];
+  
+  cartItems: any[] = [];
 
-  constructor() {}
+  addToCart(item: any) {
+    this.cartItems.push(item);
+  }
 
-  addToCart(item: CartItem): void {
-    const existingItem = this.cart.find(i => i.id === item.id);
-    if (existingItem) {
-      existingItem.quantity += item.quantity;
-    } else {
-      this.cart.push({ ...item });
-    }
+  getItems() {
+    return this.cartItems;
+  }
+
+  clearCart() {
+    this.cartItems = [];
   }
 
   removeFromCart(id: number): void {
-    this.cart = this.cart.filter(item => item.id !== id);
+    const index = this.cartItems.findIndex(item => item.id === id);
+    if (index !== -1) {
+      this.cartItems.splice(index, 1);
+    }
   }
-
-  clearCart(): void {
-    this.cart = [];
-  }
-
-  getItems(): CartItem[] {
-    return this.cart;
-  }
-
-  getTotal(): number {
-    return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  }
-
-  getItemCount(): number {
-    return this.cart.reduce((count, item) => count + item.quantity, 0);
-  }
-
-
-  
 
 }

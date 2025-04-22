@@ -14,12 +14,19 @@ import { product } from '../../model/product-model';
 export class ProductComponent implements OnInit {
   products: product[] = [];
 
+  CGST = "CGST";
+  SGST = "SGST";
+  IGST = "IGST"; // Integrated
+  UTGST = "UTGST"; // Union territory
+
   newProduct: product = {
     product_name: '',
     product_price: 0,
     stock_quantity: 0,
     product_category: '',
-    product_description: ''
+    product_description: '',
+    product_gstType: '',
+    product_gstRate: 0
   };
 
   isEditing: boolean = false;
@@ -31,14 +38,12 @@ export class ProductComponent implements OnInit {
     this.loadProducts();
   }
 
-  // Load all products
   loadProducts(): void {
     this.productService.getProducts().subscribe((data) => {
       this.products = data;
     });
   }
 
-  // Handle file input change
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -46,7 +51,6 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  // Add new product
   addProduct(): void {
     if (!this.selectedImage) {
       alert("Please select a product image.");
@@ -60,13 +64,11 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  // Edit existing product
   editProduct(product: product): void {
     this.newProduct = { ...product };
     this.isEditing = true;
   }
 
-  // Update product
   updateProduct(): void {
     this.productService.updateProduct(this.newProduct).subscribe((message: string) => {
       alert(message);
@@ -76,7 +78,6 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  // Delete product
   deleteProduct(product_id: any): void {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productService.deleteProduct(product_id).subscribe({
@@ -89,18 +90,18 @@ export class ProductComponent implements OnInit {
           console.error(err);
         }
       });
-      
     }
   }
 
-  // Reset form
   resetForm(): void {
     this.newProduct = {
       product_name: '',
       product_price: 0,
       stock_quantity: 0,
       product_category: '',
-      product_description: ''
+      product_description: '',
+      product_gstType: '',
+      product_gstRate: 0
     };
     this.selectedImage = null;
     this.isEditing = false;

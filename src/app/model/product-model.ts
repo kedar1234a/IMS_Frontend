@@ -5,4 +5,6 @@ export interface product {
   stock_quantity: number;
   product_category: string;
   product_description: string;
+  product_gstType: string;
+  product_gstRate: number;
 }

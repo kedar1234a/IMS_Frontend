@@ -15,6 +15,7 @@
     <option value="stock">Stock Quantity</option>
   </select>
 </div>
+
 <div class="container">
   <form [formGroup]="productForm" enctype="multipart/form-data">
     <input
@@ -32,7 +33,7 @@
     />
 
     <select formControlName="product_category" required>
-      <option value="" disabled selected>Select Category</option>
+      <option value="" disabled>Select Category</option>
       <option *ngFor="let category of categories" [value]="category">
         {{ category }}
       </option>
@@ -49,58 +50,76 @@
       formControlName="product_description"
       placeholder="Product Description"
       cols="30"
-     maxlength="200"
+      maxlength="200"
     ></textarea>
 
+    <!-- ✅ Updated GST Type and Rate to use formControlName -->
+    <select formControlName="product_gstType">
+      <option value="" disabled>Select GST Type</option>
+      <option [value]="CGST + '+' + SGST">CGST+SGST</option>
+      <option [value]="IGST">IGST</option>
+      <option [value]="CGST + '+' + UTGST">CGST+UTGST</option>
+    </select>
+
+    <select formControlName="product_gstRate">
+      <option value="" disabled>Select GST Rate</option>
+      <option [value]="5">5%</option>
+      <option [value]="18">18%</option>
+      <option [value]="28">28%</option>
+    </select>
+
     <input type="file" (change)="onFileSelected($event)" required />
-    <button *ngIf="!editingProductId" (click)="saveProduct()" >Save</button>
-    <button *ngIf="editingProductId" (click)="updateProduct()">Update</button>
-    <!-- 🔍 Search input field -->
+
+    <button *ngIf="!editingProductId" (click)="saveProduct()" type="button">Save</button>
+    <button *ngIf="editingProductId" (click)="updateProduct()" type="button">Update</button>
   </form>
 
   <table>
     <thead>
       <tr>
         <th>Sr.No</th>
+        <th>Image</th>
         <th>Name</th>
         <th>Description</th>
         <th>Category</th>
         <th>Stock</th>
         <th>Price</th>
-        <th>Image</th>
+       <th>GST Type</th>
+       <th>GST Rate</th>
         <th>Actions</th>
         <th>Product ID</th>
       </tr>
     </thead>
     <tbody>
-      <!-- 👇 Use filtered array instead of full array -->
-      <tr *ngFor="let product of filteredProducts; let i =index">
-        <td>{{ i+1}}</td>
+      <tr *ngFor="let product of filteredProducts; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <img
+            [src]="product.imageUrl"
+            class="product-image"
+            alt="Product image"
+          />
+        </td>
         <td>{{ product.product_name }}</td>
         <td id="product_description">{{ product.product_description }}</td>
         <td>{{ product.product_category }}</td>
         <td>{{ product.product_available_stock_quantity }}</td>
         <td>{{ product.product_price }}</td>
-        <td>
-          <img [src]="product.imageUrl" class="product-image" alt="Product image"/>
-          
-        </td>
+       <td>{{ product.gst_type}}</td>
+       <td>{{ product.gst_rate}}</td>
         <td id="action">
           <button (click)="editProduct(product)" id="edit-product">
             <img
-            src="../../../../../assets/logos/edit-black.png"
-            width="20px"
-            alt=""
+              src="../../../../../assets/logos/edit-black.png"
+              width="20px"
+              alt="edit"
             />
           </button>
-          <button
-          (click)="deleteProduct(product.product_id)"
-          id="delete-product"
-          >
-          <img src="../../../../../assets/logos/delete-black.png" width="20px" />
-        </button>
-      </td>
-      <td>{{ product.product_id }}</td>
+          <button (click)="deleteProduct(product.product_id)" id="delete-product">
+            <img src="../../../../../assets/logos/delete-black.png" width="20px" />
+          </button>
+        </td>
+        <td>{{ product.product_id }}</td>
       </tr>
     </tbody>
   </table>

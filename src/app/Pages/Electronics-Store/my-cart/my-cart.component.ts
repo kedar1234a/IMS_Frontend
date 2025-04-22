@@ -3,6 +3,8 @@ import { ElectronicsNavComponent } from "../../../Components/navbar/store-navbar
 import { CommonModule } from '@angular/common';
 import { AddToCartService ,CartItem} from '../../../Services/AddToCartService/add-to-cart-service.service';
 import { FormsModule } from '@angular/forms';
+import { SalesProductService } from '../../../Services/Billing/sales-product.service';
+import { AutobillingService } from '../../../Services/Billing/autobilling.service';
 
 @Component({
   selector: 'app-my-cart',
@@ -13,9 +15,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class MyCartComponent implements OnInit{
   items: CartItem[] = [];
+
+
   total: number = 0;
 
-  constructor(private cartService:AddToCartService) {}
+  constructor(private cartService:AddToCartService, private billService: SalesProductService, private billingItem:AutobillingService) {}
 
   ngOnInit(): void {
     this.items = this.cartService.getItems();
@@ -24,16 +28,34 @@ export class MyCartComponent implements OnInit{
 
   updateTotal(): void {
     this.total = this.items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+      (sum, item) => sum + item.totalAmount,
       0
     );
   }
+  
 
   removeItem(id: number): void {
     this.cartService.removeFromCart(id);
     this.items = this.cartService.getItems();
-    this.updateTotal();
+  
+    // Recalculate item amounts after removal
+    this.items = this.items.map(item => {
+      const netAmount = item.price * item.quantity;
+      const gstAmount = netAmount * item.gstRate / 100;
+      const totalAmount = netAmount + gstAmount;
+  
+      return {
+        ...item,
+        netAmount,
+        gstAmount,
+        totalAmount
+      };
+    });
+  
+    // Update the total using new totalAmount values
+    this.total = this.items.reduce((sum, item) => sum + item.totalAmount, 0);
   }
+  
 
   clearCart(): void {
     this.cartService.clearCart();
@@ -41,5 +63,26 @@ export class MyCartComponent implements OnInit{
     this.total = 0;
   }
 
-  exicuteBill(){}
+  exicuteBill() {
+    const processedItems = this.cartService.cartItems.map(item => {
+      const netAmount = item.price * item.quantity;
+      const gstAmount = netAmount * item.gstRate / 100;
+      const totalAmount = netAmount + gstAmount;
+  
+      return {
+        ...item,
+        netAmount,
+        gstAmount,
+        totalAmount
+      };
+    });
+  
+    // Now you can use this array to send to a service or log it
+    console.log("Billing Items:", processedItems);
+  
+  
+    // Send processed items to billing
+    this.billingItem.setBillingItem(processedItems);
+  }
+  
 }

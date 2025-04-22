@@ -56,13 +56,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of products; let i = index">
-            <td>{{ item.productName }}</td>
+            <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.netAmount}}</td>
-            <td>{{item.typeOfGST}}</td>
-            <td>{{ item.tax}}%</td>
-            <td>{{item.gst}}</td>
+            <td>{{item.gstType}}</td>
+            <td>{{ item.gstRate}}%</td>
+            <td>{{item.gstAmount}}</td>
             <td>{{ item.totalAmount }}</td>
             <td> <img src="../../../../assets/billing_icons/Trash.png" style="cursor: pointer;"
                 (click)="removeProduct(i)" /></td>
@@ -76,7 +76,7 @@
         <p><strong>Due Date:</strong> {{ invoiceDate }}</p>
       </div>
   
-      <button class="create-btn" (click)="downloadPDF()">Create your Invoice</button>
+      <button class="create-btn" (click)="saveBill()">Create your Invoice</button>
       <button class="create-btn" (click)="previewPDF()">Preview your Invoice</button>
     </div>
   </section>

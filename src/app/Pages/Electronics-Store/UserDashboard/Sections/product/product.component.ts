@@ -32,6 +32,11 @@ export class ProductComponent implements OnInit {
   searchTerm: string = '';
   selectedSortOption: string = '';
 
+  CGST = "CGST";
+  SGST = "SGST";
+  IGST = "IGST"; // Integrated
+  UTGST = "UTGST"; // Union territory
+
   editingProductId: number | null = null;
 
   constructor(
@@ -46,6 +51,8 @@ export class ProductComponent implements OnInit {
       product_category: [''],
       product_available_stock_quantity: [''],
       product_description: [''],
+      product_gstType:[''],
+      product_gstRate:['']
     });
 
     this.loadProducts();
@@ -73,6 +80,8 @@ export class ProductComponent implements OnInit {
         'product_available_stock_quantity'
       )?.value,
       product_description: this.productForm.get('product_description')?.value,
+      gst_type: this.productForm.get('product_gstType')?.value,
+      gst_rate: this.productForm.get('product_gstRate')?.value
     };
 
     this.productService.addProduct(productData, this.selectedFile).subscribe({
@@ -104,6 +113,8 @@ export class ProductComponent implements OnInit {
         'product_available_stock_quantity'
       )?.value,
       product_description: this.productForm.get('product_description')?.value,
+      product_gstType: this.productForm.get('product_gstType')?.value,
+      product_gstRate: this.productForm.get('product_gstRate')?.value
     };
 
     this.productService

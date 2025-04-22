@@ -38,6 +38,18 @@
         name="product_description"
         placeholder="Description"
       />
+
+      <select [(ngModel)]="newProduct.product_gstType">
+        <option [value]="CGST + '+' + SGST">CGST+SGST</option>
+        <option [value]="IGST">IGST</option>
+        <option [value]="CGST + '+' + UTGST">CGST+UTGST</option>
+      </select>
+
+      <select [(ngModel)]="newProduct.product_gstRate">
+        <option [value]="5">5%</option>
+        <option [value]="18">18%</option>
+        <option [value]="28">28%</option>
+      </select>
       <!-- <input
       type="file"
       name="produtc_img"
