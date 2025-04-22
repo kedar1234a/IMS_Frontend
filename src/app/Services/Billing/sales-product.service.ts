@@ -10,6 +10,7 @@ export class SalesProductService {
 
   private apiUrl = 'http://localhost:8080/api/customers';
   private getCount = 'http://localhost:8080/api/count';
+  private getBills = 'http://localhost:8080/api/fetchAllBills';
 
   constructor(private http: HttpClient) {}
 
@@ -21,4 +22,9 @@ export class SalesProductService {
   getAllBill(): Observable<number> {
     return this.http.get<number>(this.getCount);
   }
+
+  getAllCustomers(): Observable<any[]> {
+    return this.http.get<any[]>(this.getBills);
+  }
+
 }

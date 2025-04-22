@@ -70,7 +70,7 @@ export class AsideComponent {
     switch (value) {
       case 'auto-billing':
         this.router.navigate([
-          { outlets: { outlet2: ['electronics-user-dashboard-auto-billing'] } },
+          { outlets: { outlet2: ['electronics-autoBilling'] } },
         ]);
         break;
 
@@ -82,7 +82,7 @@ export class AsideComponent {
 
       case 'show-bills':
         this.router.navigate([
-          { outlets: { outlet2: ['electronics-user-dashboard-show-bills'] } },
+          { outlets: { outlet2: ['electronics-showBilling'] } },
         ]);
         break;
 
