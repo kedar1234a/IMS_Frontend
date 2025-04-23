@@ -5,6 +5,7 @@ import { AddToCartService ,CartItem} from '../../../Services/AddToCartService/ad
 import { FormsModule } from '@angular/forms';
 import { SalesProductService } from '../../../Services/Billing/sales-product.service';
 import { AutobillingService } from '../../../Services/Billing/autobilling.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-cart',
@@ -19,12 +20,14 @@ export class MyCartComponent implements OnInit{
 
   total: number = 0;
 
-  constructor(private cartService:AddToCartService, private billService: SalesProductService, private billingItem:AutobillingService) {}
+  constructor(private cartService:AddToCartService, private billService: SalesProductService, private billingItem:AutobillingService,private router: Router) {}
 
   ngOnInit(): void {
     this.items = this.cartService.getItems();
     this.updateTotal();
   }
+
+  getImageUrl(){}
 
   updateTotal(): void {
     this.items = this.items.map(item => {
@@ -97,6 +100,19 @@ export class MyCartComponent implements OnInit{
   
     // Send processed items to billing
     this.billingItem.setBillingItem(processedItems);
+
+   
+      this.router.navigate(
+        [
+          '/electronics-user-dashboard',
+          {
+            outlets: { outlet2: ['electronics-autoBilling'] }
+          }
+        ]
+      );
+    
+    
+
   }
   
 }

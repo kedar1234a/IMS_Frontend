@@ -75,9 +75,10 @@ export class FeaturedCategoriesCardComponent implements OnInit {
       const netAmount = product.product_price;
       const gstAmount = netAmount * product.gst_rate / 100;
       const totalAmount = netAmount + gstAmount;
-
+      const imgurl = this.productService.getImageUrl(product.product_id);
       this.cartService.addToCart({
         id: product.product_id,
+        imgurl:imgurl,
         name: product.product_name,
         price: product.product_price,
         quantity: 1,
