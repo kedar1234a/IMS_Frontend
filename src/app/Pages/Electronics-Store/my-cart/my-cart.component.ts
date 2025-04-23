@@ -100,7 +100,7 @@ export class MyCartComponent implements OnInit{
   
     // Send processed items to billing
     this.billingItem.setBillingItem(processedItems);
-
+    alert('Bill send to dashboard then go to dashboard ');
    
       this.router.navigate(
         [

@@ -80,6 +80,7 @@ export class FeaturedCategoriesCardComponent implements OnInit {
         id: product.product_id,
         imgurl:imgurl,
         name: product.product_name,
+        description: product.product_description,
         price: product.product_price,
         quantity: 1,
         netAmount,
