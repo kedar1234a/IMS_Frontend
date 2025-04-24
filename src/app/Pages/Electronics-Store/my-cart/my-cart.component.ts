@@ -102,17 +102,31 @@ export class MyCartComponent implements OnInit{
     this.billingItem.setBillingItem(processedItems);
     alert('Bill send to dashboard then go to dashboard ');
    
-      this.router.navigate(
-        [
-          '/electronics-user-dashboard',
-          {
-            outlets: { outlet2: ['electronics-autoBilling'] }
-          }
-        ]
-      );
+    this.navigateToAutoBilling();
+   
+    
     
     
 
   }
+
+  navigateToAutoBilling() {
+    this.router.navigate(
+      [
+        '/electronics-user-dashboard',
+        
+       
+        
+      ]
+    ).then(success => {
+      if (success) {
+        console.log('Navigation success');
+      } else {
+        console.error('Navigation failed');
+      }
+    });
+  }
+  
+  
   
 }

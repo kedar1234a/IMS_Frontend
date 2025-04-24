@@ -29,8 +29,10 @@ export class LoginComponent {
     this.authenticationService.login(this.email, this.password).subscribe({
       next: (response) => {
         console.log('Response from backend:', response);
-        alert('Login Successfully');
+        alert('Login Successfully'+ response.email);
         const store_type = response.store_type;
+        localStorage.setItem('email',response.email);
+        localStorage.setItem('user_id',response.user_id);
 
         const storeRoutes: { [key: string]: string } = {
           electronics: '/electronics-store-home',

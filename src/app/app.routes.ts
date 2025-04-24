@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { MyCartComponent } from './Pages/Electronics-Store/my-cart/my-cart.component';
 import { AutomateBillingComponent } from './Pages/Electronics-Store/UserDashboard/Sections/billing/automate-billing/automate-billing.component';
 import { ShowBillsComponent } from './Pages/Electronics-Store/UserDashboard/Sections/billing/show-bills/show-bills.component';
+import { ElectronicsStoreHomeComponent } from './Pages/Electronics-Store/electronics-store-home/electronics-store-home.component';
+import { UserdashboardComponent } from './Pages/Electronics-Store/UserDashboard/userdashboard/userdashboard.component';
 
 export const routes: Routes = [
   {
@@ -274,8 +276,10 @@ export const routes: Routes = [
     outlet: 'outlet2',
   },
   {path:'electronics-myCart',component: MyCartComponent},
-  {path:'electronics-autoBilling', component: AutomateBillingComponent,outlet:'outlet2'},
-  {path:'electronics-showBilling', component: ShowBillsComponent, outlet:'outlet2'}
+  {path:'electronics-showBilling', component: ShowBillsComponent, outlet:'outlet2'},
+ {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'}
+  
+
 
 ];
 
