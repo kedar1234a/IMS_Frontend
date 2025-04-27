@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthenticationService } from '../../../Services/AuthenticationService/authentication.service';
+import { AuthenticationService, AuthRequest } from '../../../Services/AuthenticationService/authentication.service';
 import { FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -12,55 +12,44 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./login.component.css'], // Fixed the typo
 })
 export class LoginComponent {
-  email = '';
-  password = '';
-  showPassword = false;
+  
+  loginData: AuthRequest = {
+    username: '',
+    password: ''
+  };
+
+  showPassword: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
   ) {}
 
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
+  onLogin() {
+    if (this.loginData.username && this.loginData.password) {
+      this.authenticationService.login(this.loginData).subscribe({
+        next: (token) => {
+          alert('Login Successful!');
+
+          // Save token to localStorage (or sessionStorage)
+          localStorage.setItem('jwtToken', token);
+
+          alert("Your token is" +localStorage.getItem('jwtToken'));
+
+          // Navigate to home/dashboard
+          this.router.navigate(['/electronics-store-home']);
+        },
+        error: (error) => {
+          console.error('Login failed:', error);
+          alert('Invalid credentials, please try again.');
+        }
+      });
+    } else {
+      alert('Please fill in all fields.');
+    }
   }
 
-  onSubmit() {
-    this.authenticationService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        console.log('Response from backend:', response);
-        alert('Login Successfully'+ response.email);
-        const store_type = response.store_type;
-        localStorage.setItem('email',response.email);
-        localStorage.setItem('user_id',response.user_id);
-
-        const storeRoutes: { [key: string]: string } = {
-          electronics: '/electronics-store-home',
-          grocery: '/grocery-store-home',
-          'industrial hardware': '/industrial-hardware-store-home',
-        };
-
-        const route = storeRoutes[store_type];
-
-        if (route) {
-          this.router.navigate([route]);
-        } else {
-          alert('Store Does Not Exist');
-        }
-
-        // this.router.navigate(['/electronics-store-home']);
-      },
-      error: (err) => {
-        if(err.status == 403){
-          alert(err.error.message);
-        }
-        else if(err.status == 401){
-          alert("Invalid Email or Password");
-        }
-        else{
-          alert("Something Went Wrong, Please try again Later");
-        }
-      },
-    });
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

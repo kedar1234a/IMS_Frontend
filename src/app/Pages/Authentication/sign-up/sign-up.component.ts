@@ -46,32 +46,35 @@ export class SignUpComponent {
           status: 'PENDING', // Setting default status as 'PENDING'
         };
 
-        this.authenticationService.storeSignupDetails(signupRequest).subscribe(
-          (response) => {
-            alert('Signup Successful. Please wait for admin approval.');
-            this.router.navigate(['/login']); // Navigate to login page
+        // Call the service
+      this.authenticationService.register(this.signupData).subscribe({
+        next: (response) => {
+          alert('Signup Successful. Please login.');
+          this.router.navigate(['/login']); // Navigate to login page
 
-            // Reset form fields
-            this.signupData = {
-              full_name: '',
-              email: '',
-              store_type: '',
-              password: '',
-            };
-            this.confirm_password = '';
-          },
-          (error) => {
-            console.error('Error during signup:', error);
-            alert('Signup failed. Please try again.');
-          }
-        );
-      } else {
-        alert('Passwords do not match');
-      }
+          // Reset form fields
+          this.signupData = {
+            full_name: '',
+            email: '',
+            store_type: '',
+            password: '',
+          };
+          this.confirm_password = '';
+        },
+        error: (error) => {
+          console.error('Error during signup:', error);
+          alert('Signup failed. Please try again.');
+        }
+      });
+
     } else {
-      alert('Please fill all the required fields.');
+      alert('Passwords do not match');
     }
+  } else {
+    alert('Please fill all the required fields.');
   }
+}
+
 
   // Toggle password visibility
   togglePasswordVisibility() {

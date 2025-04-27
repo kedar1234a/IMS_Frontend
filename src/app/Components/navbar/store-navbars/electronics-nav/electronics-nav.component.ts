@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthenticationService } from '../../../../Services/AuthenticationService/authentication.service';
 
 @Component({
   selector: 'app-electronics-nav',
@@ -9,5 +10,22 @@ import { RouterLink } from '@angular/router';
   styleUrl: './electronics-nav.component.css'
 })
 export class ElectronicsNavComponent {
+
+  constructor(private router: Router, private authenticationService: AuthenticationService){}
+
+  logOut(){
+   
+    this.authenticationService.logout().subscribe(response => {
+      console.log(response);
+      // Optionally, clear token from localStorage or sessionStorage
+      localStorage.removeItem('token');
+      // Redirect to login page
+      this.router.navigate(['/landing']);
+    });
+    
+  }
+
+
+  
 
 }

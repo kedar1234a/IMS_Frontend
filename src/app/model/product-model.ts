@@ -7,4 +7,5 @@ export interface product {
   product_description: string;
   product_gstType: string;
   product_gstRate: number;
+  product_userid: any;
 }

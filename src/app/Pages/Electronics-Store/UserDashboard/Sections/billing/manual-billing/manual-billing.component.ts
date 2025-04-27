@@ -133,12 +133,15 @@ UTGST = "UTGST"; //union territory
 
   }
 
-   saveBill() {
+  saveBill() {
+    const userId = sessionStorage.getItem('user_id');
+    const uid = Number(userId);
+  
     const billData = {
       name: this.invoiceName,
       billDate: this.invoiceDate,
       totalAmount: this.total,
-      customerProductList: this.products
+      customerProductList: this.products,
     };
   
     this.billingService.saveBill(billData).subscribe({
@@ -152,10 +155,10 @@ UTGST = "UTGST"; //union territory
         console.error('Error saving bill:', error);
         alert('Error saving invoice.');
         alert('Error saving invoice: ' + (error.message || error.statusText));
-
       }
     });
   }
+  
   
 
   async downloadPDF() {

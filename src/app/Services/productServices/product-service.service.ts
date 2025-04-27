@@ -15,8 +15,16 @@ export class ProductService {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
     formData.append('product_image', productImage);
-    return this.http.post(`${this.apiUrl}/addProduct`, formData);
+  
+    const token = localStorage.getItem('jwtToken'); // assuming you stored token in localStorage
+
+    const headers = {
+      'Authorization': `Bearer ${token}`,'Content-Type':'application/json'
+    };
+  
+    return this.http.post(`${this.apiUrl}/addProduct`, formData, { headers });
   }
+  
 
   updateProduct(product: any, productImage?: File): Observable<any> {
     const formData = new FormData();
@@ -27,17 +35,23 @@ export class ProductService {
     return this.http.put(`${this.apiUrl}/update`, formData);
   }
 
-  getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/getProduct`);
+  getProducts(userId?: number): Observable<any[]> {
+    if (userId == null) {
+      console.error('User ID is required to fetch products');
+      return new Observable(); // Or throw an error if preferred
+    }
+    return this.http.get<any[]>(`${this.apiUrl}/getProduct/${userId}`);
   }
 
+
+
+  
   getImageUrl(productId: number): string {
-    const timestamp = new Date().getTime(); // 👈 cache buster
+    const timestamp = new Date().getTime(); 
     return `${this.imageBaseUrl}/${productId}?t=${timestamp}`;
   }
-  //  deleteProduct(product_id: number): Observable<any> {
-  //   return this.http.delete<any>(`${this.apiUrl}/deleteProduct/${product_id}`);
-  // }
+ 
+  
   deleteProduct(product_id: number): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.apiUrl}/deleteProduct/${product_id}`);
   }

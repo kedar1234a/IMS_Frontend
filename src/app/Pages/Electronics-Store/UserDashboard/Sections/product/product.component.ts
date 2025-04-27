@@ -1,10 +1,11 @@
- import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+ import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { ProductService } from '../../../../../Services/productServices/product-service.service';
 
@@ -45,15 +46,19 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    
+    
     this.productForm = this.fb.group({
-      product_name: [''],
-      product_price: [''],
-      product_category: [''],
-      product_available_stock_quantity: [''],
-      product_description: [''],
-      product_gstType:[''],
-      product_gstRate:['']
+      product_name: ['', Validators.required],
+      product_price: ['', [Validators.required, Validators.min(0)]],
+      product_category: ['', Validators.required],
+      product_available_stock_quantity: ['', [Validators.required, Validators.min(0)]],
+      product_description: ['', Validators.required],
+      product_gstType: ['', Validators.required],
+      product_gstRate: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
     });
+    
 
     this.loadProducts();
   }
@@ -72,24 +77,18 @@ export class ProductComponent implements OnInit {
       return;
     }
 
-     // Get user_id from local storage
-  const userId = localStorage.getItem('user_id');
-  if (!userId) {
-    alert('User ID not found in local storage.');
-    return;
-  }
+    
+    
 
     const productData = {
       product_name: this.productForm.get('product_name')?.value,
-      product_price: this.productForm.get('product_price')?.value,
+      product_price: Number(this.productForm.get('product_price')?.value),
       product_category: this.productForm.get('product_category')?.value,
-      product_available_stock_quantity: this.productForm.get(
-        'product_available_stock_quantity'
-      )?.value,
+      product_available_stock_quantity: Number(this.productForm.get('product_available_stock_quantity')?.value),
       product_description: this.productForm.get('product_description')?.value,
       gst_type: this.productForm.get('product_gstType')?.value,
-      gst_rate: this.productForm.get('product_gstRate')?.value,
-      user_id: userId 
+      gst_rate: Number(this.productForm.get('product_gstRate')?.value),
+      product_image: this.selectedFile.name
     };
 
     this.productService.addProduct(productData, this.selectedFile).subscribe({
@@ -143,7 +142,12 @@ export class ProductComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productService.getProducts().subscribe({
+   
+    
+    const storedId = sessionStorage.getItem('user_id');
+    const userId = Number(storedId);
+
+    this.productService.getProducts(userId).subscribe({
       next: (data) => {
         this.productsArray = data.map(p => ({
           ...p,
@@ -156,7 +160,7 @@ export class ProductComponent implements OnInit {
       }
     });
   }
-  
+
 
   editProduct(product: any): void {
     this.editingProductId = product.product_id;

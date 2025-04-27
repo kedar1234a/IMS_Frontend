@@ -4,6 +4,7 @@ import { AutomateBillingComponent } from './Pages/Electronics-Store/UserDashboar
 import { ShowBillsComponent } from './Pages/Electronics-Store/UserDashboard/Sections/billing/show-bills/show-bills.component';
 import { ElectronicsStoreHomeComponent } from './Pages/Electronics-Store/electronics-store-home/electronics-store-home.component';
 import { UserdashboardComponent } from './Pages/Electronics-Store/UserDashboard/userdashboard/userdashboard.component';
+import { LandingFooterComponent } from './Components/footer/landing-footer/landing-footer.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +15,9 @@ export const routes: Routes = [
         (m) => m.LandingPageComponent
       );
     },
+  },
+  {
+    path:'landing',component:LandingFooterComponent
   },
 
   // <--------------------- User Auth Routes --------------------->
