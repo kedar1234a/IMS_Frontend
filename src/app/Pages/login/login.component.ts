@@ -1,39 +1,44 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthenticationService } from '../../Services/AuthenticationService/authentication.service';
-import { FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthenticationService, AuthRequest } from '../../Services/AuthenticationService/authentication.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, RouterLink, CommonModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'], // Fixed the typo
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  email = '';
-  password = '';
-  showPassword = false;
+  username: string = '';
+  password: string = '';
+  showPassword: boolean = false; // Added missing field
+  errorMessage: string = '';
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit() {
-    this.authenticationService.login(this.email, this.password).subscribe({
-      next: (response) => {
-        console.log('Response from backend:', response);      
-        alert('Login Successful');
-        this.router.navigate(['/storeHome']);
+  onLogin() {
+    const authRequest: AuthRequest = {
+      username: this.username,
+      password: this.password
+    };
+
+    this.authService.login(authRequest).subscribe({
+      next: (token) => {
+        console.log('Login successful. Token:', token);
+        localStorage.setItem('token', token); // Save token in localStorage
+        this.router.navigate(['/dashboard']); // Navigate to dashboard page
       },
       error: (error) => {
-        console.error('Login failed:', error);
-        alert('Invalid email or password. Try again.');
+        console.error('Login failed', error);
+        this.errorMessage = 'Invalid username or password.';
       }
     });
   }
-  
 }
