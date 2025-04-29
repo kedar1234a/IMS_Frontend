@@ -16,7 +16,13 @@ export class SalesProductService {
   constructor(private http: HttpClient, private cartService:AddToCartService) {}
 
   saveBill(billData: any): Observable<any> {
-    return this.http.post(this.apiUrl, billData,  { responseType: 'text' });
+    const token = localStorage.getItem('jwtToken'); // assuming you stored token in localStorage
+
+    const headers = {
+      'Authorization': `Bearer ${token}`,'Content-Type':'application/text'
+    };
+
+    return this.http.post(this.apiUrl, billData, { headers });
   }
 
  

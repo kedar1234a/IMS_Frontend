@@ -15,13 +15,11 @@ export class ElectronicsNavComponent {
 
   logOut(){
    
-    this.authenticationService.logout().subscribe(response => {
-      console.log(response);
       // Optionally, clear token from localStorage or sessionStorage
       localStorage.removeItem('token');
       // Redirect to login page
       this.router.navigate(['/landing']);
-    });
+   
     
   }
 

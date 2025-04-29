@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,19 +11,34 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  addProduct(product: any, productImage: File): Observable<any> {
+  addProduct(productData: any, token: string): Observable<any> {
     const formData = new FormData();
-    formData.append('product', JSON.stringify(product));
-    formData.append('product_image', productImage);
-  
-    const token = localStorage.getItem('jwtToken'); // assuming you stored token in localStorage
+    formData.append('name', productData.name);
+    if (productData.price !== undefined) formData.append('price', productData.price);
+    if (productData.category) formData.append('category', productData.category);
+    if (productData.quantity !== undefined) formData.append('quantity', productData.quantity);
+    if (productData.description) formData.append('description', productData.description);
+    if (productData.gstType) formData.append('gstType', productData.gstType);
+    if (productData.gstRate !== undefined) formData.append('gstRate', productData.gstRate);
+    formData.append('image', productData.image);
 
-    const headers = {
-      'Authorization': `Bearer ${token}`,'Content-Type':'application/json'
-    };
-  
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
     return this.http.post(`${this.apiUrl}/addProduct`, formData, { headers });
   }
+
+  getProductsByUser(): Observable<any[]> {
+
+    const token = localStorage.getItem("token")
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  
+    return this.http.get<any[]>(`${this.apiUrl}/products/byUser`, { headers });
+  }
+  
   
 
   updateProduct(product: any, productImage?: File): Observable<any> {
@@ -34,15 +49,6 @@ export class ProductService {
     }
     return this.http.put(`${this.apiUrl}/update`, formData);
   }
-
-  getProducts(userId?: number): Observable<any[]> {
-    if (userId == null) {
-      console.error('User ID is required to fetch products');
-      return new Observable(); // Or throw an error if preferred
-    }
-    return this.http.get<any[]>(`${this.apiUrl}/getProduct/${userId}`);
-  }
-
 
 
   

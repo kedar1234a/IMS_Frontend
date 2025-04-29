@@ -154,131 +154,17 @@ export const routes: Routes = [
     outlet: 'outlet2',
   },
   // <--------------------- Grocery Store Routes --------------------->
-  
-  {
-    path: 'grocery-store-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/grocery-store-home/grocery-store-home.component'
-      ).then((m) => m.GroceryStoreHomeComponent);
-    },
-  },
-  {
-    path: 'grocery-store-see-more',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/grocery-store-home/grocery-see-more/grocery-see-more.component'
-      ).then((m) => m.GrocerySeeMoreComponent);
-    },
-  },
 
-  // <--------------------- Grocery Store Dashboard Routes --------------------->
-  
-  {
-    path: 'grocery-user-dashboard',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/userdashboard/userdashboard.component'
-      ).then((m) => m.UserdashboardComponent);
-    },
-
-  },
-  {
-    path: 'grocery-user-dashboard-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/Sections/home/home.component'
-      ).then((m) => m.HomeComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'grocery-user-dashboard-product',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/Sections/product/product.component'
-      ).then((m) => m.ProductComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'grocery-user-dashboard-billing',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/Sections/billing/billing.component'
-      ).then((m) => m.BillingComponent);
-    },
-    outlet: 'outlet2',
-  },
 
   // <--------------------- Industrial Store Routes --------------------->
 
-  {
-    path: 'industrial-hardware-store-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/industrial-hardware-store-home/industrial-hardware-store-home.component'
-      ).then((m) => m.IndustrialHardwareStoreHomeComponent);
-    },
-  },
-  {
-    path: 'industrial-hardware-store-see-more',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/industrial-hardware-store-home/industrial-hardware-store-home.component'
-      ).then((m) => m.IndustrialHardwareStoreHomeComponent);
-    },
-  },
+
+  
   // <--------------------- Grocery Store Dashboard Routes --------------------->
+ 
+
+
   
-  {
-    path: 'industrial-hardware-user-dashboard',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/userdashboard/userdashboard.component'
-      ).then((m) => m.UserdashboardComponent);
-    },
-  
-  },
-  {
-    path: 'industrial-hardware-user-dashboard-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/home/home.component'
-      ).then((m) => m.HomeComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'industrial-hardware-user-dashboard-product',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/product/product.component'
-      ).then((m) => m.ProductComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'industrial-hardware-user-dashboard-billing',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/billing/billing.component'
-      ).then((m) => m.BillingComponent);
-    },
-    outlet: 'outlet2',
-  },
   {path:'electronics-myCart',component: MyCartComponent},
   {path:'electronics-showBilling', component: ShowBillsComponent, outlet:'outlet2'},
  {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'}

@@ -15,8 +15,6 @@ export interface AuthRequest {
 export class AuthenticationService {
 
   private baseUrl = 'http://localhost:8080/api';
-  private apiUrl = 'http://localhost:8080/api/register';
-  private signInUrl = 'http://localhost:8080/api/login';
 
   constructor(private http: HttpClient) {}
 
@@ -29,7 +27,5 @@ export class AuthenticationService {
     return this.http.post(`${this.baseUrl}/login`, authRequest, { responseType: 'text' });
   }
   
-  logout(): Observable<string> {
-    return this.http.post(`${this.baseUrl}/logout`, {}, { responseType: 'text' });
-  }
+
 }

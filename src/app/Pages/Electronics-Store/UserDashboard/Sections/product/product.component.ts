@@ -1,4 +1,4 @@
- import { CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ProductService } from '../../../../../Services/productServices/product-service.service';
-
 
 @Component({
   selector: 'app-product',
@@ -26,6 +25,11 @@ export class ProductComponent implements OnInit {
     'AC',
   ];
 
+  CGST = 'CGST';
+  SGST = 'SGST';
+  IGST = 'IGST';
+  UTGST = 'UTGST';
+
   productForm!: FormGroup;
   productsArray: any[] = [];
   filteredProducts: any[] = [];
@@ -33,11 +37,7 @@ export class ProductComponent implements OnInit {
   searchTerm: string = '';
   selectedSortOption: string = '';
 
-  CGST = "CGST";
-  SGST = "SGST";
-  IGST = "IGST"; // Integrated
-  UTGST = "UTGST"; // Union territory
-
+  token: string | null = null;
   editingProductId: number | null = null;
 
   constructor(
@@ -46,9 +46,12 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.token = localStorage.getItem('token');
 
-    
-    
+    if (!this.token) {
+      console.error('Token is missing. User may not be authenticated.');
+    }
+
     this.productForm = this.fb.group({
       product_name: ['', Validators.required],
       product_price: ['', [Validators.required, Validators.min(0)]],
@@ -56,9 +59,8 @@ export class ProductComponent implements OnInit {
       product_available_stock_quantity: ['', [Validators.required, Validators.min(0)]],
       product_description: ['', Validators.required],
       product_gstType: ['', Validators.required],
-      product_gstRate: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
+      product_gstRate: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
     });
-    
 
     this.loadProducts();
   }
@@ -77,21 +79,23 @@ export class ProductComponent implements OnInit {
       return;
     }
 
-    
-    
+    if (!this.token) {
+      console.error('Token is missing. Cannot proceed with saving product.');
+      return;
+    }
 
     const productData = {
-      product_name: this.productForm.get('product_name')?.value,
-      product_price: Number(this.productForm.get('product_price')?.value),
-      product_category: this.productForm.get('product_category')?.value,
-      product_available_stock_quantity: Number(this.productForm.get('product_available_stock_quantity')?.value),
-      product_description: this.productForm.get('product_description')?.value,
-      gst_type: this.productForm.get('product_gstType')?.value,
-      gst_rate: Number(this.productForm.get('product_gstRate')?.value),
-      product_image: this.selectedFile.name
+      name: this.productForm.get('product_name')?.value,
+      price: Number(this.productForm.get('product_price')?.value),
+      category: this.productForm.get('product_category')?.value,
+      quantity: Number(this.productForm.get('product_available_stock_quantity')?.value),
+      description: this.productForm.get('product_description')?.value,
+      gstType: this.productForm.get('product_gstType')?.value,
+      gstRate: Number(this.productForm.get('product_gstRate')?.value),
+      image: this.selectedFile
     };
 
-    this.productService.addProduct(productData, this.selectedFile).subscribe({
+    this.productService.addProduct(productData, this.token).subscribe({
       next: (response) => {
         alert(response.message || 'Product saved successfully!');
         this.loadProducts();
@@ -105,6 +109,29 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  loadProducts(): void {
+ 
+
+    this.productService.getProductsByUser().subscribe({
+      next: (data) => {
+        this.productsArray = data.map(p => ({
+          ...p,
+          imageUrl: this.productService.getImageUrl(p.product_id),
+        }));
+        this.filteredProducts = [...this.productsArray];
+      },
+      error: (err) => {
+        console.error('Error loading products:', err);
+      },
+    });
+  }
+
+  editProduct(product: any): void {
+    this.editingProductId = product.product_id;
+    this.productForm.patchValue(product);
+    this.selectedFile = null;
+  }
+
   updateProduct(): void {
     if (!this.editingProductId) {
       alert('No product selected for update.');
@@ -116,56 +143,25 @@ export class ProductComponent implements OnInit {
       product_name: this.productForm.get('product_name')?.value,
       product_price: this.productForm.get('product_price')?.value,
       product_category: this.productForm.get('product_category')?.value,
-      product_available_stock_quantity: this.productForm.get(
-        'product_available_stock_quantity'
-      )?.value,
+      product_available_stock_quantity: this.productForm.get('product_available_stock_quantity')?.value,
       product_description: this.productForm.get('product_description')?.value,
       product_gstType: this.productForm.get('product_gstType')?.value,
-      product_gstRate: this.productForm.get('product_gstRate')?.value
+      product_gstRate: this.productForm.get('product_gstRate')?.value,
     };
 
-    this.productService
-      .updateProduct(updatedProduct, this.selectedFile || undefined)
-      .subscribe({
-        next: (res) => {
-          alert('Product updated successfully!');
-          this.loadProducts(); // 👈 important for refreshing image
-          this.productForm.reset();
-          this.editingProductId = null;
-          this.selectedFile = null;
-        },
-        error: (err) => {
-          console.error('Error updating product:', err);
-          alert('Failed to update product');
-        },
-      });
-  }
-
-  loadProducts(): void {
-   
-    
-    const storedId = sessionStorage.getItem('user_id');
-    const userId = Number(storedId);
-
-    this.productService.getProducts(userId).subscribe({
-      next: (data) => {
-        this.productsArray = data.map(p => ({
-          ...p,
-          imageUrl: this.productService.getImageUrl(p.product_id)
-        }));
-        this.filteredProducts = [...this.productsArray];
+    this.productService.updateProduct(updatedProduct, this.selectedFile || undefined).subscribe({
+      next: (res) => {
+        alert('Product updated successfully!');
+        this.loadProducts();
+        this.productForm.reset();
+        this.editingProductId = null;
+        this.selectedFile = null;
       },
       error: (err) => {
-        console.error('Error loading products:', err);
-      }
+        console.error('Error updating product:', err);
+        alert('Failed to update product: ' + err.message);
+      },
     });
-  }
-
-
-  editProduct(product: any): void {
-    this.editingProductId = product.product_id;
-    this.productForm.patchValue(product);
-    this.selectedFile = null;
   }
 
   deleteProduct(id: number): void {
@@ -174,12 +170,8 @@ export class ProductComponent implements OnInit {
     this.productService.deleteProduct(id).subscribe({
       next: () => {
         alert('Product deleted successfully');
-        this.productsArray = this.productsArray.filter(
-          (product) => product.product_id !== id
-        );
-        this.filteredProducts = this.filteredProducts.filter(
-          (product) => product.product_id !== id
-        );
+        this.productsArray = this.productsArray.filter(product => product.product_id !== id);
+        this.filteredProducts = this.filteredProducts.filter(product => product.product_id !== id);
         this.productForm.reset();
         this.selectedFile = null;
       },
@@ -212,18 +204,14 @@ export class ProductComponent implements OnInit {
         this.filteredProducts.sort((a, b) => a.product_id - b.product_id);
         break;
       case 'name':
-        this.filteredProducts.sort((a, b) =>
-          a.product_name.localeCompare(b.product_name)
-        );
+        this.filteredProducts.sort((a, b) => a.product_name.localeCompare(b.product_name));
         break;
       case 'price':
         this.filteredProducts.sort((a, b) => a.product_price - b.product_price);
         break;
       case 'stock':
         this.filteredProducts.sort(
-          (a, b) =>
-            a.product_available_stock_quantity -
-            b.product_available_stock_quantity
+          (a, b) => a.product_available_stock_quantity - b.product_available_stock_quantity
         );
         break;
       default:

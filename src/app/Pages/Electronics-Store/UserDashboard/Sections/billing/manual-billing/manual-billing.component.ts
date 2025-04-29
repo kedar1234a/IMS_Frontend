@@ -134,8 +134,6 @@ UTGST = "UTGST"; //union territory
   }
 
   saveBill() {
-    const userId = sessionStorage.getItem('user_id');
-    const uid = Number(userId);
   
     const billData = {
       name: this.invoiceName,
