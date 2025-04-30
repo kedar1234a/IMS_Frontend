@@ -56,7 +56,9 @@ export class AsideComponent {
         break;
 
       case 'Reviews':
-        console.log('Navigating to Reviews...');
+        this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-review'] } },
+        ]);
         this.activeItem = item;
         break;
 
@@ -69,21 +71,19 @@ export class AsideComponent {
     this.activeItem = 'Billing';
     switch (value) {
       case 'auto-billing':
-        this.router.navigate([
-          { outlets: { outlet2: ['electronics-autoBilling'] } },
-        ]);
+        this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-auto-billing'] } }]);
+
         break;
 
       case 'manual-billing':
-        this.router.navigate([
-          { outlets: { outlet2: ['electronics-user-dashboard-manual-billing'] } },
-        ]);
+       this.router.navigate([
+          { outlets: { outlet2: ['electronics-user-dashboard-manual-billing'] } }]);
+       
         break;
 
       case 'show-bills':
-        this.router.navigate([
-          { outlets: { outlet2: ['electronics-showBilling'] } },
-        ]);
+        this.router.navigate([{ outlets: { outlet2: ['electronics-user-dashboard-show-bills'] } }]);
+       
         break;
 
       default:
