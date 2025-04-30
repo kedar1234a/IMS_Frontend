@@ -7,36 +7,40 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
   private apiUrl = 'http://localhost:8080/api';
-  private imageBaseUrl = 'http://localhost:8080/api/getImageByProductId';
 
   constructor(private http: HttpClient) {}
 
-  addProduct(productData: any, token: string): Observable<any> {
+  addProduct(productData: any, imageFile: File, token: string) {
     const formData = new FormData();
     formData.append('name', productData.name);
-    if (productData.price !== undefined) formData.append('price', productData.price);
-    if (productData.category) formData.append('category', productData.category);
-    if (productData.quantity !== undefined) formData.append('quantity', productData.quantity);
-    if (productData.description) formData.append('description', productData.description);
-    if (productData.gstType) formData.append('gstType', productData.gstType);
-    if (productData.gstRate !== undefined) formData.append('gstRate', productData.gstRate);
-    formData.append('image', productData.image);
+    formData.append('price', productData.price);
+    formData.append('category', productData.category);
+    formData.append('quantity', productData.quantity);
+    formData.append('description', productData.description);
+    formData.append('gstType', productData.gstType);
+    formData.append('gstRate', productData.gstRate);
+    formData.append('image', imageFile);
+   
+    formData.forEach((value, key) => console.log(key, value));
 
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     });
+    
+    console.log(headers.get('Authorization')); 
 
     return this.http.post(`${this.apiUrl}/addProduct`, formData, { headers });
   }
 
-  getProductsByUser(): Observable<any[]> {
+
+  getProducts(): Observable<any[]> {
 
     const token = localStorage.getItem("token")
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
   
-    return this.http.get<any[]>(`${this.apiUrl}/products/byUser`, { headers });
+    return this.http.get<any[]>(`${this.apiUrl}/showProduct`, { headers });
   }
   
   
@@ -53,8 +57,8 @@ export class ProductService {
 
   
   getImageUrl(productId: number): string {
-    const timestamp = new Date().getTime(); 
-    return `${this.imageBaseUrl}/${productId}?t=${timestamp}`;
+    
+    return `${this.apiUrl}/getImage/${productId}`;
   }
  
   

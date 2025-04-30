@@ -48,7 +48,7 @@ UTGST = "UTGST"; //union territory
 
     
     this.CalculateInvoiceNo();
-     this.loadProducts(); 
+   
   }
 
   CalculateInvoiceNo(){
@@ -68,18 +68,7 @@ UTGST = "UTGST"; //union territory
     });
   }
 
-  loadProducts(): void {
-    this.itemService.getProducts().subscribe({
-      next: (data) => {
-
-        this.items = data;
-     
-      },
-      error: (err) => {
-        console.error('Error loading products:', err);
-      }
-    });
-  }
+ 
 
   onProductSelected(){
     const selectedItem = this.items.find(item => item.product_name === this.name);

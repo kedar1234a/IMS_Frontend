@@ -28,13 +28,13 @@ export class LoginComponent {
   onLogin() {
     if (this.loginData.username && this.loginData.password) {
       this.authenticationService.login(this.loginData).subscribe({
-        next: (token) => {
+        next: (res) => {
           alert('Login Successful!');
 
           // Save token to localStorage (or sessionStorage)
-          localStorage.setItem('jwtToken', token);
+          localStorage.setItem('token', res);
 
-          alert("Your token is" +localStorage.getItem('jwtToken'));
+          alert("Your token is" +localStorage.getItem('token'));
 
           // Navigate to home/dashboard
           this.router.navigate(['/electronics-store-home']);

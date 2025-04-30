@@ -1,79 +1,16 @@
-<div class="product-navbar">
-  <input
-    type="text"
-    [(ngModel)]="searchTerm"
-    (input)="onSearchChange()"
-    name="search-product"
-    id="search-product"
-    placeholder="Search by Name, Category or Price..."
-  />
-  <select [(ngModel)]="selectedSortOption" (change)="sortProducts()">
-    <option value="">Sort By</option>
-    <option value="id">Product ID</option>
-    <option value="name">Product Name</option>
-    <option value="price">Product Price</option>
-    <option value="stock">Stock Quantity</option>
-  </select>
-</div>
-
 <div class="container">
-  <form [formGroup]="productForm" enctype="multipart/form-data">
-    <input
-      type="text"
-      formControlName="product_name"
-      placeholder="Product Name"
-      required
-    />
-
-    <input
-      type="number"
-      formControlName="product_price"
-      placeholder="Price"
-      required
-    />
-
-    <select formControlName="product_category" required>
-      <option value="" disabled>Select Category</option>
-      <option *ngFor="let category of categories" [value]="category">
-        {{ category }}
-      </option>
-    </select>
-
-    <input
-      type="number"
-      formControlName="product_available_stock_quantity"
-      placeholder="Stock Quantity"
-      required
-    />
-
-    <textarea
-      formControlName="product_description"
-      placeholder="Product Description"
-      cols="30"
-      maxlength="200"
-    ></textarea>
-
-    <!-- ✅ Updated GST Type and Rate to use formControlName -->
-    <select formControlName="product_gstType">
-      <option value="" disabled>Select GST Type</option>
-      <option [value]="CGST + '+' + SGST">CGST+SGST</option>
-      <option [value]="IGST">IGST</option>
-      <option [value]="CGST + '+' + UTGST">CGST+UTGST</option>
-    </select>
-
-    <select formControlName="product_gstRate">
-      <option value="" disabled>Select GST Rate</option>
-      <option [value]="5">5%</option>
-      <option [value]="18">18%</option>
-      <option [value]="28">28%</option>
-    </select>
-
-    <input type="file" (change)="onFileSelected($event)" required />
-
-    <button *ngIf="!editingProductId" (click)="saveProduct()" type="button">Save</button>
-    <button *ngIf="editingProductId" (click)="updateProduct()" type="button">Update</button>
+  <form (submit)="saveProduct(); $event.preventDefault()">
+    <input type="text" [(ngModel)]="product.name" name="name" placeholder="Name" required />
+    <input type="number" [(ngModel)]="product.price" name="price" placeholder="Price" />
+    <input type="text" [(ngModel)]="product.category" name="category" placeholder="Category" />
+    <input type="number" [(ngModel)]="product.quantity" name="quantity" placeholder="Quantity" />
+    <textarea [(ngModel)]="product.description" name="description" placeholder="Description"></textarea>
+    <input type="text" [(ngModel)]="product.gstType" name="gstType" placeholder="GST Type" />
+    <input type="number" [(ngModel)]="product.gstRate" name="gstRate" placeholder="GST Rate" />
+    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" required />
+    <button type="submit">Add Product</button>
   </form>
-
+  
   <table>
     <thead>
       <tr>
@@ -84,8 +21,8 @@
         <th>Category</th>
         <th>Stock</th>
         <th>Price</th>
-       <th>GST Type</th>
-       <th>GST Rate</th>
+        <th>GST Type</th>
+        <th>GST Rate</th>
         <th>Actions</th>
         <th>Product ID</th>
       </tr>
@@ -94,28 +31,20 @@
       <tr *ngFor="let product of filteredProducts; let i = index">
         <td>{{ i + 1 }}</td>
         <td>
-          <img
-            [src]="product.imageUrl"
-            class="product-image"
-            alt="Product image"
-          />
+          <img [src]="getImageUrl(product.product_id)" class="product-image" alt="Product image" />
         </td>
         <td>{{ product.product_name }}</td>
-        <td id="product_description">{{ product.product_description }}</td>
+        <td>{{ product.product_description}}</td>
         <td>{{ product.product_category }}</td>
-        <td>{{ product.product_available_stock_quantity }}</td>
+        <td>{{ product.product_available_stock_quantity}}</td>
         <td>{{ product.product_price }}</td>
-       <td>{{ product.gst_type}}</td>
-       <td>{{ product.gst_rate}}</td>
-        <td id="action">
-          <button (click)="editProduct(product)" id="edit-product">
-            <img
-              src="../../../../../assets/logos/edit-black.png"
-              width="20px"
-              alt="edit"
-            />
+        <td>{{ product.gst_type }}</td>
+        <td>{{ product.gst_rate}}</td>
+        <td>
+          <button (click)="editProduct(product)">
+            <img src="../../../../../assets/logos/edit-black.png" width="20px" alt="edit" />
           </button>
-          <button (click)="deleteProduct(product.product_id)" id="delete-product">
+          <button (click)="deleteProduct(product.id)">
             <img src="../../../../../assets/logos/delete-black.png" width="20px" />
           </button>
         </td>
