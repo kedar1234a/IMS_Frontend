@@ -72,6 +72,13 @@ export class ProductComponent implements OnInit {
       return;
     }
 
+     // Get user_id from local storage
+  const userId = localStorage.getItem('user_id');
+  if (!userId) {
+    alert('User ID not found in local storage.');
+    return;
+  }
+
     const productData = {
       product_name: this.productForm.get('product_name')?.value,
       product_price: this.productForm.get('product_price')?.value,
@@ -81,7 +88,8 @@ export class ProductComponent implements OnInit {
       )?.value,
       product_description: this.productForm.get('product_description')?.value,
       gst_type: this.productForm.get('product_gstType')?.value,
-      gst_rate: this.productForm.get('product_gstRate')?.value
+      gst_rate: this.productForm.get('product_gstRate')?.value,
+      user_id: userId 
     };
 
     this.productService.addProduct(productData, this.selectedFile).subscribe({

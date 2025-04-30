@@ -9,6 +9,15 @@
 
   <ul *ngIf="items.length > 0" class="cart-items">
     <li *ngFor="let item of items" class="cart-item">
+
+      <div class="featured-product-image">
+        <img
+          [src]="item.imgurl"
+          alt="Product Image"
+          class="product-image"
+        />
+      </div>
+
       <div>
         <strong>{{ item.name }}</strong><br />
         Price: ₹{{ item.price }}
@@ -22,6 +31,7 @@
       />
       
         <br />
+        Product Description: {{item.description}}<br>
         Subtotal: ₹{{ item.price * item.quantity }}<br>
         GST Type : {{ item.gstType}}<br>
         GST Rate : {{ item.gstRate}}% <br>

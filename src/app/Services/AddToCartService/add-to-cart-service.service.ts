@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 export interface CartItem {
   id: number;
+  imgurl: string;
   name: string;
+  description: string;
   price: number;
   quantity: number;
   netAmount:number;
