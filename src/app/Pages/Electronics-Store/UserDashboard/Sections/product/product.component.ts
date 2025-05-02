@@ -112,7 +112,7 @@ export class ProductComponent implements OnInit {
   getImageUrl(product_id: number): string {
     return this.productService.getImageUrl(product_id);
   }
-
+ 
   resetFormState() {
     this.product = {
       name: '',

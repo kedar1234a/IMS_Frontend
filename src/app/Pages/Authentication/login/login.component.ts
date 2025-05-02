@@ -34,7 +34,6 @@ export class LoginComponent {
           // Save token to localStorage (or sessionStorage)
           localStorage.setItem('token', res);
 
-          alert("Your token is" +localStorage.getItem('token'));
 
           // Navigate to home/dashboard
           this.router.navigate(['/electronics-store-home']);
