@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ProductService } from '../../../../../Services/productServices/product-service.service';
 import { isNullOrUndef } from 'chart.js/dist/helpers/helpers.core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -18,6 +19,9 @@ import { isNullOrUndef } from 'chart.js/dist/helpers/helpers.core';
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+
+  isEditMode = false;
+  selectedProductId: number | null = null;
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
@@ -54,9 +58,15 @@ export class ProductComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
-  onFileSelected(event: any) {
-    this.imageFile = event.target.files[0];
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.imageFile = input.files[0];
+    } else {
+      this.imageFile = null; // fallback if user cancels selection
+    }
   }
+  
 
   ngOnInit(): void {
 
@@ -103,11 +113,64 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  editProduct(product:any){}
+  editProduct(product: any) {
+    this.isEditMode = true;
+    this.selectedProductId = product.product_id;
+  
+    this.product = {
+      name: product.product_name,
+      price: product.product_price,
+      category: product.product_category,
+      quantity: product.product_available_stock_quantity,
+      description: product.product_description,
+      gstType: product.gst_type,
+      gstRate: product.gst_rate,
+    };
+  }
 
-  updateProduct(){}
+  updateProduct() {
 
-  deleteProduct(byId:number){}
+    if (!this.selectedProductId) return;
+  
+    this.productService.updateProduct(this.selectedProductId,this.product
+    ).subscribe({
+      next: (res) => {
+        alert('Product updated successfully');
+        this.resetFormState();
+        this.loadProducts();
+        this.isEditMode = false;
+      },
+      error: (err) => {
+        console.error('Update failed', err);
+        alert('Failed to update product');
+      }
+    });
+  }
+  
+  cancelEdit() {
+    this.resetFormState();
+    this.isEditMode=false;
+  }
+
+
+// product.component.ts
+deleteProduct(id: number){
+  this.productService.deleteProduct(id).subscribe({
+    next: (response) => {
+      if (response.status === 'success') {
+        alert(response.message); // Or use a toast/snackbar
+        this.loadProducts(); // Refresh the list
+      } else {
+        alert('Error: ' + response.error);
+      }
+     
+    },
+    error: (err) => {
+      console.error('Error deleting product', err);
+    }
+  });
+}
+
 
   getImageUrl(product_id: number): string {
     return this.productService.getImageUrl(product_id);

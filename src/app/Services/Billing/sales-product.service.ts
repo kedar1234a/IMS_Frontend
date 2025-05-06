@@ -10,7 +10,7 @@ export class SalesProductService {
 
   private apiUrl = 'http://localhost:8080/api/addBill';
   private getCount = 'http://localhost:8080/api/count';
-  private getBills = 'http://localhost:8080/api/fetchAllBills';
+  private getBills = 'http://localhost:8080/api/fetchAllBillsByUser';
 
   constructor(private http: HttpClient, private cartService: AddToCartService) {}
 

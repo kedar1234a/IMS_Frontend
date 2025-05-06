@@ -1,5 +1,5 @@
 <div class="container">
-  <form (submit)="saveProduct(); $event.preventDefault()">
+  <form (submit)="isEditMode ? updateProduct() : saveProduct(); $event.preventDefault()">
     <input type="text" [(ngModel)]="product.name" name="name" placeholder="Name" required />
     <input type="number" [(ngModel)]="product.price" name="price" placeholder="Price" />
     <input type="text" [(ngModel)]="product.category" name="category" placeholder="Category" />
@@ -7,10 +7,12 @@
     <textarea [(ngModel)]="product.description" name="description" placeholder="Description"></textarea>
     <input type="text" [(ngModel)]="product.gstType" name="gstType" placeholder="GST Type" />
     <input type="number" [(ngModel)]="product.gstRate" name="gstRate" placeholder="GST Rate" />
-    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" required />
-    <button type="submit">Add Product</button>
+    <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" [required]="!isEditMode" />
+    
+    <button type="submit">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
+    <button *ngIf="isEditMode" type="button" (click)="cancelEdit()">Cancel</button>
   </form>
-  
+
   <table>
     <thead>
       <tr>
@@ -30,21 +32,19 @@
     <tbody>
       <tr *ngFor="let product of filteredProducts; let i = index">
         <td>{{ i + 1 }}</td>
-        <td>
-          <img [src]="getImageUrl(product.product_id)" class="product-image" alt="Product image" />
-        </td>
+        <td><img [src]="getImageUrl(product.product_id)" class="product-image" alt="Product image" /></td>
         <td>{{ product.product_name }}</td>
-        <td>{{ product.product_description}}</td>
+        <td>{{ product.product_description }}</td>
         <td>{{ product.product_category }}</td>
-        <td>{{ product.product_available_stock_quantity}}</td>
+        <td>{{ product.product_available_stock_quantity }}</td>
         <td>{{ product.product_price }}</td>
         <td>{{ product.gst_type }}</td>
-        <td>{{ product.gst_rate}}</td>
+        <td>{{ product.gst_rate }}</td>
         <td>
           <button (click)="editProduct(product)">
             <img src="../../../../../assets/logos/edit-black.png" width="20px" alt="edit" />
           </button>
-          <button (click)="deleteProduct(product.id)">
+          <button (click)="deleteProduct(product.product_id)">
             <img src="../../../../../assets/logos/delete-black.png" width="20px" />
           </button>
         </td>

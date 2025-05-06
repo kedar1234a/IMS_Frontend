@@ -45,14 +45,32 @@ export class ProductService {
   
   
 
-  updateProduct(product: any, productImage?: File): Observable<any> {
+  updateProduct(productId: number, productData: any, imageFile?: File): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  
     const formData = new FormData();
-    formData.append('product', JSON.stringify(product));
-    if (productImage) {
-      formData.append('product_image', productImage);
+    formData.append('name', productData.name);
+    if (productData.price !== undefined) formData.append('price', productData.price.toString());
+    if (productData.category) formData.append('category', productData.category);
+    if (productData.quantity !== undefined) formData.append('quantity', productData.quantity.toString());
+    if (productData.description) formData.append('description', productData.description);
+    if (productData.gstType) formData.append('gstType', productData.gstType);
+    if (productData.gstRate !== undefined) formData.append('gstRate', productData.gstRate.toString());
+   
+    if (imageFile instanceof File && imageFile.size > 0) {
+      formData.append('image', imageFile);
     }
-    return this.http.put(`${this.apiUrl}/update`, formData);
+  
+    return this.http.put(
+      `${this.apiUrl}/updateProduct/${productId}`,
+      formData,
+      { headers }
+    );
   }
+  
 
 
   
@@ -61,10 +79,15 @@ export class ProductService {
     return `${this.apiUrl}/getImage/${productId}`;
   }
  
+
   
-  deleteProduct(product_id: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.apiUrl}/deleteProduct/${product_id}`);
+  deleteProduct(productId: number): Observable<any> {
+    const token = localStorage.getItem('token'); // assuming token is stored here
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.delete<string>(`${this.apiUrl}/deleteProduct/${productId}`, { headers });
   }
-  
  
 }
