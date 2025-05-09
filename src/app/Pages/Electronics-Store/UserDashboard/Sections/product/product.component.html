@@ -2,11 +2,32 @@
   <form (submit)="isEditMode ? updateProduct() : saveProduct(); $event.preventDefault()">
     <input type="text" [(ngModel)]="product.name" name="name" placeholder="Name" required />
     <input type="number" [(ngModel)]="product.price" name="price" placeholder="Price" />
-    <input type="text" [(ngModel)]="product.category" name="category" placeholder="Category" />
+    <select [(ngModel)]="product.category" name="category">
+    <option value="" disabled selected>Select category</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Grocery">Grocery</option>
+    <option value="Hardware">Hardware</option>
+ 
+  </select>
     <input type="number" [(ngModel)]="product.quantity" name="quantity" placeholder="Quantity" />
     <textarea [(ngModel)]="product.description" name="description" placeholder="Description"></textarea>
-    <input type="text" [(ngModel)]="product.gstType" name="gstType" placeholder="GST Type" />
-    <input type="number" [(ngModel)]="product.gstRate" name="gstRate" placeholder="GST Rate" />
+    <select [(ngModel)]="product.gstType" name="gstType">
+      <option value="" disabled selected>Select GST Type</option>
+      <option value="IGST">IGST</option>
+      <option value="CGST">CGST</option>
+      <option value="SGST">SGST</option>
+      <option value="UTGST">UTGST</option>
+    </select>
+    
+    <select [(ngModel)]="product.gstRate" name="gstRate">
+      <option value="" disabled selected>Select GST Rate</option>
+      <option value="0">0%</option>
+      <option value="5">5%</option>
+      <option value="12">12%</option>
+      <option value="18">18%</option>
+      <option value="28">28%</option>
+    </select>
+    
     <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" [required]="!isEditMode" />
     
     <button type="submit">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
@@ -33,7 +54,7 @@
       <tr *ngFor="let product of filteredProducts; let i = index">
         <td>{{ i + 1 }}</td>
         <td><img [src]="getImageUrl(product.product_id)" class="product-image" alt="Product image" /></td>
-        <td>{{ product.product_name }}</td>
+        <td>{{ product.productName }}</td>
         <td>{{ product.product_description }}</td>
         <td>{{ product.product_category }}</td>
         <td>{{ product.product_available_stock_quantity }}</td>

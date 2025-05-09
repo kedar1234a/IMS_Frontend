@@ -104,13 +104,16 @@ export class MyCartComponent implements OnInit{
   }
 
   navigateToAutoBilling() {
-    this.router.navigate(['/electronics-user-dashboard']
-    ).then(success => {
-      if (success) {
-        console.log('Navigation success');
-      } else {
-        console.error('Navigation failed');
-      }
-    });
+   
+
+  this.router.navigate(['/electronics-user-dashboard']).then(() => {
+    setTimeout(() => {
+      this.router.navigate([
+        { outlets: { outlet2: ['electronics-autoBilling'] } },
+      ]);
+    }, 100); // S
+  });
+  
   }
+
 }

@@ -12,6 +12,7 @@ export class ProductService {
 
   addProduct(productData: any, imageFile: File, token: string) {
     const formData = new FormData();
+   
     formData.append('name', productData.name);
     formData.append('price', productData.price);
     formData.append('category', productData.category);

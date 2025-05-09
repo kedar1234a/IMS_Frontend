@@ -43,12 +43,14 @@ export class AdminDashboardComponent implements OnInit {
     if (status === 'ACTIVE' && confirm(`Are You sure want To Approve this User?`)) {
       this.adminService.approveUser(id).subscribe({
         next: () => {
-          alert('User approved successfully!');
+          alert("User can login now ")
           this.fetchUser();  // Re-fetch the user list after status update
+        
         },
         error: (err) => {
           alert('Error approving user');
-          console.error(err);
+      
+        
         }
       });
     } else if (status === 'REJECTED' && confirm(`Are You sure want To Reject this User?`)) {

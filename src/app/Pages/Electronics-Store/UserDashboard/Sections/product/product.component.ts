@@ -118,7 +118,7 @@ export class ProductComponent implements OnInit {
     this.selectedProductId = product.product_id;
   
     this.product = {
-      name: product.product_name,
+      name: product.productName,
       price: product.product_price,
       category: product.product_category,
       quantity: product.product_available_stock_quantity,

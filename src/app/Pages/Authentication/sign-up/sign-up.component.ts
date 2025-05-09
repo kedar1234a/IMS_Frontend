@@ -19,6 +19,7 @@ export class SignUpComponent {
     email: '',
     store_type: '',
     password: '',
+    role: 'USER'
   };
 
   confirm_password = '';
@@ -49,7 +50,7 @@ export class SignUpComponent {
         // Call the service
       this.authenticationService.register(this.signupData).subscribe({
         next: (response) => {
-          alert('Signup Successful. Please login.');
+          alert(response.message);
           this.router.navigate(['/login']); // Navigate to login page
 
           // Reset form fields
@@ -63,7 +64,7 @@ export class SignUpComponent {
         },
         error: (error) => {
           console.error('Error during signup:', error);
-          alert('Signup failed. Please try again.');
+          alert(error.message);
         }
       });
 

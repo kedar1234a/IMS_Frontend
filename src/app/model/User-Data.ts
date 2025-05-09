@@ -5,4 +5,5 @@ export interface UserData{
   store_type : string,
   password : string,
   status?:string,
+  role?:string
 }

@@ -18,8 +18,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: UserData): Observable<string> {
-    return this.http.post(`${this.baseUrl}/register`, user, { responseType: 'text' });
+  register(user: UserData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, user, { responseType: 'json' });
   }
 
 
