@@ -21,15 +21,13 @@ export class LandingNavComponent {
       selectedStore == 'signup'
     ) {
       this.router.navigate(['/signup']);
+     // this.router.navigate(['/verifyEmail']);
     } else {
       this.router.navigate(['/login']);
     }
   }
 
   logOut(){
-   
- 
-    
       // Optionally, clear token from localStorage or sessionStorage
       localStorage.removeItem('token');
       // Redirect to login page

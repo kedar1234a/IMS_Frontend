@@ -5,6 +5,8 @@ import { ShowBillsComponent } from './Pages/Electronics-Store/UserDashboard/Sect
 import { ElectronicsStoreHomeComponent } from './Pages/Electronics-Store/electronics-store-home/electronics-store-home.component';
 import { UserdashboardComponent } from './Pages/Electronics-Store/UserDashboard/userdashboard/userdashboard.component';
 import { LandingFooterComponent } from './Components/footer/landing-footer/landing-footer.component';
+import { OtpComponent } from './Pages/Authentication/otp/otp.component';
+import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +32,8 @@ export const routes: Routes = [
         (m) => m.SignUpComponent
       );
     },
+  },{
+    path:'verifyEmail', component:OtpComponent
   },
   {
     path: 'login',
@@ -42,15 +46,7 @@ export const routes: Routes = [
   },
   // <--------------------- Profile Routee --------------------->
 
-  {
-    path: 'user-profile',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import('./Pages/profile/profile.component').then(
-        (m) => m.ProfileComponent
-      );
-    },
-  },
+  {path:'userProfile', component:UserProfileComponent},
 
   // <--------------------- Admin Routes --------------------->
 
