@@ -14,7 +14,13 @@
 
     <div class="form-group">
       <label for="reviewText">Review:</label>
-      <textarea id="reviewText" name="reviewText" [(ngModel)]="reviewText" required></textarea>
+      <textarea id="reviewText" name="reviewText" [(ngModel)]="reviewText" (input)="generateSuggestion()" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="suggestionText">Suggestion:</label>
+      <textarea id="suggestionText" name="suggestionText" [(ngModel)]="suggestionText" readonly></textarea>
+      <button type="button" class="submit-button" (click)="completeWithSuggestion()" [disabled]="!suggestionText">Use Suggestion</button>
     </div>
 
     <div class="form-group">

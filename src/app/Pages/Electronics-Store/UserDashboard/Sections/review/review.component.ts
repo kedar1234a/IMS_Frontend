@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 @Component({
   selector: 'app-review',
@@ -12,13 +13,18 @@ import { FormsModule } from '@angular/forms';
 export class ReviewComponent implements OnInit {
   name: string = '';
   reviewText: string = '';
+  suggestionText: string = '';
   rating: number = 0;
   displayPicture: string | null = null;
   reviews: any[] = [];
   emojis: string[] = ['😞', '😐', '😊', '😄', '😍'];
   showReviews: boolean = false;
+  private genAI: GoogleGenerativeAI;
 
-  constructor() {}
+  constructor() {
+    // Initialize Gemini API with your API key
+    this.genAI = new GoogleGenerativeAI('AIzaSyBYGqAev81pI_5A1Ut1K27ssljqjCcvY9U'); // Replace with your actual API key
+  }
 
   ngOnInit(): void {
     // Load existing reviews from localStorage
@@ -44,6 +50,31 @@ export class ReviewComponent implements OnInit {
     }
   }
 
+  async generateSuggestion(): Promise<void> {
+    if (this.reviewText.trim()) {
+      try {
+        const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const prompt = `construct a feedback sentence fromn the given text which is short and professional for product review which is human:\n\n${this.reviewText}`;
+        
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        this.suggestionText = response.text();
+      } catch (error) {
+        console.error('Error generating suggestion:', error);
+        this.suggestionText = 'Unable to generate suggestion. Please try again.';
+      }
+    } else {
+      this.suggestionText = 'Please enter some review text to generate a suggestion.';
+    }
+  }
+
+  completeWithSuggestion(): void {
+    if (this.suggestionText) {
+      this.reviewText = this.suggestionText;
+      this.suggestionText = ''; // Clear suggestion after using it
+    }
+  }
+
   submitReview(): void {
     if (this.name && this.reviewText && this.rating > 0) {
       const newReview = {
@@ -61,6 +92,7 @@ export class ReviewComponent implements OnInit {
       // Reset form
       this.name = '';
       this.reviewText = '';
+      this.suggestionText = '';
       this.rating = 0;
       this.displayPicture = null;
     }
