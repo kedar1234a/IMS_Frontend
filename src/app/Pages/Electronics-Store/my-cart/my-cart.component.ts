@@ -20,21 +20,21 @@ export class MyCartComponent implements OnInit{
 
   total: number = 0;
 
-  constructor(private cartService:AddToCartService, private billService: SalesProductService, private billingItem:AutobillingService,private router: Router) {}
+  constructor(private cartService: AddToCartService, private billService: SalesProductService, private billingItem: AutobillingService, private router: Router) { }
 
   ngOnInit(): void {
     this.items = this.cartService.getItems();
     this.updateTotal();
   }
 
-  getImageUrl(){}
+  getImageUrl() { }
 
   updateTotal(): void {
     this.items = this.items.map(item => {
       const netAmount = item.price * item.quantity;
       const gstAmount = netAmount * item.gstRate / 100;
       const totalAmount = netAmount + gstAmount;
-  
+
       return {
         ...item,
         netAmount,
@@ -42,25 +42,25 @@ export class MyCartComponent implements OnInit{
         totalAmount
       };
     });
-  
+
     this.total = this.items.reduce((sum, item) => sum + item.totalAmount, 0);
-  
+
     // Optional: update items in cart service too
     this.cartService.cartItems = this.items;
   }
-  
-  
+
+
 
   removeItem(id: number): void {
     this.cartService.removeFromCart(id);
     this.items = this.cartService.getItems();
-  
+
     // Recalculate item amounts after removal
     this.items = this.items.map(item => {
       const netAmount = item.price * item.quantity;
       const gstAmount = netAmount * item.gstRate / 100;
       const totalAmount = netAmount + gstAmount;
-  
+
       return {
         ...item,
         netAmount,
@@ -68,11 +68,11 @@ export class MyCartComponent implements OnInit{
         totalAmount
       };
     });
-  
+
     // Update the total using new totalAmount values
     this.total = this.items.reduce((sum, item) => sum + item.totalAmount, 0);
   }
-  
+
 
   clearCart(): void {
     this.cartService.clearCart();
@@ -85,7 +85,7 @@ export class MyCartComponent implements OnInit{
       const netAmount = item.price * item.quantity;
       const gstAmount = netAmount * item.gstRate / 100;
       const totalAmount = netAmount + gstAmount;
-  
+
       return {
         ...item,
         netAmount,
@@ -93,40 +93,27 @@ export class MyCartComponent implements OnInit{
         totalAmount
       };
     });
-  
+
     // Now you can use this array to send to a service or log it
     console.log("Billing Items:", processedItems);
-  
-  
     // Send processed items to billing
     this.billingItem.setBillingItem(processedItems);
     alert('Bill send to dashboard then go to dashboard ');
-   
     this.navigateToAutoBilling();
-   
-    
-    
-    
-
+    this.clearCart();
   }
 
   navigateToAutoBilling() {
-    this.router.navigate(
-      [
-        '/electronics-user-dashboard',
-        
-       
-        
-      ]
-    ).then(success => {
-      if (success) {
-        console.log('Navigation success');
-      } else {
-        console.error('Navigation failed');
-      }
-    });
+   
+
+  this.router.navigate(['/electronics-user-dashboard']).then(() => {
+    setTimeout(() => {
+      this.router.navigate([
+        { outlets: { outlet2: ['electronics-autoBilling'] } },
+      ]);
+    }, 100); // S
+  });
+  
   }
-  
-  
-  
+
 }

@@ -19,6 +19,7 @@ export class ShowBillsComponent implements OnInit {
   ngOnInit(): void {
     this.customerService.getAllCustomers().subscribe((data) => {
       this.billings = data;
+      console.log(data);
     });
   }
 
@@ -73,13 +74,13 @@ export class ShowBillsComponent implements OnInit {
     y -= 18;
 
     billing.customerProductList.forEach((product: any) => {
-      page.drawText(product.productName, { x: 50, y, size: fontSize, font });
+      page.drawText(product.name.toString(), { x: 50, y, size: fontSize, font });
       page.drawText(product.price.toFixed(2), { x: 150, y, size: fontSize, font });
       page.drawText(product.quantity.toString(), { x: 210, y, size: fontSize, font });
       page.drawText(product.netAmount.toFixed(2), { x: 260, y, size: fontSize, font });
-      page.drawText(product.typeOfGST, { x: 330, y, size: fontSize, font });
-      page.drawText(`${product.tax}%`, { x: 400, y, size: fontSize, font });
-      page.drawText(product.gst.toFixed(2), { x: 450, y, size: fontSize, font });
+      page.drawText(product.gstType, { x: 330, y, size: fontSize, font });
+      page.drawText(`${product.gstRate}%`, { x: 400, y, size: fontSize, font });
+      page.drawText(product.gstAmount.toFixed(2), { x: 450, y, size: fontSize, font });
       page.drawText(product.totalAmount.toFixed(2), { x: 510, y, size: fontSize, font });
       y -= 15;
     });

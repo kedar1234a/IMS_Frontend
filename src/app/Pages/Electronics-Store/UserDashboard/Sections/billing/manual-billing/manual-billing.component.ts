@@ -48,7 +48,7 @@ UTGST = "UTGST"; //union territory
 
     
     this.CalculateInvoiceNo();
-     this.loadProducts(); 
+   
   }
 
   CalculateInvoiceNo(){
@@ -68,18 +68,7 @@ UTGST = "UTGST"; //union territory
     });
   }
 
-  loadProducts(): void {
-    this.itemService.getProducts().subscribe({
-      next: (data) => {
-
-        this.items = data;
-     
-      },
-      error: (err) => {
-        console.error('Error loading products:', err);
-      }
-    });
-  }
+ 
 
   onProductSelected(){
     const selectedItem = this.items.find(item => item.product_name === this.name);
@@ -133,12 +122,13 @@ UTGST = "UTGST"; //union territory
 
   }
 
-   saveBill() {
+  saveBill() {
+  
     const billData = {
       name: this.invoiceName,
       billDate: this.invoiceDate,
       totalAmount: this.total,
-      customerProductList: this.products
+      customerProductList: this.products,
     };
   
     this.billingService.saveBill(billData).subscribe({
@@ -152,10 +142,10 @@ UTGST = "UTGST"; //union territory
         console.error('Error saving bill:', error);
         alert('Error saving invoice.');
         alert('Error saving invoice: ' + (error.message || error.statusText));
-
       }
     });
   }
+  
   
 
   async downloadPDF() {

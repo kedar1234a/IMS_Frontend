@@ -13,12 +13,12 @@
         <p> Sign in to manage your Inventory.</p>
       </div>
       <div class="login-form">
-        <form (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onLogin()">
           <input
             type="text"
             name="email"
             placeholder="Enter Email"
-            [(ngModel)]="email"
+            [(ngModel)]="loginData.username"
             required
           />
 
@@ -27,7 +27,7 @@
               [type]="showPassword ? 'text' : 'password'"
               name="password"
               placeholder="Password"
-              [(ngModel)]="password"
+              [(ngModel)]="loginData.password"
               required
             />
             <i

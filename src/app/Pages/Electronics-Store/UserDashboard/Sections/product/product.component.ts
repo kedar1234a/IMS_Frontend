@@ -1,13 +1,15 @@
- import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { ProductService } from '../../../../../Services/productServices/product-service.service';
-
+import { isNullOrUndef } from 'chart.js/dist/helpers/helpers.core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -17,6 +19,25 @@ import { ProductService } from '../../../../../Services/productServices/product-
   styleUrls: ['./product.component.css'],
 })
 export class ProductComponent implements OnInit {
+
+  isEditMode = false;
+  selectedProductId: number | null = null;
+
+  @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
+
+  product = {
+    name: '',
+    price: '',
+    category: '',
+    quantity: '',
+    description: '',
+    gstType: '',
+    gstRate: ''
+  };
+  imageFile: File | null = null;
+
+
+
   categories: string[] = [
     'Smartphone',
     'Laptop & PC',
@@ -25,205 +46,152 @@ export class ProductComponent implements OnInit {
     'AC',
   ];
 
-  productForm!: FormGroup;
+  CGST = 'CGST';
+  SGST = 'SGST';
+  IGST = 'IGST';
+  UTGST = 'UTGST';
+
+
+  
   productsArray: any[] = [];
   filteredProducts: any[] = [];
-  selectedFile: File | null = null;
-  searchTerm: string = '';
-  selectedSortOption: string = '';
 
-  CGST = "CGST";
-  SGST = "SGST";
-  IGST = "IGST"; // Integrated
-  UTGST = "UTGST"; // Union territory
+  constructor(private productService: ProductService) {}
 
-  editingProductId: number | null = null;
-
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductService
-  ) {}
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.imageFile = input.files[0];
+    } else {
+      this.imageFile = null; // fallback if user cancels selection
+    }
+  }
+  
 
   ngOnInit(): void {
-    this.productForm = this.fb.group({
-      product_name: [''],
-      product_price: [''],
-      product_category: [''],
-      product_available_stock_quantity: [''],
-      product_description: [''],
-      product_gstType:[''],
-      product_gstRate:['']
-    });
 
     this.loadProducts();
+      
   }
 
-  getImageUrl(product_id: number): string {
-    return this.productService.getImageUrl(product_id);
-  }
+  saveProduct() {
+    const token = localStorage.getItem('token'); // Make sure you store the JWT token
+    console.log('Get token to save product', token);
+    if (!token) {
+      alert('User not authenticated');
+      console.log('token not authenticated');
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
-
-  saveProduct(): void {
-    if (!this.selectedFile) {
-      alert('Please select an image!');
       return;
     }
 
-     // Get user_id from local storage
-  const userId = localStorage.getItem('user_id');
-  if (!userId) {
-    alert('User ID not found in local storage.');
-    return;
-  }
+    if (!this.imageFile) {
+      alert('Please select an image file.');
+      return;
+    }
 
-    const productData = {
-      product_name: this.productForm.get('product_name')?.value,
-      product_price: this.productForm.get('product_price')?.value,
-      product_category: this.productForm.get('product_category')?.value,
-      product_available_stock_quantity: this.productForm.get(
-        'product_available_stock_quantity'
-      )?.value,
-      product_description: this.productForm.get('product_description')?.value,
-      gst_type: this.productForm.get('product_gstType')?.value,
-      gst_rate: this.productForm.get('product_gstRate')?.value,
-      user_id: userId 
-    };
-
-    this.productService.addProduct(productData, this.selectedFile).subscribe({
-      next: (response) => {
-        alert(response.message || 'Product saved successfully!');
+    this.productService.addProduct(this.product, this.imageFile, token).subscribe({
+      next: (res) => {
+        console.log('Product added:', res);
+        alert('Product added successfully!');
         this.loadProducts();
-        this.productForm.reset();
-        this.selectedFile = null;
+        this.resetFormState();
       },
       error: (err) => {
-        console.error('Error saving product:', err);
-        alert('Failed to save product');
-      },
+        console.error('Error adding product:', err);
+        alert('Error adding product.');
+      }
     });
   }
 
-  updateProduct(): void {
-    if (!this.editingProductId) {
-      alert('No product selected for update.');
-      return;
-    }
+  loadProducts(){
 
-    const updatedProduct = {
-      product_id: this.editingProductId,
-      product_name: this.productForm.get('product_name')?.value,
-      product_price: this.productForm.get('product_price')?.value,
-      product_category: this.productForm.get('product_category')?.value,
-      product_available_stock_quantity: this.productForm.get(
-        'product_available_stock_quantity'
-      )?.value,
-      product_description: this.productForm.get('product_description')?.value,
-      product_gstType: this.productForm.get('product_gstType')?.value,
-      product_gstRate: this.productForm.get('product_gstRate')?.value
-    };
-
-    this.productService
-      .updateProduct(updatedProduct, this.selectedFile || undefined)
-      .subscribe({
-        next: (res) => {
-          alert('Product updated successfully!');
-          this.loadProducts(); // 👈 important for refreshing image
-          this.productForm.reset();
-          this.editingProductId = null;
-          this.selectedFile = null;
-        },
-        error: (err) => {
-          console.error('Error updating product:', err);
-          alert('Failed to update product');
-        },
-      });
+    this.productService.getProducts().subscribe({
+      next: (resPro)=>{
+        console.log(resPro);
+        this.filteredProducts = resPro;
+      }
+    });
   }
 
-  loadProducts(): void {
-    this.productService.getProducts().subscribe({
-      next: (data) => {
-        this.productsArray = data.map(p => ({
-          ...p,
-          imageUrl: this.productService.getImageUrl(p.product_id)
-        }));
-        this.filteredProducts = [...this.productsArray];
+  editProduct(product: any) {
+    this.isEditMode = true;
+    this.selectedProductId = product.product_id;
+  
+    this.product = {
+      name: product.productName,
+      price: product.product_price,
+      category: product.product_category,
+      quantity: product.product_available_stock_quantity,
+      description: product.product_description,
+      gstType: product.gst_type,
+      gstRate: product.gst_rate,
+    };
+  }
+
+  updateProduct() {
+
+    if (!this.selectedProductId) return;
+  
+    this.productService.updateProduct(this.selectedProductId,this.product
+    ).subscribe({
+      next: (res) => {
+        alert('Product updated successfully');
+        this.resetFormState();
+        this.loadProducts();
+        this.isEditMode = false;
       },
       error: (err) => {
-        console.error('Error loading products:', err);
+        console.error('Update failed', err);
+        alert('Failed to update product');
       }
     });
   }
   
-
-  editProduct(product: any): void {
-    this.editingProductId = product.product_id;
-    this.productForm.patchValue(product);
-    this.selectedFile = null;
+  cancelEdit() {
+    this.resetFormState();
+    this.isEditMode=false;
   }
 
-  deleteProduct(id: number): void {
-    if (!confirm('Are you sure you want to delete this product?')) return;
 
-    this.productService.deleteProduct(id).subscribe({
-      next: () => {
-        alert('Product deleted successfully');
-        this.productsArray = this.productsArray.filter(
-          (product) => product.product_id !== id
-        );
-        this.filteredProducts = this.filteredProducts.filter(
-          (product) => product.product_id !== id
-        );
-        this.productForm.reset();
-        this.selectedFile = null;
-      },
-      error: (err) => {
-        console.error('Error deleting product:', err);
-        alert('Failed to delete the product. Please try again.');
-      },
-    });
-  }
-
-  onSearchChange(): void {
-    const term = this.searchTerm.toLowerCase().trim();
-
-    if (term === '') {
-      this.filteredProducts = this.productsArray;
-      return;
+// product.component.ts
+deleteProduct(id: number){
+  this.productService.deleteProduct(id).subscribe({
+    next: (response) => {
+      if (response.status === 'success') {
+        alert(response.message); // Or use a toast/snackbar
+        this.loadProducts(); // Refresh the list
+      } else {
+        alert('Error: ' + response.error);
+      }
+     
+    },
+    error: (err) => {
+      console.error('Error deleting product', err);
     }
+  });
+}
 
-    this.filteredProducts = this.productsArray.filter(
-      (product) =>
-        product.product_id.toString().includes(term) ||
-        product.product_name.toLowerCase().includes(term) ||
-        product.product_price.toString().includes(term)
-    );
+
+  getImageUrl(product_id: number): string {
+    return this.productService.getImageUrl(product_id);
   }
-
-  sortProducts(): void {
-    switch (this.selectedSortOption) {
-      case 'id':
-        this.filteredProducts.sort((a, b) => a.product_id - b.product_id);
-        break;
-      case 'name':
-        this.filteredProducts.sort((a, b) =>
-          a.product_name.localeCompare(b.product_name)
-        );
-        break;
-      case 'price':
-        this.filteredProducts.sort((a, b) => a.product_price - b.product_price);
-        break;
-      case 'stock':
-        this.filteredProducts.sort(
-          (a, b) =>
-            a.product_available_stock_quantity -
-            b.product_available_stock_quantity
-        );
-        break;
-      default:
-        this.filteredProducts = [...this.productsArray];
+ 
+  resetFormState() {
+    this.product = {
+      name: '',
+      price: '',
+      category: '',
+      quantity: '',
+      description: '',
+      gstType: '',
+      gstRate: ''
+    };
+    this.imageFile = null;
+  
+    // Clear file input
+    if (this.fileInputRef?.nativeElement) {
+      this.fileInputRef.nativeElement.value = '';
     }
   }
+  
 }

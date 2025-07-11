@@ -79,7 +79,7 @@ export class FeaturedCategoriesCardComponent implements OnInit {
       this.cartService.addToCart({
         id: product.product_id,
         imgurl:imgurl,
-        name: product.product_name,
+        name: product.productName,
         description: product.product_description,
         price: product.product_price,
         quantity: 1,

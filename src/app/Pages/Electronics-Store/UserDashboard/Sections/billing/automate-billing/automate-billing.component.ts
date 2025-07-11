@@ -77,8 +77,8 @@ export class AutomateBillingComponent implements OnInit {
     this.billingService.saveBill(billData).subscribe({
       next: (response) => {
         console.log('Bill saved successfully:');
-        alert(response); 
-        //this.clearForm();
+        alert(response.message); 
+        this.clearForm();
         this.CalculateInvoiceNo();
       },
       error: (error) => {

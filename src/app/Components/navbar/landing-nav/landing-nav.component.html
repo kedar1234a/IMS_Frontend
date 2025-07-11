@@ -1,6 +1,6 @@
 <div id="nav-container">
   <div id="navbar">
-    <div id="logo"><img src="../../../../assets/logos/inventory-black.png" alt=""> <h5>IMS</h5></div>
+    <div id="logo"><img src="../../../../assets/logos/inventory-black.png" alt=""> <h5>Inventory Management System</h5></div>
     <div id="input">
       <img src="../../../../assets/logos/search.png" width="30px" height="30px" id="search-logo">
       <input type="search" placeholder="Search..." id="search_bar" />
@@ -37,7 +37,7 @@
         >
           <option value="" selected disabled>Account</option>
           <option value="signup">SignUp</option>
-          <option value="login">LogIn</option>
+          <option value="login" (click)="logOut()">LogIn</option>
         </select>
       </li>
       <li routerLink="/adminLogin">Admin Login</li>

@@ -14,64 +14,84 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
+otp: any;
+verifyOtp() {
+throw new Error('Method not implemented.');
+}
   signupData: UserData = {
     full_name: '',
     email: '',
     store_type: '',
     password: '',
+    role: 'USER'
   };
 
   confirm_password = '';
   showPassword = false;
   showConfirmPassword = false;
 
+
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {}
+  ) {
 
-  OnSignUp() {
-    // Check if all required fields are provided
-    if (
-      this.signupData.full_name &&
-      this.signupData.email &&
-      this.signupData.password &&
-      this.signupData.store_type
-    ) {
-      // Check if passwords match
-      if (this.signupData.password === this.confirm_password) {
-        // Add a pending status to the signup data before sending it
-        const signupRequest = {
-          ...this.signupData,
-          status: 'PENDING', // Setting default status as 'PENDING'
-        };
+    const nav = history.state;
 
-        this.authenticationService.storeSignupDetails(signupRequest).subscribe(
-          (response) => {
-            alert('Signup Successful. Please wait for admin approval.');
-            this.router.navigate(['/login']); // Navigate to login page
-
-            // Reset form fields
-            this.signupData = {
-              full_name: '',
-              email: '',
-              store_type: '',
-              password: '',
-            };
-            this.confirm_password = '';
-          },
-          (error) => {
-            console.error('Error during signup:', error);
-            alert('Signup failed. Please try again.');
-          }
-        );
-      } else {
-        alert('Passwords do not match');
-      }
-    } else {
-      alert('Please fill all the required fields.');
-    }
+    this.signupData.email = nav.email;
   }
+
+ 
+OnSignUp() {
+  // Trim all fields
+  this.signupData.full_name = this.signupData.full_name.trim();
+  this.signupData.email = this.signupData.email.trim();
+  this.signupData.store_type = this.signupData.store_type.trim();
+  this.signupData.password = this.signupData.password.trim();
+  this.confirm_password = this.confirm_password.trim();
+
+  // Check if all fields are filled
+  if (
+    this.signupData.full_name &&
+    this.signupData.email &&
+    this.signupData.password 
+  ) {
+    // Check if passwords match
+    if (this.signupData.password === this.confirm_password) {
+      const signupRequest = {
+        ...this.signupData,
+        status: 'PENDING',
+      };
+
+      this.authenticationService.register(signupRequest).subscribe({
+        next: (response) => {
+          alert(response.message);
+          this.router.navigate(['/login']);
+
+          // Reset fields
+          this.signupData = {
+            full_name: '',
+            email: '',
+            store_type: '',
+            password: '',
+            role: 'USER',
+          };
+          this.confirm_password = '';
+        },
+        error: (error) => {
+          console.error('Error during signup:', error);
+          alert(error.error?.message || 'Signup failed.');
+        },
+      });
+    } else {
+      alert('Passwords do not match');
+    }
+  } else {
+    alert('Please fill all the required fields.');
+  }
+}
+
+
 
   // Toggle password visibility
   togglePasswordVisibility() {

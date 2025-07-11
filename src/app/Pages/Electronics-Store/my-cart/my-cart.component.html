@@ -27,7 +27,7 @@
         type="number"
         min="1"
         [(ngModel)]="item.quantity"
-        (ngModelChange)="updateTotal()"
+        (blur)="updateTotal()"
       />
       
         <br />

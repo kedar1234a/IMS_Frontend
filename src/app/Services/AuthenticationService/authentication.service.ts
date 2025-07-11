@@ -1,26 +1,43 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserData } from '../../model/User-Data';
+
+export interface AuthRequest {
+  username: string;
+  password: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private apiUrl = 'http://localhost:8080/api/register';
-  private signInUrl = 'http://localhost:8080/api/login';
+
+  private baseUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
-  storeSignupDetails(UserData: UserData): Observable<any> {
-    return this.http.post<any>(this.apiUrl, UserData, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    });
+   sendOtp(email: string): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    return this.http.post(`${this.baseUrl}/sendOtp`, null, { params });
   }
 
-  login(email: string, password: string): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(this.signInUrl, { email, password }, { headers });
+  verifyOtp(email: string, otp: string): Observable<any> {
+    const params = new HttpParams()
+      .set('email', email)
+      .set('otp', otp);
+    return this.http.post(`${this.baseUrl}/verifyOtp`, null, { params });
+  }
+
+  register(user: UserData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, user, { responseType: 'json' });
+  }
+
+
+  login(authRequest: AuthRequest): Observable<string> {
+    return this.http.post(`${this.baseUrl}/login`, authRequest, { responseType: 'text' });
   }
   
+
 }

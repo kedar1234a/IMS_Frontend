@@ -4,6 +4,9 @@ import { AutomateBillingComponent } from './Pages/Electronics-Store/UserDashboar
 import { ShowBillsComponent } from './Pages/Electronics-Store/UserDashboard/Sections/billing/show-bills/show-bills.component';
 import { ElectronicsStoreHomeComponent } from './Pages/Electronics-Store/electronics-store-home/electronics-store-home.component';
 import { UserdashboardComponent } from './Pages/Electronics-Store/UserDashboard/userdashboard/userdashboard.component';
+import { LandingFooterComponent } from './Components/footer/landing-footer/landing-footer.component';
+import { OtpComponent } from './Pages/Authentication/otp/otp.component';
+import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 
 export const routes: Routes = [
 
@@ -16,6 +19,9 @@ export const routes: Routes = [
       );
     },
   },
+  {
+    path:'landing',component:LandingFooterComponent
+  },
 
   // <--------------------- User Auth Routes --------------------->
 
@@ -27,6 +33,8 @@ export const routes: Routes = [
         (m) => m.SignUpComponent
       );
     },
+  },{
+    path:'verifyEmail', component:OtpComponent
   },
   {
     path: 'login',
@@ -39,15 +47,7 @@ export const routes: Routes = [
   },
   // <--------------------- Profile Routee --------------------->
 
-  {
-    path: 'user-profile',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import('./Pages/profile/profile.component').then(
-        (m) => m.ProfileComponent
-      );
-    },
-  },
+  {path:'userProfile', component:UserProfileComponent},
 
   // <--------------------- Admin Routes --------------------->
 
@@ -158,132 +158,28 @@ export const routes: Routes = [
     },
     outlet: 'outlet2',
   },
+  {
+    path: 'electronics-user-dashboard-sellers',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/sellers/sellers.component'
+      ).then((m) => m.SellersComponent);
+    },
+    outlet: 'outlet2',
+  },
   // <--------------------- Grocery Store Routes --------------------->
-  
-  {
-    path: 'grocery-store-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/grocery-store-home/grocery-store-home.component'
-      ).then((m) => m.GroceryStoreHomeComponent);
-    },
-  },
-  {
-    path: 'grocery-store-see-more',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/grocery-store-home/grocery-see-more/grocery-see-more.component'
-      ).then((m) => m.GrocerySeeMoreComponent);
-    },
-  },
 
-  // <--------------------- Grocery Store Dashboard Routes --------------------->
-  
-  {
-    path: 'grocery-user-dashboard',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/userdashboard/userdashboard.component'
-      ).then((m) => m.UserdashboardComponent);
-    },
-
-  },
-  {
-    path: 'grocery-user-dashboard-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/Sections/home/home.component'
-      ).then((m) => m.HomeComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'grocery-user-dashboard-product',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/Sections/product/product.component'
-      ).then((m) => m.ProductComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'grocery-user-dashboard-billing',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Grocery-Store/UserDashboard/Sections/billing/billing.component'
-      ).then((m) => m.BillingComponent);
-    },
-    outlet: 'outlet2',
-  },
 
   // <--------------------- Industrial Store Routes --------------------->
 
-  {
-    path: 'industrial-hardware-store-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/industrial-hardware-store-home/industrial-hardware-store-home.component'
-      ).then((m) => m.IndustrialHardwareStoreHomeComponent);
-    },
-  },
-  {
-    path: 'industrial-hardware-store-see-more',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/industrial-hardware-store-home/industrial-hardware-store-home.component'
-      ).then((m) => m.IndustrialHardwareStoreHomeComponent);
-    },
-  },
+
+  
   // <--------------------- Grocery Store Dashboard Routes --------------------->
+ 
+
+
   
-  {
-    path: 'industrial-hardware-user-dashboard',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/userdashboard/userdashboard.component'
-      ).then((m) => m.UserdashboardComponent);
-    },
-  
-  },
-  {
-    path: 'industrial-hardware-user-dashboard-home',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/home/home.component'
-      ).then((m) => m.HomeComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'industrial-hardware-user-dashboard-product',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/product/product.component'
-      ).then((m) => m.ProductComponent);
-    },
-    outlet: 'outlet2',
-  },
-  {
-    path: 'industrial-hardware-user-dashboard-billing',
-    pathMatch: 'full',
-    loadComponent: () => {
-      return import(
-        './Pages/Industrial-Hardware-Store/UserDashboard/Sections/billing/billing.component'
-      ).then((m) => m.BillingComponent);
-    },
-    outlet: 'outlet2',
-  },
   {path:'electronics-myCart',component: MyCartComponent},
   {path:'electronics-showBilling', component: ShowBillsComponent, outlet:'outlet2'},
  {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'}
