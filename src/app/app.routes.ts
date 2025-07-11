@@ -149,6 +149,16 @@ export const routes: Routes = [
     },
     outlet: 'outlet2',
   },
+  {
+    path: 'electronics-user-dashboard-sellers',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/sellers/sellers.component'
+      ).then((m) => m.SellersComponent);
+    },
+    outlet: 'outlet2',
+  },
   // <--------------------- Grocery Store Routes --------------------->
 
 
