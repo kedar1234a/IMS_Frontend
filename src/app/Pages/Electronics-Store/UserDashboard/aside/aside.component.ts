@@ -45,7 +45,10 @@ export class AsideComponent {
         this.activeItem = item;
         break;
 
-      case 'Sellers / Vendors':
+      case 'Sellers':
+         this.router.navigate([
+          { outlets: { outlet2: ['sellers'] } },
+        ]);
         console.log('Navigating to Sellers / Vendors...');
         this.activeItem = item;
         break;
