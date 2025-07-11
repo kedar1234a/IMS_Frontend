@@ -23,7 +23,7 @@ export class ReviewComponent implements OnInit {
 
   constructor() {
     // Initialize Gemini API with your API key
-    this.genAI = new GoogleGenerativeAI('AIzaSyBYGqAev81pI_5A1Ut1K27ssljqjCcvY9U'); // Replace with your actual API key
+    this.genAI = new GoogleGenerativeAI('AIzaSyBYGqAev81pI_5A1Ut1K27ssljqjCcvY9U');
   }
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class ReviewComponent implements OnInit {
     if (this.reviewText.trim()) {
       try {
         const model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-        const prompt = `construct a feedback sentence fromn the given text which is short and professional for product review which is human:\n\n${this.reviewText}`;
+        const prompt = `construct a feedback sentence from the given text which is short and professional for product review in that only particular launguage  which is human:\n\n${this.reviewText}`;
         
         const result = await model.generateContent(prompt);
         const response = await result.response;
