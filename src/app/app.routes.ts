@@ -7,6 +7,7 @@ import { UserdashboardComponent } from './Pages/Electronics-Store/UserDashboard/
 import { LandingFooterComponent } from './Components/footer/landing-footer/landing-footer.component';
 import { OtpComponent } from './Pages/Authentication/otp/otp.component';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
+import { SellersComponent } from './Pages/Electronics-Store/UserDashboard/Sections/sellers/sellers.component';
 
 export const routes: Routes = [
   {
@@ -173,9 +174,11 @@ export const routes: Routes = [
   
   {path:'electronics-myCart',component: MyCartComponent},
   {path:'electronics-showBilling', component: ShowBillsComponent, outlet:'outlet2'},
- {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'}
-  
-
+ {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'},
+ {
+  path: 'sellers', component:SellersComponent, outlet: 'outlet2'
+  // This route is for the Sellers section in the Electronics Store User Dashboard
+ }
 
 ];
 
