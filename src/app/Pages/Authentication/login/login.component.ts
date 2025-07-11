@@ -41,6 +41,7 @@ export class LoginComponent {
         error: (error) => {
           console.error('Login failed:', error);
           alert('Invalid credentials, please try again.');
+          this.router.navigate(['/payment-getway']);
         }
       });
     } else {

@@ -163,9 +163,9 @@ export const routes: Routes = [
   
   {path:'electronics-myCart',component: MyCartComponent},
   {path:'electronics-showBilling', component: ShowBillsComponent, outlet:'outlet2'},
- {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'}
+ {path:'electronics-autoBilling', component: AutomateBillingComponent, outlet:'outlet2'},
   
-
+{path: 'payment-getway', loadComponent: () => import('./Pages/Authentication/paymentGetway/payment-getway/payment-getway.component').then(m => m.PaymentGetwayComponent)    }
 
 ];
 
