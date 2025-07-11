@@ -10,6 +10,7 @@ import { UserProfileComponent } from './Pages/user-profile/user-profile.componen
 import { SellersComponent } from './Pages/Electronics-Store/UserDashboard/Sections/sellers/sellers.component';
 
 export const routes: Routes = [
+
   {
     path: '',
     pathMatch: 'full',
@@ -119,14 +120,13 @@ export const routes: Routes = [
       ).then((m) => m.ProductComponent);
     },
     outlet: 'outlet2',
-  },
-  {
-    path: 'electronics-user-dashboard-manual-billing',
+  },{
+    path: 'electronics-user-dashboard-review',
     pathMatch: 'full',
     loadComponent: () => {
       return import(
-        './Pages/Electronics-Store/UserDashboard/Sections/billing/manual-billing/manual-billing.component'
-      ).then((m) => m.ManualBillingComponent);
+        './Pages/Electronics-Store/UserDashboard/Sections/review/review.component'
+      ).then((m) => m.ReviewComponent);
     },
     outlet: 'outlet2',
   },
@@ -138,7 +138,16 @@ export const routes: Routes = [
         './Pages/Electronics-Store/UserDashboard/Sections/billing/automate-billing/automate-billing.component'
       ).then((m) => m.AutomateBillingComponent);
     },
-    // outlet: 'outlet2',
+    outlet: 'outlet2',
+  },{
+    path: 'electronics-user-dashboard-manual-billing',
+    pathMatch: 'full',
+    loadComponent: () => {
+      return import(
+        './Pages/Electronics-Store/UserDashboard/Sections/billing/manual-billing/manual-billing.component'
+      ).then((m) => m.ManualBillingComponent);
+    },
+    outlet: 'outlet2',
   },
   {
     path: 'electronics-user-dashboard-show-bills',
